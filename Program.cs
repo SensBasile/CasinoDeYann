@@ -1,4 +1,5 @@
 using CasinoDeYann.DataAccess;
+using CasinoDeYann.DataAccess.EfModels;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

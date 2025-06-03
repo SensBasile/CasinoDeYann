@@ -33,4 +33,10 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
         user.Money += amount;
         return await Update(user);
     }
+
+    public async Task<bool> DeleteOneByName(string name)
+    {
+        User user = await GetOneByName(name);
+        return await Delete(user.Id);
+    }
 }

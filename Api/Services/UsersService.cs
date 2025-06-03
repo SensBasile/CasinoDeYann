@@ -26,4 +26,14 @@ public class UsersService
         var user = await _usersRepository.GetOneByName(name);
         return _statsRepository.GetStats(user.Id);
     }
+
+    public async Task<UserProfileModel> GetUserProfileAsync(string userName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> DeleteAccountAsync(string userName)
+    {
+        return await _usersRepository.DeleteOneByName(userName);
+    }
 }

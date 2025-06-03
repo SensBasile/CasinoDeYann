@@ -13,20 +13,20 @@ public class SlotMachineService(IUsersRepository usersRepository)
 
     private const int WildIndex = 7;
 
-    private readonly float[] _alignCoeff = [1.2f, 1.5f, 2f]; // 3 aligned, 4 aligned, 5 aligned
-    private readonly float _vCoeff = 2f;
-    private readonly float[] _mCoeff = [1.5f, 1.7f, 2f];
+    private readonly float[] _alignCoeff = [2f, 3f, 4f]; // 3 aligned, 4 aligned, 5 aligned
+    private readonly float _vCoeff = 5f;
+    private readonly float[] _mCoeff = [2f, 3.5f, 5f];
     
     private readonly float[] _symbolsCoeff = [
         1f, // bell
-        1.1f, // cherry
-        1.2f, // diamond
-        1.3f, // hearth
-        1.4f, // horseshoe
-        1.7f, // seven
-        2f, // watermelon
-        8f, // wildcard
-        10f, // yann
+        2f, // cherry
+        5f, // diamond
+        3f, // hearth
+        4f, // horseshoe
+        7f, // seven
+        2.5f, // watermelon
+        10f, // wildcard
+        15f, // yann
     ];
 
     private readonly Random _random = new();

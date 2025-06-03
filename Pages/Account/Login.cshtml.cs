@@ -24,7 +24,6 @@ namespace CasinoDeYann.Pages.Account
 
         public void OnGet()
         {
-            // Optional: clear previous error
         }
 
         public async Task<IActionResult> OnPostAsync()

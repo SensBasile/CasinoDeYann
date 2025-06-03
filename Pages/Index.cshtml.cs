@@ -1,18 +1,21 @@
-using Microsoft.AspNetCore.Mvc;
+using CasinoDeYann.Api.DataAccess.Dbo;
+using CasinoDeYann.Api.DataAccess.Interfaces;
+using CasinoDeYann.Api.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace CasinoDeYann.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly UsersService _usersService;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(UsersService usersService)
     {
-        _logger = logger;
+        _usersService = usersService;
     }
 
-    public void OnGet()
+    public IEnumerable<User> TopUsers { get; private set; }
+
+    public async Task OnGet()
     {
+        TopUsers = await _usersService.getLeaderboard();
     }
 }

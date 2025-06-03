@@ -11,7 +11,7 @@ public class GoldMineService(IUsersRepository usersRepository)
 
     public async Task<GoldMineModel> Mine(string userName)
     {
-        var callingUser = usersRepository.GetOneByName(userName);
+        var callingUser = await usersRepository.GetOneByName(userName);
         if (callingUser.Money >= 100) throw new BadHttpRequestException("You have too much money to mine");
         callingUser = await usersRepository.AddMoney(callingUser.Username, mineValue);
 

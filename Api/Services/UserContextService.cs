@@ -20,6 +20,6 @@ public class UserContextService
         if (string.IsNullOrEmpty(username))
             return Task.FromResult<User?>(null);
 
-        return Task.FromResult(_usersRepository.GetOneByName(username));
+        return _usersRepository.GetOneByName(username);
     }
 }

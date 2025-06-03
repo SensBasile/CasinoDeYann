@@ -32,7 +32,7 @@ public class SlotMachineService(IUsersRepository usersRepository)
 
     public async Task<SlotMachineModel> Play(string userName, int bet)
     {
-        var callingUser = usersRepository.GetOneByName(userName);
+        var callingUser = await usersRepository.GetOneByName(userName);
         if (callingUser.Money < bet) throw new BadHttpRequestException("You don't have enough money");
         callingUser = await usersRepository.AddMoney(callingUser.Username, -bet);
         

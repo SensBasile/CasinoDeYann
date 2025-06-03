@@ -2,18 +2,154 @@
 @model CasinoDeYann.Pages.SlotMachine
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Machine à sous";
+    <link rel="stylesheet" href="~/css/SlotMachine.css" asp-append-version="true"/>
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+<div class="background-container">
+    <img src="~/assets/SlotMachine/background/slot.gif" alt="Background" class="background-gif" />
 </div>
-</body>
-</html>
+
+<div class="slot-machine">
+    <div id="row1" class="row">
+        <img id="11" class="slot-symbol" src="assets/SlotMachine/bell/bell.png" alt=""/>
+        <img id="12" class="slot-symbol" src="assets/SlotMachine/bell/bell.png" alt=""/>
+        <img id="13" class="slot-symbol" src="assets/SlotMachine/bell/bell.png" alt=""/>
+        <img id="14" class="slot-symbol" src="assets/SlotMachine/bell/bell.png" alt=""/>
+        <img id="15" class="slot-symbol" src="assets/SlotMachine/bell/bell.png" alt=""/>
+    </div>
+    <div id="row2" class="row">
+        <img id="21" class="slot-symbol" src="~/assets/SlotMachine/cherry/cherry.png" alt=""/>
+        <img id="22" class="slot-symbol" src="~/assets/SlotMachine/cherry/cherry.png" alt=""/>
+        <img id="23" class="slot-symbol" src="~/assets/SlotMachine/cherry/cherry.png" alt=""/>
+        <img id="24" class="slot-symbol" src="~/assets/SlotMachine/cherry/cherry.png" alt=""/>
+        <img id="25" class="slot-symbol" src="~/assets/SlotMachine/cherry/cherry.png" alt=""/>
+    </div>
+    <div id="row3" class="row">
+        <img id="31" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="32" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="33" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="34" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="35" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+    </div>
+</div>
+
+<button id="spin">🎲 Lancer</button>
+<div id="result-message"></div>
+
+@section Scripts {
+    <script>
+        const symbols = [
+            "/assets/SlotMachine/bell/bell.png",
+            "/assets/SlotMachine/cherry/cherry.png",
+            "/assets/SlotMachine/diamond/diamond.png",
+            "/assets/SlotMachine/heart/heart.png",
+            "/assets/SlotMachine/horseshoe/horseshoe.png",
+            "/assets/SlotMachine/seven/seven.png",
+            "/assets/SlotMachine/watermelon/watermelon.png",
+            "/assets/SlotMachine/wildcard/wildcard.png",
+            "/assets/SlotMachine/yann/yann.png",
+        ];
+
+        const gridUI = [
+            [
+                document.getElementById("11"),
+                document.getElementById("12"),
+                document.getElementById("13"),
+                document.getElementById("14"),
+                document.getElementById("15"),
+            ],
+            [
+                document.getElementById("21"),
+                document.getElementById("22"),
+                document.getElementById("23"),
+                document.getElementById("24"),
+                document.getElementById("25"),
+            ],
+            [
+                document.getElementById("31"),
+                document.getElementById("32"),
+                document.getElementById("33"),
+                document.getElementById("34"),
+                document.getElementById("35"),
+            ]
+        ];
+        
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function initializeGrid() {
+            for (let row = 1; row <= 3; row++) {
+                for (let col = 1; col <= 5; col++) {
+                    const id = `${row}${col}`;
+                    const img = document.getElementById(id);
+                    if (img) img.src = symbols[getRandomInt(0, symbols.length)];
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initializeGrid();
+        });
+        
+        function setCol(col, grid) {
+            for (let i = 0; i < grid.length; i++) {
+                setTimeout(() => {
+                    animate(col);
+                    gridUI[0][col].src = symbols[grid[grid.length - 1 - i][col]]}, i * 500
+                );
+            }
+        }
+
+        function animate(index) {
+            gridUI[2][index].src = gridUI[1][index].src;
+            gridUI[1][index].src = gridUI[0][index].src;
+            gridUI[0][index].src = symbols[getRandomInt(0, symbols.length)];
+        }
+
+        document.getElementById("spin").addEventListener("click", async () => {
+            const roll0 = setInterval(() => animate(0), getRandomInt(80, 120));
+            const roll1 = setInterval(() => animate(1), getRandomInt(80, 120));
+            const roll2 = setInterval(() => animate(2), getRandomInt(80, 120));
+            const roll3 = setInterval(() => animate(3), getRandomInt(80, 120));
+            const roll4 = setInterval(() => animate(4), getRandomInt(80, 120));
+            
+            const res = await fetch("/api/SlotMachine/play", { method: "POST" });
+            const data = await res.json();
+
+            setTimeout(() => {
+                clearInterval(roll0);
+                setCol(0, data.grid)
+            }, 1000 + getRandomInt(500, -500));
+
+            setTimeout(() => {
+                clearInterval(roll1);
+                setCol(1, data.grid)
+            }, 2000 + getRandomInt(500, -500));
+
+            setTimeout(() => {
+                clearInterval(roll2);
+                setCol(2, data.grid)
+            }, 3000 + getRandomInt(500, -500));
+
+            setTimeout(() => {
+                clearInterval(roll3);
+                setCol(3, data.grid)
+            }, 4000 + getRandomInt(500, -500));
+
+            setTimeout(() => {
+                clearInterval(roll4);
+                setCol(4, data.grid)
+            }, 5000);
+            
+            setTimeout(() => {
+                document.getElementById("result-message").textContent = data.message;
+                
+                // Check victory and show highlighted gif
+            }, 6000);
+        });
+    </script>
+}

@@ -1,0 +1,59 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.slot-machine {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+#result-message {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: gold;
+}
+
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.background-gif {
+    width: 40vw;
+    height: 40vw;
+}
+
+.content-overlay {
+    position: relative;
+    z-index: 1;
+    padding: 2rem;
+    color: white;
+}
+
+.slot-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slot-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 80px);
+    grid-template-rows: repeat(3, 80px);
+    gap: 10px;
+}
+
+img {
+    width: 100px;
+}
+
+.slot-symbol {
+    width: 80px;
+}

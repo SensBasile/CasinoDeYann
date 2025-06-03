@@ -53,6 +53,7 @@ public class AuthService
         {
             Username = username,
             Password = BCrypt.Net.BCrypt.HashPassword(password),
+            Money = 100,
             Role = "User"
         };
 

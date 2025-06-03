@@ -1,60 +1,136 @@
 using CasinoDeYann.Api.DataAccess.Interfaces;
 using CasinoDeYann.Api.Services.SlotMachine.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CasinoDeYann.Api.Services.SlotMachine;
 
-public class SlotMachineService
+public class SlotMachineService(IUsersRepository usersRepository)
 {
-    private readonly int w = 5;
-    private readonly int h = 5;
+    private const int W = 5;
+    private const int H = 5;
+    private const int SymbolsNumber = 9;
+    private const int MinAlign = 3;
+
+    private const int WildIndex = 7;
+
+    private readonly float[] _alignCoeff = [1.2f, 1.5f, 2f]; // 3 aligned, 4 aligned, 5 aligned
+    private readonly float _vCoeff = 2f;
+    private readonly float[] _mCoeff = [1.5f, 1.7f, 2f];
     
-    private readonly string[] _symbols = [
-        "/assets/SlotMachine/bell/bell.png",
-        "/assets/SlotMachine/cherry/cherry.png",
-        "/assets/SlotMachine/diamond/diamond.png",
-        "/assets/SlotMachine/heart/heart.png",
-        "/assets/SlotMachine/horseshoe/horseshoe.png",
-        "/assets/SlotMachine/seven/seven.png",
-        "/assets/SlotMachine/watermelon/watermelon.png",
-        "/assets/SlotMachine/wildcard/wildcard.png",
-        "/assets/SlotMachine/yann/yann.png",
+    private readonly float[] _symbolsCoeff = [
+        1f, // bell
+        1.1f, // cherry
+        1.2f, // diamond
+        1.3f, // hearth
+        1.4f, // horseshoe
+        1.7f, // seven
+        2f, // watermelon
+        8f, // wildcard
+        10f, // yann
     ];
-    
-    private readonly IUsersRepository _usersRepository;
+
     private readonly Random _random = new();
 
-
-    public SlotMachineService(IUsersRepository usersRepository)
+    public async Task<SlotMachineModel> Play(string userName, int bet)
     {
-        _usersRepository = usersRepository;
-    }
-    
-    public async Task<SlotMachineModel> Play(string userName)
-    {
+        var callingUser = usersRepository.GetOneByName(userName);
+        if (callingUser.Money < bet) throw new BadHttpRequestException("You don't have enough money");
+        callingUser = await usersRepository.AddMoney(callingUser.Username, -bet);
+        
         var grid = new List<int[]>();
         
-        for (int i = 0; i < h; i++)
+        for (int i = 0; i < H; i++)
         {
             var row = new List<int>();
-            for (int j = 0; j < w; j++)
+            for (int j = 0; j < W; j++)
             {
-                row.Add(_random.Next(_symbols.Length));
+                row.Add(_random.Next(SymbolsNumber));
             }
             grid.Add(row.ToArray());
         }
-
-        var callingUser = _usersRepository.GetOneByName(userName);
-        var gain = ComputeGain(grid.ToArray());
-        callingUser = await _usersRepository.AddMoney(callingUser.Username, gain);
+        
+        var patterns = Enumerable.Range(0, H).Select(_ => new bool[W]).ToArray();
+        var gain = ComputeGain(grid.ToArray(), bet, patterns);
+        
+        callingUser = await usersRepository.AddMoney(callingUser.Username, gain);
+        
         return new SlotMachineModel(
-            grid.ToArray(), 
+            grid.ToArray(),
+            patterns,
+            gain,
             callingUser.Money,
             gain > 0 ? "Bravo vous avez gagné !!!" : "Retentez votre chance"
             );
     }
 
-    private int ComputeGain(int[][] toArray)
+    private float CheckAlignRow(int[] row, bool[] patterns)
     {
-        return 100;
+        int rowSymbol = row[0];
+        int acc = 1;
+        for (int i = 1; i < W; i++)
+        {
+            if (row[i] != rowSymbol && row[i] != WildIndex)
+            {
+                if (rowSymbol != WildIndex) break;
+                rowSymbol = row[i];
+            }
+            acc++;
+        }
+
+        if (acc < MinAlign) return 0f;
+
+        for (int i = 0; i < acc; i++) patterns[i] = true;
+        return _alignCoeff[acc - MinAlign] * _symbolsCoeff[rowSymbol]; 
+    }
+
+    private float CheckAlignCol(int[][] grid, int col, bool[][] patterns)
+    {
+        int colSymbol = grid[0][col];
+        int acc = 1;
+        for (int i = 1; i < H; i++)
+        {
+            if (grid[i][col] != colSymbol && grid[i][col] != WildIndex)
+            {
+                if (colSymbol != WildIndex) break;
+                colSymbol = grid[i][col];
+            }
+            acc++;
+        }
+        
+        if (acc < MinAlign) return 0f;
+        
+        for (int i = 0; i < acc; i++) patterns[i][col] = true;
+        return _alignCoeff[acc - MinAlign] * _symbolsCoeff[grid[0][col]];
+    }
+
+    private float CheckAlignDiagUp(int[][] grid, int starting_row, bool[][] patterns)
+    {
+        return 0f; // TODO
+    }
+    
+    private float CheckAlignDiagDown(int[][] grid, int starting_row, bool[][] patterns)
+    {
+        return 0f; // TODO
+    }
+
+    private long ComputeGain(int[][] grid, long bet, bool[][] patterns)
+    {
+        long sum = 0;
+        for (int i = 0; i < H; i++)
+        {
+            sum += (long) Math.Floor(bet * CheckAlignRow(grid[i], patterns[i]));
+        }
+
+        for (int i = 0; i < W; i++)
+        {
+            sum += (long) Math.Floor(bet * CheckAlignCol(grid, i, patterns));
+        }
+
+        for (int i = 0; H - (i + 1) >= MinAlign; i++)
+        {
+            sum += (long) Math.Floor(bet * CheckAlignDiagDown(grid, i, patterns));
+            sum += (long) Math.Floor(bet * CheckAlignDiagUp(grid, H - 1 - i, patterns));
+        }
+        return sum;
     }
 }

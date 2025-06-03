@@ -2,18 +2,36 @@
 @model CasinoDeYann.Pages.GoldMine
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Mine d'or";
+    <link rel="stylesheet" href="~/css/GoldMine.css" asp-append-version="true"/>
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+<div class="goldmine-container">
+    <img
+        src="~/assets/GoldMine/background/background.webp"
+        alt="Gold Mine"
+        class="goldmine-gif"
+    />
+    <div class="nugget-wrapper" id="nugget-wrapper">
+        <img
+            src="~/assets/GoldMine/nugget/nugget.webp"
+            alt="Gold Nugget"
+            class="nugget"
+            id="nugget"
+        />
+    </div>
 </div>
-</body>
-</html>
+
+@section Scripts {
+    <script>
+        const nugget = document.getElementById("nugget");
+
+        nugget.addEventListener("click", () => {
+            nugget.classList.add("shake");
+
+            setTimeout(() => {
+                nugget.classList.remove("shake");
+            }, 300);
+        });
+    </script>
+}

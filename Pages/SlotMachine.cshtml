@@ -163,9 +163,6 @@ ViewData["Title"] = "Machine à sous";
             document.getElementById("55"),
         ]
     ];
-    
-    let patterns;
-    let grid;
 
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -191,32 +188,22 @@ ViewData["Title"] = "Machine à sous";
         for (let i = 0; i < grid.length; i++) {
             setTimeout(() => {
                 animate(col);
-                gridUI[0][col].src = symbols[grid[grid.length - 1 - i][col]]}, i * 500
-            );
+                gridUI[0][col].src = symbols[grid[grid.length - 1 - i][col]]
+            },i * 500);
         }
     }
 
     function animate(index) {
-        gridUI[4][index].src = gridUI[3][index].src;
-        gridUI[3][index].src = gridUI[2][index].src;
-        gridUI[2][index].src = gridUI[1][index].src;
-        gridUI[1][index].src = gridUI[0][index].src;
+        for (let i = 4; i > 0; i-- ) {
+            gridUI[i][index].src = gridUI[i - 1][index].src;
+        } 
         gridUI[0][index].src = symbols[getRandomInt(0, symbols.length)];
     }
     
-    function showPatterns() {
+    function showPatterns(grid, patterns) {
         for (let i = 0; i < patterns.length; i++) {
             for (let j = 0; j < patterns[i].length; j++) {
                 if (patterns[i][j]) gridUI[i][j].src = symbolsHighlighted[grid[i][j]];
-            }
-        }
-    }
-    
-    function resetPatterns() {
-        if (!patterns || !grid) return;
-        for (let i = 0; i < patterns.length; i++) {
-            for (let j = 0; j < patterns[i].length; j++) {
-                if (patterns[i][j]) gridUI[i][j].src = symbols[grid[i][j]];
             }
         }
     }
@@ -224,7 +211,6 @@ ViewData["Title"] = "Machine à sous";
     document.getElementById("spin").addEventListener("click", async () => {
         if (running) return;
         running = true;
-        resetPatterns();
         
         // TODO prevent player of playing if not enough money
 
@@ -236,38 +222,36 @@ ViewData["Title"] = "Machine à sous";
 
         const res = await fetch(`/api/SlotMachine/play/${bet}`, { method: "POST" });
         const data = await res.json();
-        grid = data.grid;
-        patterns = data.patterns;
 
         console.log(data);
 
         setTimeout(() => {
             clearInterval(roll0);
-            setCol(0, grid)
+            setCol(0, data.grid);
         }, 1000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll1);
-            setCol(1, grid)
+            setCol(1, data.grid);
         }, 2000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll2);
-            setCol(2, grid)
+            setCol(2, data.grid);
         }, 3000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll3);
-            setCol(3, grid)
+            setCol(3, data.grid);
         }, 4000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll4);
-            setCol(4, grid)
+            setCol(4, data.grid);
         }, 5000);
 
         setTimeout(() => {
-            showPatterns();
+            showPatterns(data.grid, data.patterns);
             document.getElementById("result-message").textContent = data.message;
 
             const userMoneyDisplay = document.getElementById("user-money");
@@ -290,7 +274,7 @@ ViewData["Title"] = "Machine à sous";
                 }, 3000);
             }
             running = false;
-        }, 7000);
+        }, 7550);
     });
 </script>
 }

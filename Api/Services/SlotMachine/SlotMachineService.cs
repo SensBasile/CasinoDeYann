@@ -1,6 +1,5 @@
 using CasinoDeYann.Api.DataAccess.Interfaces;
 using CasinoDeYann.Api.Services.SlotMachine.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CasinoDeYann.Api.Services.SlotMachine;
 
@@ -103,14 +102,232 @@ public class SlotMachineService(IUsersRepository usersRepository)
         return _alignCoeff[acc - MinAlign] * _symbolsCoeff[grid[0][col]];
     }
 
-    private float CheckAlignDiagUp(int[][] grid, int starting_row, bool[][] patterns)
+    // ----- DIAGONALE “DOWN” (↘) à partir de (starting_row, 0) -----
+    private float CheckAlignDiagDown(int[][] grid, int startingRow, bool[][] patterns)
     {
-        return 0f; // TODO
+        int row = startingRow;
+        int col = 0;
+        int diagSymbol = grid[row][col];
+        int acc = 1;
+
+        // On parcourt (r,c) = (starting_row + k, 0 + k) tant que c < W et r < H
+        for (int k = 1; k < W; k++)
+        {
+            int r = startingRow + k;
+            int c = k;
+            if (r >= H) break;
+
+            if (grid[r][c] != diagSymbol && grid[r][c] != WildIndex)
+            {
+                if (diagSymbol != WildIndex) break;
+                diagSymbol = grid[r][c];
+            }
+            acc++;
+        }
+
+        if (acc < MinAlign) return 0f;
+
+        // On marque les acc premières cases de la diagonale
+        for (int k = 0; k < acc; k++)
+        {
+            int r = startingRow + k;
+            int c = k;
+            patterns[r][c] = true;
+        }
+        return _alignCoeff[acc - MinAlign] * _symbolsCoeff[diagSymbol];
     }
-    
-    private float CheckAlignDiagDown(int[][] grid, int starting_row, bool[][] patterns)
+
+    // ----- DIAGONALE “UP” (↗) à partir de (starting_row, 0) -----
+    private float CheckAlignDiagUp(int[][] grid, int startingRow, bool[][] patterns)
     {
-        return 0f; // TODO
+        int row = startingRow;
+        int col = 0;
+        int diagSymbol = grid[row][col];
+        int acc = 1;
+
+        // On parcourt (r,c) = (starting_row - k, 0 + k) tant que c < W et r >= 0
+        for (int k = 1; k < W; k++)
+        {
+            int r = startingRow - k;
+            int c = k;
+            if (r < 0) break;
+
+            if (grid[r][c] != diagSymbol && grid[r][c] != WildIndex)
+            {
+                if (diagSymbol != WildIndex) break;
+                diagSymbol = grid[r][c];
+            }
+            acc++;
+        }
+
+        if (acc < MinAlign) return 0f;
+
+        // On marque les acc premières cases de la diagonale “vers le haut”
+        for (int k = 0; k < acc; k++)
+        {
+            int r = startingRow - k;
+            int c = k;
+            patterns[r][c] = true;
+        }
+        return _alignCoeff[acc - MinAlign] * _symbolsCoeff[diagSymbol];
+    }
+
+    // ----- FORME “V” ORIENTÉE VERS LE BAS (VPOINT ↓) -----
+    // Parcourt les 5 colonnes avec les lignes : starting_row, starting_row+1, starting_row+2, starting_row+1, starting_row
+    private float CheckVDown(int[][] grid, int startingRow, bool[][] patterns)
+    {
+        // on ne peut tracer une branche V de taille “3” vers le bas que si starting_row + 2 < H
+        if (startingRow + (MinAlign - 1) > H - 1) 
+            return 0f;
+        
+        // Définition du chemin : pour col = 0..4, row = starting_row + (col <= 2 ? col : 4 - col)
+        int row0 = startingRow;
+        int colSymbol = grid[row0][0];
+        int acc = 1;
+
+        for (int c = 1; c < W; c++)
+        {
+            int delta = c <= 2 ? c : (W - 1 - c);
+            int r = startingRow + delta;
+            if (r < 0 || r >= H) break; // en principe non nécessaire grâce à la condition ci-dessus
+
+            if (grid[r][c] != colSymbol && grid[r][c] != WildIndex)
+            {
+                if (colSymbol != WildIndex) break;
+                colSymbol = grid[r][c];
+            }
+            acc++;
+        }
+
+        if (acc < MinAlign) return 0f;
+
+        // On marque les acc premières positions du “V” depuis l’extrémité gauche
+        for (int c = 0; c < acc; c++)
+        {
+            int delta = c <= 2 ? c : (W - 1 - c);
+            int r = startingRow + delta;
+            patterns[r][c] = true;
+        }
+        return _vCoeff * _symbolsCoeff[colSymbol];
+    }
+
+    // ----- FORME “V” ORIENTÉE VERS LE HAUT (VPOINT ↑) -----
+    // Parcourt les 5 colonnes avec les lignes : starting_row, starting_row-1, starting_row-2, starting_row-1, starting_row
+    private float CheckVUp(int[][] grid, int startingRow, bool[][] patterns)
+    {
+        // on ne peut tracer une branche V vers le haut que si starting_row - (MinAlign - 1) >= 0
+        if (startingRow - (MinAlign - 1) < 0)
+            return 0f;
+        
+        int row0 = startingRow;
+        int colSymbol = grid[row0][0];
+        int acc = 1;
+
+        for (int c = 1; c < W; c++)
+        {
+            int delta = c <= 2 ? c : (W - 1 - c);
+            int r = startingRow - delta;
+            if (r < 0 || r >= H) break;
+
+            if (grid[r][c] != colSymbol && grid[r][c] != WildIndex)
+            {
+                if (colSymbol != WildIndex) break;
+                colSymbol = grid[r][c];
+            }
+            acc++;
+        }
+
+        if (acc < MinAlign) return 0f;
+
+        for (int c = 0; c < acc; c++)
+        {
+            int delta = c <= 2 ? c : (W - 1 - c);
+            int r = startingRow - delta;
+            patterns[r][c] = true;
+        }
+        return _vCoeff * _symbolsCoeff[colSymbol];
+    }
+
+    // ----- FORME “M” ORIENTÉE VERS LE HAUT (“pics” en haut) -----
+    // Parcourt les 5 colonnes avec les lignes : [r, r+2, r, r+2, r], si r+2 < H
+    private float CheckMUp(int[][] grid, int startingRow, bool[][] patterns)
+    {
+        // Le “creux” de l’M se trouve à starting_row + 2, il faut starting_row + 2 < H
+        if (startingRow + 2 >= H) 
+            return 0f;
+
+        int row0 = startingRow;
+        int colSymbol = grid[row0][0];
+        int acc = 1;
+
+        // Pour chaque colonne c = 1..4, on détermine r selon c % 2
+        for (int c = 1; c < W; c++)
+        {
+            int r = (c % 2 == 1) 
+                    ? (startingRow + 2)   // pour les colonnes impaires : le “creux”
+                    : startingRow;        // pour les colonnes paires : la “crête”
+            if (r < 0 || r >= H) break;
+
+            if (grid[r][c] != colSymbol && grid[r][c] != WildIndex)
+            {
+                if (colSymbol != WildIndex) break;
+                colSymbol = grid[r][c];
+            }
+            acc++;
+        }
+
+        if (acc < MinAlign) return 0f;
+
+        // On marque les acc premières positions de la forme MUp
+        for (int c = 0; c < acc; c++)
+        {
+            int r = (c % 2 == 1) 
+                    ? (startingRow + 2) 
+                    : startingRow;
+            patterns[r][c] = true;
+        }
+
+        // acc vaut 3, 4 ou 5 → on indexe mCoeff[acc - MinAlign]
+        return _mCoeff[acc - MinAlign] * _symbolsCoeff[colSymbol];
+    }
+
+    // ----- FORME “M” ORIENTÉE VERS LE BAS (inversé de MUp : “pics” en bas) -----
+    // Parcourt les 5 colonnes avec les lignes : [r, r-2, r, r-2, r], si r-2 >= 0
+    private float CheckMDown(int[][] grid, int startingRow, bool[][] patterns)
+    {
+        // Le “sommet” de l’M inversé se trouve à starting_row - 2
+        if (startingRow - 2 < 0) 
+            return 0f;
+
+        int row0 = startingRow;
+        int colSymbol = grid[row0][0];
+        int acc = 1;
+
+        for (int c = 1; c < W; c++)
+        {
+            int r = (c % 2 == 1) 
+                    ? (startingRow - 2)  // pour les colonnes impaires : le “sommet” inversé
+                    : startingRow;       // pour les colonnes paires : la “base”
+            if (r < 0 || r >= H) break;
+
+            if (grid[r][c] != colSymbol && grid[r][c] != WildIndex)
+            {
+                if (colSymbol != WildIndex) break;
+                colSymbol = grid[r][c];
+            }
+            acc++;
+        }
+
+        if (acc < MinAlign) return 0f;
+
+        for (int c = 0; c < acc; c++)
+        {
+            int r = (c % 2 == 1) 
+                    ? (startingRow - 2) 
+                    : startingRow;
+            patterns[r][c] = true;
+        }
+        return _mCoeff[acc - MinAlign] * _symbolsCoeff[colSymbol];
     }
 
     private long ComputeGain(int[][] grid, long bet, bool[][] patterns)
@@ -128,8 +345,16 @@ public class SlotMachineService(IUsersRepository usersRepository)
 
         for (int i = 0; H - (i + 1) >= MinAlign; i++)
         {
+            sum += (long) Math.Floor(bet * CheckVDown(grid, i, patterns));
             sum += (long) Math.Floor(bet * CheckAlignDiagDown(grid, i, patterns));
+            sum += (long) Math.Floor(bet * CheckVUp(grid, i, patterns));
             sum += (long) Math.Floor(bet * CheckAlignDiagUp(grid, H - 1 - i, patterns));
+        }
+
+        for (int i = 0; i + 1 < H; i++)
+        {
+            sum += (long) Math.Floor(bet * CheckMUp(grid, i, patterns));
+            sum += (long) Math.Floor(bet * CheckMDown(grid, H - 1 - i, patterns));
         }
         return sum;
     }

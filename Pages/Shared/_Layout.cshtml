@@ -42,9 +42,12 @@
                     </li>
                     @if (currentUser != null)
                     {
-                        <div class="navbar-text text-end">
-                            Bienvenue, @currentUser.Username | 💰 <span id="user-money">@currentUser.Money</span> €
+                        <div class="navbar-text text-end balance">
+                            <span id="user-money">@currentUser.Money</span> <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp"/>
                         </div>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/UserProfile">@currentUser.Username</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/Account/Logout">Déconnexion</a>
                         </li>

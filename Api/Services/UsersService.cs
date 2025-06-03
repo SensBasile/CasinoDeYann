@@ -3,19 +3,22 @@ using CasinoDeYann.Api.DataAccess.Interfaces;
 
 namespace CasinoDeYann.Api.Services;
 
-public class UsersService
+public class UsersService(IUsersRepository usersRepository)
 {
-    private readonly IUsersRepository _usersRepository;
-
-    public UsersService(IUsersRepository usersRepository)
-    {
-        _usersRepository = usersRepository;
-    }
-    
     public async Task<IEnumerable<User>> GetLeaderboard()
     {
-        return (await _usersRepository.Get())
+        return (await usersRepository.Get())
             .OrderByDescending(u => u.Money)
             .Take(10);
+    }
+
+    public async Task<UserProfileModel> GetUserProfileAsync(string userName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task DeleteAccountAsync(string userName)
+    {
+        throw new NotImplementedException();
     }
 }

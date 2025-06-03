@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using CasinoDeYann.Api.DataAccess.Dbo;
+using CasinoDeYann.Api.Services;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CasinoDeYann.Pages;
 
-public class SlotMachine : PageModel
+public class SlotMachine(UserContextService userContextService) : PageModel
 {
-    public void OnGet()
+    public required User CurrentUser;
+    
+    public async Task OnGetAsync()
     {
-        
+        CurrentUser = await userContextService.GetCurrentUserAsync();
     }
 }

@@ -1,0 +1,193 @@
+﻿@page
+@model CasinoDeYann.Pages.UserProfile
+@using System.Text.Json
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Profil utilisateur</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/css/Profile.css"/>
+</head>
+<body>
+    <h1>Profil de @User.Identity.Name</h1>
+
+    <!-- 1. Niveau du compte (badge) et solde -->
+    <div class="section">
+        <h2>Informations du compte</h2>
+        <p>
+            @* On choisit la classe CSS en fonction de Model.Level *@
+            @if (Model.Level == 1)
+            {
+                <span class="badge-level-1">Niveau 1</span>
+            }
+            else if (Model.Level == 2)
+            {
+                <span class="badge-level-2">Niveau 2</span>
+            }
+            else if (Model.Level == 3)
+            {
+                <span class="badge-level-3">Niveau 3</span>
+            }
+            else
+            {
+                <span class="badge-level-1">Niveau @Model.Level</span>
+            }
+            &nbsp;&nbsp;
+            Solde : <strong>@Model.Balance.ToString("N2") €</strong>
+        </p>
+    </div>
+
+    <!-- 2. Historique des parties -->
+    <div class="section">
+        <h2>Historique des parties</h2>
+        @if (Model.History?.Count > 0)
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Jeu</th>
+                        <th>Mise (€)</th>
+                        <th>Gain (€)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in Model.History)
+                    {
+                        <tr>
+                            <td>@entry.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@entry.GameName</td>
+                            <td>@entry.Bet.ToString("N2")</td>
+                            <td>@entry.Gain.ToString("N2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Aucune partie jouée pour l'instant.</p>
+        }
+    </div>
+
+    <!-- 3. Statistiques -->
+    <div class="section">
+        <h2>Statistiques générales</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Gain maximal</h3>
+                <p><strong>@Model.MaxWin.ToString("N2") €</strong></p>
+            </div>
+            <div class="stat-card">
+                <h3>Montant total parié</h3>
+                <p><strong>@Model.TotalPlayed.ToString("N2") €</strong></p>
+            </div>
+            <div class="stat-card">
+                <h3>Montant total gagné</h3>
+                <p><strong>@Model.TotalWon.ToString("N2") €</strong></p>
+            </div>
+            <div class="stat-card">
+                <h3>Montant total perdu</h3>
+                <p><strong>@Model.TotalLost.ToString("N2") €</strong></p>
+            </div>
+            <div class="stat-card">
+                <h3>Plus grande série de victoires</h3>
+                <p><strong>@Model.MaxWinStreak</strong> parties</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Graphiques -->
+    <div class="section">
+        <h2>Répartition des parties par jeu</h2>
+        <canvas id="pieChart" width="400" height="400"></canvas>
+    </div>
+
+    <div class="section">
+        <h2>Parties jouées par semaine</h2>
+        <canvas id="barChart" width="600" height="300"></canvas>
+    </div>
+
+    <!-- 5. Boutons “Modifier le mot de passe” & “Supprimer le compte” -->
+    <div class="section">
+        <a asp-page="/ChangePassword" class="btn btn-primary">Modifier le mot de passe</a>
+
+        <form method="post" asp-page-handler="DeleteAccount" style="display:inline;">
+            <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte ?');">
+                Supprimer le compte
+            </button>
+        </form>
+    </div>
+
+    <!-- ------------------ SCRIPTS POUR LES GRAPHIQUES ------------------ -->
+    <script>
+        // Données pour le camembert (pie chart) :
+        const pieLabels = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerGame.Keys));
+        const pieValues = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerGame.Values));
+
+        const ctxPie = document.getElementById('pieChart').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: pieLabels,
+                datasets: [{
+                    data: pieValues,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)'
+                        // ... ajoutez autant de couleurs que de labels ...
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Données pour le diagramme en bâtons (bar chart) :
+        const barLabels = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerWeek.Keys));
+        const barValues = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerWeek.Values));
+
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: barLabels,
+                datasets: [{
+                    label: 'Parties jouées',
+                    data: barValues,
+                    // Par défaut Chart.js choisira ses couleurs
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

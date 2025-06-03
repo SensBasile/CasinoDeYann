@@ -71,3 +71,13 @@ footer a {
 main.game-interface {
   min-height: 70vh;
 }
+
+.balance {
+  display: flex;
+}
+
+.mini-coin {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}

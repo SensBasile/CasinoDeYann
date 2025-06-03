@@ -102,7 +102,6 @@ public class SlotMachineService(IUsersRepository usersRepository)
         return _alignCoeff[acc - MinAlign] * _symbolsCoeff[grid[0][col]];
     }
 
-    // ----- DIAGONALE “DOWN” (↘) à partir de (starting_row, 0) -----
     private float CheckAlignDiagDown(int[][] grid, int startingRow, bool[][] patterns)
     {
         int row = startingRow;
@@ -137,7 +136,6 @@ public class SlotMachineService(IUsersRepository usersRepository)
         return _alignCoeff[acc - MinAlign] * _symbolsCoeff[diagSymbol];
     }
 
-    // ----- DIAGONALE “UP” (↗) à partir de (starting_row, 0) -----
     private float CheckAlignDiagUp(int[][] grid, int startingRow, bool[][] patterns)
     {
         int row = startingRow;
@@ -172,8 +170,6 @@ public class SlotMachineService(IUsersRepository usersRepository)
         return _alignCoeff[acc - MinAlign] * _symbolsCoeff[diagSymbol];
     }
 
-    // ----- FORME “V” ORIENTÉE VERS LE BAS (VPOINT ↓) -----
-    // Parcourt les 5 colonnes avec les lignes : starting_row, starting_row+1, starting_row+2, starting_row+1, starting_row
     private float CheckVDown(int[][] grid, int startingRow, bool[][] patterns)
     {
         // on ne peut tracer une branche V de taille “3” vers le bas que si starting_row + 2 < H
@@ -211,8 +207,6 @@ public class SlotMachineService(IUsersRepository usersRepository)
         return _vCoeff * _symbolsCoeff[colSymbol];
     }
 
-    // ----- FORME “V” ORIENTÉE VERS LE HAUT (VPOINT ↑) -----
-    // Parcourt les 5 colonnes avec les lignes : starting_row, starting_row-1, starting_row-2, starting_row-1, starting_row
     private float CheckVUp(int[][] grid, int startingRow, bool[][] patterns)
     {
         // on ne peut tracer une branche V vers le haut que si starting_row - (MinAlign - 1) >= 0
@@ -248,8 +242,6 @@ public class SlotMachineService(IUsersRepository usersRepository)
         return _vCoeff * _symbolsCoeff[colSymbol];
     }
 
-    // ----- FORME “M” ORIENTÉE VERS LE HAUT (“pics” en haut) -----
-    // Parcourt les 5 colonnes avec les lignes : [r, r+2, r, r+2, r], si r+2 < H
     private float CheckMUp(int[][] grid, int startingRow, bool[][] patterns)
     {
         // Le “creux” de l’M se trouve à starting_row + 2, il faut starting_row + 2 < H
@@ -291,8 +283,6 @@ public class SlotMachineService(IUsersRepository usersRepository)
         return _mCoeff[acc - MinAlign] * _symbolsCoeff[colSymbol];
     }
 
-    // ----- FORME “M” ORIENTÉE VERS LE BAS (inversé de MUp : “pics” en bas) -----
-    // Parcourt les 5 colonnes avec les lignes : [r, r-2, r, r-2, r], si r-2 >= 0
     private float CheckMDown(int[][] grid, int startingRow, bool[][] patterns)
     {
         // Le “sommet” de l’M inversé se trouve à starting_row - 2

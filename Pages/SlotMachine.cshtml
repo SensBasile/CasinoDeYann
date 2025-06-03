@@ -207,22 +207,10 @@ ViewData["Title"] = "Machine à sous";
             }
         }
     }
-    
-    /*
-    function resetPatterns() {
-        if (!patterns || !gridResult) return;
-        for (let i = 0; i < patterns.length; i++) {
-            for (let j = 0; j < patterns[i].length; j++) {
-                if (patterns[i][j]) gridUI[i][j].src = symbols[gridResult[i][j]];
-            }
-        }
-    }
-     */
 
     document.getElementById("spin").addEventListener("click", async () => {
         if (running) return;
         running = true;
-        // resetPatterns();
         
         // TODO prevent player of playing if not enough money
 

@@ -42,8 +42,28 @@
 }
 
 #spin {
-    display: block;
-    margin: 5vw auto 0;
+    position: absolute;
+    bottom: 12.5%;
+    left: 54%;
+    transform: translateX(-50%);
+    width: 18%;
+    height: 20.5%;
+    background-image: url('../assets/SlotMachine/ui/go_button.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#spin:hover {
+    background-image: url('../assets/SlotMachine/ui/go_button_hover.png');
+}
+
+#spin:active {
+    background-image: url('../assets/SlotMachine/ui/go_button_off.png');
 }
 
 #result-message {
@@ -68,5 +88,10 @@
     }
     .slot-symbol {
         width: 10%;
+    }
+    
+    #spin {
+        width: 60px;
+        bottom: 6%;
     }
 }

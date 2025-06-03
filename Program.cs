@@ -32,6 +32,7 @@ builder.Services.AddScoped<UsersService>();
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<SlotMachineService>();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

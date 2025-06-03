@@ -26,6 +26,8 @@ builder.Services.AddAutoMapper(typeof(AutomapperProfiles));
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<UserContextService>();
+
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
 var app = builder.Build();

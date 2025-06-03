@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using CasinoDeYann.BusinessLogic
+@inject CasinoDeYann.BusinessLogic.UserContextService UserContextService
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -10,6 +12,10 @@
 </head>
 <body>
 <header>
+    @{
+        var currentUser = await UserContextService.GetCurrentUserAsync();
+    }
+
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
             <a class="navbar-brand" asp-area="" asp-page="/Index">Le Casino de Yann</a>
@@ -40,6 +46,13 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="Account/Signup">S'enregistrer</a>
                     </li>
+                    @if (currentUser != null)
+                    {
+                        <div class="navbar-text text-end">
+                            Bienvenue, @currentUser.Username | 💰 <span id="user-money">@currentUser.Money</span> €
+                        </div>
+                    }
+
                 </ul>
             </div>
         </div>

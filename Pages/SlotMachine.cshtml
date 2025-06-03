@@ -148,7 +148,12 @@
             setTimeout(() => {
                 document.getElementById("result-message").textContent = data.message;
                 
-                // Check victory and show highlighted gif
+                const moneyDisplay = document.getElementById("user-money");
+                console.log(moneyDisplay);
+                console.log(data.money);
+                if (moneyDisplay && data.money !== undefined) {
+                    moneyDisplay.textContent = data.money;
+                }
             }, 6000);
         });
     </script>

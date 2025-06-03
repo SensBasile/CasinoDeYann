@@ -27,7 +27,7 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
         }
     }
 
-    public async Task<User> AddMoney(string name, int amount)
+    public async Task<User> AddMoney(string name, long amount)
     {
         var user = GetOneByName(name);
         user.Money += amount;

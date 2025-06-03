@@ -32,7 +32,7 @@ public class SlotMachineController : Controller
     private readonly Random _random = new();
 
     [HttpPost("play")]
-    public IActionResult Play()
+    public async Task<IActionResult> Play()
     {
         var grid = new List<int[]>();
 
@@ -56,13 +56,14 @@ public class SlotMachineController : Controller
 
         var gain = ComputeGain(grid.ToArray());
         
-        usersRepository.AddMoney(callingUser.Username, gain);
+        callingUser = await usersRepository.AddMoney(callingUser.Username, gain);
         
 
         var response = new
         {
             grid,
             message = gain > 0 ? "Bravo vous avez gagné !!!" : "Retentez votre chance",
+            money = callingUser.Money,
         };
 
         return Ok(response);

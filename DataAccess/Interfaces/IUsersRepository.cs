@@ -6,5 +6,5 @@ namespace CasinoDeYann.DataAccess.Interfaces;
 public interface IUsersRepository : IRepository<TUser, User>
 {
     public User GetOneByName(string name);
-    public Task<User> AddMoney(string name, int amount);
+    public Task<User> AddMoney(string name, long amount);
 }

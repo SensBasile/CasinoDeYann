@@ -26,11 +26,19 @@
     <script>
         const nugget = document.getElementById("nugget");
 
-        nugget.addEventListener("click", () => {
+        nugget.addEventListener("click", async () => {
             nugget.classList.add("shake");
-
+            const res = await fetch("/api/GoldMine/mine", {method: "POST"});
             setTimeout(() => {
                 nugget.classList.remove("shake");
+                document.getElementById("result-message").textContent = data.message;
+
+                const moneyDisplay = document.getElementById("user-money");
+                console.log(moneyDisplay);
+                console.log(data.money);
+                if (moneyDisplay && data.money !== undefined) {
+                    moneyDisplay.textContent = data.money;
+                }
             }, 300);
         });
     </script>

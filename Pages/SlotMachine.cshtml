@@ -151,8 +151,11 @@
             const roll3 = setInterval(() => animate(3), getRandomInt(80, 120));
             const roll4 = setInterval(() => animate(4), getRandomInt(80, 120));
             
-            const res = await fetch("/api/SlotMachine/play", { method: "POST" });
+            //LE 0 EST UN PLACEHOLDER POUR LE FUTUR MONTANT DU BET
+            const res = await fetch("/api/SlotMachine/play/0", { method: "POST" });
             const data = await res.json();
+            
+            console.log(data);
 
             setTimeout(() => {
                 clearInterval(roll0);

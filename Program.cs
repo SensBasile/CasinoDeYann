@@ -2,6 +2,7 @@ using CasinoDeYann.BusinessLogic;
 using CasinoDeYann.DataAccess;
 using CasinoDeYann.DataAccess.EfModels;
 using CasinoDeYann.DataAccess.Interfaces;
+using CasinoDeYann.Services.SlotMachine;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,7 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UserContextService>();
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<SlotMachineService>();
 
 var app = builder.Build();
 

@@ -16,6 +16,11 @@ public class SlotMachineController(SlotMachineService slotMachineService) : Cont
             return Unauthorized();
         }
 
+        if (bet <= 0 || bet > 1000)
+        {
+            return BadRequest();
+        }
+
         SlotMachineModel res = await slotMachineService.Play(User.Identity.Name, bet);
         return Ok(res.ToResponse());
     }

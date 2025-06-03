@@ -1,4 +1,6 @@
-﻿.machine-container {
+﻿/* === Your original CSS rules stay exactly the same === */
+
+.machine-container {
     position: relative;
     display: block;
     width: 50vw;
@@ -18,7 +20,7 @@
     top:    30%;
     width:  100%;
     height: 60%;
-    
+
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -29,7 +31,7 @@
 .slot-machine .row {
     display: flex;
     justify-content: center;
-    
+
     column-gap: 7%;
     width: 100%;
     margin: 0;
@@ -72,3 +74,68 @@
     font-weight: bold;
 }
 
+/* === NEW: Bet‐Amount Display and Plus/Minus Buttons === */
+
+#bet-amount {
+    position: absolute;
+    bottom: 23.5%;
+    left: 74.5%;
+    transform: translateX(-50%);
+    font-family: Consolas;
+    font-size: 1.1vw;
+    color: #ff0000; /* Vous pouvez changer selon votre design */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    z-index: 10;
+}
+
+#decrease-bet {
+    position: absolute;
+    bottom: 0%;
+    right: 23%;
+    transform: translateX(-50%);
+    width: 8%;
+    height: 20.5%;
+    background-image: url('../assets/SlotMachine/ui/minus_button.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+}
+
+#decrease-bet:hover {
+    background-image: url('../assets/SlotMachine/ui/minus_button_hover.png');
+}
+
+#decrease-bet:active {
+    background-image: url('../assets/SlotMachine/ui/minus_button_pressed.png');
+}
+
+#increase-bet {
+    position: absolute;
+    bottom: 0%;
+    right: 11.5%;
+    transform: translateX(-50%);
+    width: 8%;
+    height: 20.5%;
+    background-image: url('../assets/SlotMachine/ui/plus_button.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+}
+
+#increase-bet:hover {
+    background-image: url('../assets/SlotMachine/ui/plus_button_hover.png');
+}
+
+#increase-bet:active {
+    background-image: url('../assets/SlotMachine/ui/plus_button_pressed.png');
+}

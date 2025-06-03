@@ -26,9 +26,14 @@
     <script>
         const nugget = document.getElementById("nugget");
 
-        nugget.addEventListener("click", () => {
+        nugget.addEventListener("click", async () => {
             nugget.classList.add("shake");
+            const res = await fetch("/api/GoldMine/mine", {method: "POST"});
 
+            const moneyDisplay = document.getElementById("user-money");
+            moneyDisplay.textContent = String(parseInt(moneyDisplay.textContent) + 1);
+
+            
             setTimeout(() => {
                 nugget.classList.remove("shake");
             }, 300);

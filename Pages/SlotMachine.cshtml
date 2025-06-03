@@ -6,10 +6,13 @@
     <link rel="stylesheet" href="~/css/SlotMachine.css" asp-append-version="true"/>
 }
 
-<div class="background-container">
-    <img src="~/assets/SlotMachine/background/slot.gif" alt="Background" class="background-gif" />
-</div>
-
+<div class="machine-container">
+    <!-- slot.gif is now the "machine" graphic itself -->
+    <img
+        src="~/assets/SlotMachine/background/slot.gif"
+        alt="Slotachine"
+        class="machine-gif"
+    />
 <div class="slot-machine">
     <div id="row1" class="row">
         <img id="11" class="slot-symbol" src="assets/SlotMachine/bell/bell.png" alt=""/>
@@ -32,8 +35,22 @@
         <img id="34" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
         <img id="35" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
     </div>
+    <div id="row4" class="row">
+        <img id="41" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="42" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="43" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="44" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="45" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+    </div>
+    <div id="row5" class="row">
+        <img id="51" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="52" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="53" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="54" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+        <img id="55" class="slot-symbol" src="~/assets/SlotMachine/diamond/diamond.png" alt=""/>
+    </div>
 </div>
-
+</div>
 <button id="spin">🎲 Lancer</button>
 <div id="result-message"></div>
 
@@ -72,6 +89,20 @@
                 document.getElementById("33"),
                 document.getElementById("34"),
                 document.getElementById("35"),
+            ],
+            [
+                document.getElementById("41"),
+                document.getElementById("42"),
+                document.getElementById("43"),
+                document.getElementById("44"),
+                document.getElementById("45"),
+            ],
+            [
+                document.getElementById("51"),
+                document.getElementById("52"),
+                document.getElementById("53"),
+                document.getElementById("54"),
+                document.getElementById("55"),
             ]
         ];
         
@@ -82,7 +113,7 @@
         }
 
         function initializeGrid() {
-            for (let row = 1; row <= 3; row++) {
+            for (let row = 1; row <= 5; row++) {
                 for (let col = 1; col <= 5; col++) {
                     const id = `${row}${col}`;
                     const img = document.getElementById(id);
@@ -105,6 +136,8 @@
         }
 
         function animate(index) {
+            gridUI[4][index].src = gridUI[3][index].src;
+            gridUI[3][index].src = gridUI[2][index].src;
             gridUI[2][index].src = gridUI[1][index].src;
             gridUI[1][index].src = gridUI[0][index].src;
             gridUI[0][index].src = symbols[getRandomInt(0, symbols.length)];

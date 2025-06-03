@@ -57,6 +57,7 @@
 
 @section Scripts {
     <script>
+        let running = false;
         const symbols = [
             "/assets/SlotMachine/bell/bell.png",
             "/assets/SlotMachine/cherry/cherry.png",
@@ -145,6 +146,9 @@
         }
 
         document.getElementById("spin").addEventListener("click", async () => {
+            if (running) return;
+            running = true;
+            
             const roll0 = setInterval(() => animate(0), getRandomInt(80, 120));
             const roll1 = setInterval(() => animate(1), getRandomInt(80, 120));
             const roll2 = setInterval(() => animate(2), getRandomInt(80, 120));
@@ -191,6 +195,8 @@
                 if (moneyDisplay && data.money !== undefined) {
                     moneyDisplay.textContent = data.money;
                 }
+                
+                running = false;
             }, 6000);
         });
     </script>

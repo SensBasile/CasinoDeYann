@@ -1,7 +1,8 @@
 using CasinoDeYann.Api.DataAccess.Dbo;
-using CasinoDeYann.Api.DataAccess.Interfaces;
 using CasinoDeYann.Api.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace CasinoDeYann.Pages;
 
 public class IndexModel : PageModel
 {

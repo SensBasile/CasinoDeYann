@@ -2,6 +2,7 @@ using CasinoDeYann.Api.DataAccess;
 using CasinoDeYann.Api.DataAccess.EFModels;
 using CasinoDeYann.Api.DataAccess.Interfaces;
 using CasinoDeYann.Api.Services;
+using CasinoDeYann.Api.Services.GoldMineService;
 using CasinoDeYann.Api.Services.SlotMachine;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,9 @@ builder.Services.AddScoped<UsersService>();
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<SlotMachineService>();
+builder.Services.AddScoped<GoldMineService>();
 builder.Services.AddHttpClient();
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 

@@ -1,8 +1,8 @@
-using CasinoDeYann.BusinessLogic;
-using CasinoDeYann.DataAccess;
-using CasinoDeYann.DataAccess.EfModels;
-using CasinoDeYann.DataAccess.Interfaces;
-using CasinoDeYann.Services.SlotMachine;
+using CasinoDeYann.Api.DataAccess;
+using CasinoDeYann.Api.DataAccess.EFModels;
+using CasinoDeYann.Api.DataAccess.Interfaces;
+using CasinoDeYann.Api.Services;
+using CasinoDeYann.Api.Services.SlotMachine;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 

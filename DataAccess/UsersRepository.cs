@@ -11,7 +11,7 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
     public UsersRepository(CasinoDbContext context, ILogger<UsersRepository> logger, IMapper mapper) : base(context, logger, mapper)
     { }
 
-    public async Task<User> getOneByName(string name)
+    public User GetOneByName(string name)
     {
         try
         { 
@@ -25,5 +25,12 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
             _logger.LogError("error on db", ex);
             return null;
         }
+    }
+
+    public async Task<User> AddMoney(string name, int amount)
+    {
+        var user = GetOneByName(name);
+        user.Money += amount;
+        return await Update(user);
     }
 }

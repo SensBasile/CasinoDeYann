@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CasinoDeYann.DataAccess.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CasinoDeYann.Controllers;
 
@@ -18,6 +19,13 @@ public class SlotMachineController : Controller
     "/assets/SlotMachine/yann/yann.png",
     ];
     
+    private readonly IUsersRepository usersRepository;
+    
+    public SlotMachineController(IUsersRepository usersRepository)
+    {
+        this.usersRepository = usersRepository;
+    }
+    
     private readonly Random _random = new();
 
     [HttpPost("play")]
@@ -25,6 +33,13 @@ public class SlotMachineController : Controller
     {
         var grid = new List<int[]>();
 
+        if (User.Identity == null || User.Identity.Name == null)
+        {
+            return Unauthorized();
+        }
+
+        var callingUser = usersRepository.GetOneByName(User.Identity.Name);
+        
         for (int i = 0; i < 3; i++)
         {
             var row = new List<int>();
@@ -36,6 +51,9 @@ public class SlotMachineController : Controller
         }
 
         var gain = ComputeGain(grid.ToArray());
+        
+        usersRepository.AddMoney(callingUser.Username, gain);
+        
 
         var response = new
         {
@@ -49,6 +67,6 @@ public class SlotMachineController : Controller
     private int ComputeGain(int[][] grid)
     {
         // TODO
-        return 0;
+        return 100; // stonks
     }
 }

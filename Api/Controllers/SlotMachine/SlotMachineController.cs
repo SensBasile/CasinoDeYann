@@ -16,7 +16,7 @@ public class SlotMachineController(SlotMachineService slotMachineService) : Cont
             return Unauthorized();
         }
 
-        SlotMachineModel res = await slotMachineService.Play(User.Identity.Name);
+        SlotMachineModel res = await slotMachineService.Play(User.Identity.Name, bet);
         return Ok(res.ToResponse());
     }
 }

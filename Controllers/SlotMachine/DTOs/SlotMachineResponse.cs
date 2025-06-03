@@ -1,6 +1,3 @@
 ﻿namespace CasinoDeYann.Controllers.SlotMachine.DTOs;
 
-public class SlotMachineResponse
-{
-    
-}
+public record SlotMachineResponse(int[][] Grid, long Gain, int[] Patterns, string Message);

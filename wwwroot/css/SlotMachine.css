@@ -30,14 +30,14 @@
     display: flex;
     justify-content: center;
     
-    column-gap: 5.5%;
+    column-gap: 7%;
     width: 100%;
     margin: 0;
     padding: 0;
 }
 
 .slot-symbol {
-    width: 11%;
+    width: 9%;
     height: auto;
 }
 

@@ -17,6 +17,6 @@ public class IndexModel : PageModel
 
     public async Task OnGet()
     {
-        TopUsers = await _usersService.getLeaderboard();
+        TopUsers = await _usersService.GetLeaderboard();
     }
 }

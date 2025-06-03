@@ -52,7 +52,12 @@ ViewData["Title"] = "Machine à sous";
     </div>
 
     <!-- BET AMOUNT DISPLAY -->
-    <div id="bet-amount">Mise : 1</div>
+    <div class="info" id="gain-text">Gain</div>
+    <div class="info" id="money-text">Monnaie</div>
+    <div class="info" id="bet-text">Mise</div>
+    <div class="info" id="gain-amount">0</div>
+    <div class="info" id="money-amount">0</div>
+    <div class="info" id="bet-amount">1</div>
 
     <!-- MINUS AND PLUS BUTTONS -->
     <button id="decrease-bet" type="button"></button>
@@ -70,6 +75,9 @@ ViewData["Title"] = "Machine à sous";
     
     let bet = 1;
     const betDisplay = document.getElementById("bet-amount");
+    const gainDisplay = document.getElementById("gain-amount");
+    const moneyDisplay = document.getElementById("money-amount");
+    
     const decreaseBtn = document.getElementById("decrease-bet");
     const increaseBtn = document.getElementById("increase-bet");
 
@@ -80,7 +88,7 @@ ViewData["Title"] = "Machine à sous";
         if (betIndex > 0) {
             betIndex--;
             bet = bets[betIndex];
-            betDisplay.textContent = `Mise : ${bet}`;
+            betDisplay.textContent = `${bet}`;
         }
     });
 
@@ -88,7 +96,7 @@ ViewData["Title"] = "Machine à sous";
         if (betIndex < bets.length - 1) {
             betIndex++;
             bet = bets[betIndex];
-            betDisplay.textContent = `Mise : ${bet}`;
+            betDisplay.textContent = `${bet}`;
         }
     });
     // — BET CONTROLS END — 
@@ -261,13 +269,18 @@ ViewData["Title"] = "Machine à sous";
             showPatterns();
             document.getElementById("result-message").textContent = data.message;
 
-            const moneyDisplay = document.getElementById("user-money");
-            console.log(moneyDisplay);
+            const userMoneyDisplay = document.getElementById("user-money");
+            console.log(userMoneyDisplay);
             console.log(data.money);
+            if (userMoneyDisplay && data.money !== undefined) {
+                userMoneyDisplay.textContent = data.money;
+            }
             if (moneyDisplay && data.money !== undefined) {
                 moneyDisplay.textContent = data.money;
             }
-
+            if (gainDisplay && data.gain !== undefined) {
+                gainDisplay.textContent = data.gain;
+            }
             running = false;
         }, 6000);
     });

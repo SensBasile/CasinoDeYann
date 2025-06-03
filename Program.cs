@@ -1,5 +1,8 @@
+using CasinoDeYann.BusinessLogic;
 using CasinoDeYann.DataAccess;
 using CasinoDeYann.DataAccess.EfModels;
+using CasinoDeYann.DataAccess.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +12,20 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<CasinoDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login";
+        options.LogoutPath = "/Logout";
+    });
+
+builder.Services.AddAutoMapper(typeof(AutomapperProfiles));
+
+builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
 var app = builder.Build();
 
@@ -24,7 +41,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStaticFiles();
@@ -34,5 +51,7 @@ app.UseDefaultFiles();
 app.MapStaticAssets();
 app.MapRazorPages()
     .WithStaticAssets();
+
+
 
 app.Run();

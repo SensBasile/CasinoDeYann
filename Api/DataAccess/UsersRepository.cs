@@ -11,11 +11,11 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
     public UsersRepository(CasinoDbContext context, ILogger<UsersRepository> logger, IMapper mapper) : base(context, logger, mapper)
     { }
 
-    public User GetOneByName(string name)
+    public async Task<User> GetOneByName(string name)
     {
         try
         { 
-            var query = _context.Users.AsNoTracking().FirstOrDefault(x => x.Username == name);
+            var query = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Username == name);
             if (query == null)
                 return null;
             return _mapper.Map<User>(query);
@@ -29,7 +29,7 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
 
     public async Task<User> AddMoney(string name, long amount)
     {
-        var user = GetOneByName(name);
+        var user = await GetOneByName(name);
         user.Money += amount;
         return await Update(user);
     }

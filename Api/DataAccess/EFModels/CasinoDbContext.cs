@@ -7,4 +7,5 @@ public class CasinoDbContext : DbContext
         : base(options) {}
     
     public DbSet<TUser> Users { get; set; }
+    public DbSet<TStats> Stats { get; set; }
 }

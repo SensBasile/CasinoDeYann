@@ -19,7 +19,7 @@ public class AuthService
 
     public async Task<bool> LoginAsync(string username, string password)
     {
-        var user = _usersRepository.GetOneByName(username);
+        var user = await  _usersRepository.GetOneByName(username);
         if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
             return false;
 

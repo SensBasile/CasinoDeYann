@@ -1,7 +1,7 @@
 using CasinoDeYann.BusinessLogic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CasinoDeYann.Controllers;
+namespace CasinoDeYann.Controllers.Account;
 
 public class AccountController : Controller
 {

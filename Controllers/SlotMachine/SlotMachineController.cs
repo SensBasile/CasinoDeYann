@@ -1,12 +1,15 @@
 ﻿using CasinoDeYann.DataAccess.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CasinoDeYann.Controllers;
+namespace CasinoDeYann.Controllers.SlotMachine;
 
 [Route("api/[controller]")] // SlotMachine
 [ApiController]
 public class SlotMachineController : Controller
 {
+    private readonly int w = 5;
+    private readonly int h = 5;
+    
     private readonly string[] _symbols = [
     "/assets/SlotMachine/bell/bell.png",
     "/assets/SlotMachine/cherry/cherry.png",
@@ -33,6 +36,7 @@ public class SlotMachineController : Controller
     {
         var grid = new List<int[]>();
 
+        for (int i = 0; i < h; i++)
         if (User.Identity == null || User.Identity.Name == null)
         {
             return Unauthorized();
@@ -43,7 +47,7 @@ public class SlotMachineController : Controller
         for (int i = 0; i < 3; i++)
         {
             var row = new List<int>();
-            for (int j = 0; j < 5; j++)
+            for (int j = 0; j < w; j++)
             {
                 row.Add(_random.Next(_symbols.Length));
             }

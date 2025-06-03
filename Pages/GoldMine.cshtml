@@ -29,16 +29,13 @@
         nugget.addEventListener("click", async () => {
             nugget.classList.add("shake");
             const res = await fetch("/api/GoldMine/mine", {method: "POST"});
+
+            const moneyDisplay = document.getElementById("user-money");
+            moneyDisplay.textContent = String(parseInt(moneyDisplay.textContent) + 1);
+
+            
             setTimeout(() => {
                 nugget.classList.remove("shake");
-                document.getElementById("result-message").textContent = data.message;
-
-                const moneyDisplay = document.getElementById("user-money");
-                console.log(moneyDisplay);
-                console.log(data.money);
-                if (moneyDisplay && data.money !== undefined) {
-                    moneyDisplay.textContent = data.money;
-                }
             }, 300);
         });
     </script>

@@ -12,7 +12,7 @@ public class UsersService
         _usersRepository = usersRepository;
     }
     
-    public async Task<IEnumerable<User>> getLeaderboard()
+    public async Task<IEnumerable<User>> GetLeaderboard()
     {
         return (await _usersRepository.Get())
             .OrderByDescending(u => u.Money)

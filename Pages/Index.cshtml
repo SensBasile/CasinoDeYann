@@ -8,3 +8,35 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<h2>Leaderboard</h2>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Money</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model.TopUsers != null && Model.TopUsers.Any())
+    {
+        var rank = 1;
+        foreach (var user in Model.TopUsers)
+        {
+            <tr>
+                <td>@rank</td>
+                <td>@user.Username</td>
+                <td>@user.Money.ToString("C")</td>
+            </tr>
+            rank++;
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="3">No users available.</td>
+        </tr>
+    }
+    </tbody>
+</table>

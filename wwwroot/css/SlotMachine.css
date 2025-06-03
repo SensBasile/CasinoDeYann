@@ -8,7 +8,7 @@
 
 .machine-gif {
     display: block;
-    width: 100%;
+    width: 50vw;
     height: auto;
     margin: 0 auto;
 }
@@ -72,26 +72,3 @@
     font-weight: bold;
 }
 
-@media (max-width: 80vw) {
-    .machine-container {
-        width: 90vw;
-    }
-    .slot-machine {
-        top:    12%;
-        right:   8%;
-        width:  55%;
-        height: 55%;
-        row-gap: 0.8%;
-    }
-    .slot-machine .row {
-        column-gap: 3%;
-    }
-    .slot-symbol {
-        width: 10%;
-    }
-    
-    #spin {
-        width: 60px;
-        bottom: 6%;
-    }
-}

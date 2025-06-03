@@ -2,7 +2,9 @@
 
 namespace CasinoDeYann.Controllers;
 
-public class GoldMine : Controller
+[Route("api/[controller]")]
+[ApiController]
+public class RouletteController : Controller
 {
     // GET
     public IActionResult Index()

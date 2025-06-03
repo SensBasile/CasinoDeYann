@@ -1,7 +1,7 @@
 ﻿.machine-container {
     position: relative;
     display: block;
-    width: 75vw;
+    width: 50vw;
     max-width: 100vw;
     margin: 5vw auto;
 }
@@ -15,11 +15,10 @@
 
 .slot-machine {
     position: absolute;
-    top:    8%;
-    right:  4%;
-    width:  55%;
+    top:    30%;
+    width:  100%;
     height: 60%;
-
+    
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -29,26 +28,27 @@
 
 .slot-machine .row {
     display: flex;
-    justify-content: flex-start;
-    column-gap: 7.5%;
+    justify-content: center;
+    
+    column-gap: 5.5%;
     width: 100%;
     margin: 0;
     padding: 0;
 }
 
 .slot-symbol {
-    width: 13%;
+    width: 11%;
     height: auto;
 }
 
 #spin {
     position: absolute;
-    bottom: 12.5%;
-    left: 54%;
+    bottom: 0%;
+    left: 50%;
     transform: translateX(-50%);
     width: 18%;
     height: 20.5%;
-    background-image: url('../assets/SlotMachine/ui/go_button.png');
+    background-image: url('../assets/SlotMachine/ui/spin_button.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-color: transparent;
@@ -59,11 +59,11 @@
 }
 
 #spin:hover {
-    background-image: url('../assets/SlotMachine/ui/go_button_hover.png');
+    background-image: url('../assets/SlotMachine/ui/spin_button_hover.png');
 }
 
 #spin:active {
-    background-image: url('../assets/SlotMachine/ui/go_button_off.png');
+    background-image: url('../assets/SlotMachine/ui/spin_button_pressed.png');
 }
 
 #result-message {

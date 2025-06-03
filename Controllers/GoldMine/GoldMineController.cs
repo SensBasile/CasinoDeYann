@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CasinoDeYann.Controllers;
+namespace CasinoDeYann.Controllers.GoldMine;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BlackJackController : Controller
+public class GoldMineController : Controller
 {
     // GET
     public IActionResult Index()

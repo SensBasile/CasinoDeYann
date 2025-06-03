@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CasinoDeYann.Controllers;
+namespace CasinoDeYann.Controllers.SlotMachine;
 
 [Route("api/[controller]")] // SlotMachine
 [ApiController]
@@ -25,7 +25,7 @@ public class SlotMachineController : Controller
     {
         var grid = new List<int[]>();
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
             var row = new List<int>();
             for (int j = 0; j < 5; j++)

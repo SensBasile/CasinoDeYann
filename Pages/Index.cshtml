@@ -16,6 +16,7 @@
         <th>Rank</th>
         <th>Name</th>
         <th>Money</th>
+        <th>Level</th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
                 <td>@rank</td>
                 <td>@user.Username</td>
                 <td>@user.Money.ToString("C")</td>
+                <td>@user.Xp</td>
             </tr>
             rank++;
         }

@@ -2,7 +2,6 @@
 .roulette-page {
     display: flex;
     width: 85vw;       /* adjust as you like (formerly 60vw). */
-    max-width: 100vw;
     height: 60vh;      /* or whatever fixed height you prefer */
     margin: 5vh auto;  /* center‐horizontally on the page */
     position: relative;
@@ -108,11 +107,11 @@
 /* PLAY BUTTON at bottom center */
 #play-button {
     position: absolute;
-    bottom: 12%;
-    left: 50%;
-    width: 8vw;
-    height:4vw;
-    background-image: url('../assets/Roulette/ui/play_button.png');
+    bottom: 3.8%;
+    left: 41%;
+    width: 4vw;
+    height:2.5vw;
+    background-image: url('../assets/Roulette/ui/roulette_button.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-color: transparent;
@@ -124,17 +123,16 @@
 }
 
 #play-button:hover {
-    background-image: url('../assets/Roulette/ui/play_button_hover.png');
+    background-image: url('../assets/Roulette/ui/roulette_button_hover.png');
 }
 
 #play-button:active {
-    background-image: url('../assets/Roulette/ui/play_button_pressed.png');
+    background-image: url('../assets/Roulette/ui/roulette_button_pressed.png');
 }
 
 .betting-board {
     position: relative;
     width: 90%;       /* or whatever % of its parent (.carpet-container) you want */
-    max-width: 600px; /* optional: cap the width so it doesn’t become gigantic on wide screens */
     margin: 0 auto;   /* center horizontally inside .carpet-container if needed */
 }
 
@@ -174,11 +172,11 @@
     height: auto;
     aspect-ratio: 1 / 1;
     background-color: transparent;
-    border-radius: 100%;
+    border-radius: 0;
     border: none;
     font-family: Consolas;
     color: #fff;
-    font-size: 2vw;
+    font-size: 1.8vw;
     text-align: center;
     line-height: 100%;
     cursor: pointer;
@@ -196,12 +194,251 @@
     left: 4%;
 }
 
-.bet-1 {
+.bet-3 {
     top: 22.2%;
     left: 10.5%;
 }
-
 .bet-2 {
+    top: 32.8%;
+    left: 10.5%;
+}
+.bet-1 {
+    top: 43.3%;
+    left: 10.5%;
+}
+
+.bet-6 {
     top: 22.2%;
     left: 16.3%;
+}
+.bet-5 {
+    top: 32.7%;
+    left: 16.3%;
+}
+.bet-4 {
+    top: 43.3%;
+    left: 16.3%;
+}
+
+.bet-9 {
+    top: 22.2%;
+    left: 22%;
+}
+.bet-8 {
+    top: 32.7%;
+    left: 22%;
+}
+.bet-7 {
+    top: 43.3%;
+    left: 22%;
+}
+
+.bet-12 {
+    top: 22.2%;
+    left: 27.7%;
+}
+.bet-11 {
+    top: 32.7%;
+    left: 27.7%;
+}
+.bet-10 {
+    top: 43.3%;
+    left: 27.7%;
+}
+
+.bet-15 {
+    top: 22.2%;
+    left: 33.5%;
+}
+.bet-14 {
+    top: 32.7%;
+    left: 33.5%;
+}
+.bet-13 {
+    top: 43.3%;
+    left: 33.5%;
+}
+
+.bet-18 {
+    top: 22.2%;
+    left: 39.2%;
+}
+.bet-17 {
+    top: 32.7%;
+    left: 39.2%;
+}
+.bet-16 {
+    top: 43.3%;
+    left: 39.2%;
+}
+
+.bet-21 {
+    top: 22.2%;
+    left: 45%;
+}
+.bet-20 {
+    top: 32.7%;
+    left: 45%;
+}
+.bet-19 {
+    top: 43.3%;
+    left: 45%;
+}
+
+.bet-24 {
+    top: 22.2%;
+    left: 50.7%;
+}
+.bet-23 {
+    top: 32.7%;
+    left: 50.7%;
+}
+.bet-22 {
+    top: 43.3%;
+    left: 50.7%;
+}
+
+.bet-27 {
+    top: 22.2%;
+    left: 56.4%;
+}
+.bet-26 {
+    top: 32.7%;
+    left: 56.4%;
+}
+.bet-25 {
+    top: 43.3%;
+    left: 56.4%;
+}
+
+.bet-30 {
+    top: 22.2%;
+    left: 62.2%;
+}
+.bet-29 {
+    top: 32.7%;
+    left: 62.2%;
+}
+.bet-28 {
+    top: 43.3%;
+    left: 62.2%;
+}
+
+.bet-33 {
+    top: 22.2%;
+    left: 67.9%;
+}
+.bet-32 {
+    top: 32.7%;
+    left: 67.9%;
+}
+.bet-31 {
+    top: 43.3%;
+    left: 67.9%;
+}
+
+.bet-36 {
+    top: 22.2%;
+    left: 73.7%;
+}
+.bet-35 {
+    top: 32.7%;
+    left: 73.7%;
+}
+.bet-34 {
+    top: 43.3%;
+    left: 73.7%;
+}
+
+.bet-row3 {
+    font-size: 1.3vw;
+    border-radius: 0;
+    top:    22.2%;
+    left:   79.4%; 
+    width:  5.5%; 
+    height: auto;
+}
+
+/* Middle (2–5–8–…–35) */
+.bet-row2 {
+    font-size: 1.3vw;
+    top:    32.7%;
+    left:   79.4%;
+    width:  5.5%;
+    height: auto;
+}
+
+.bet-row1 {
+    font-size: 1.3vw;
+    top:    43.3%;
+    left:   79.4%;
+    width:  5.5%;
+    height: auto;
+}
+
+.bet-dozen1 {
+    top:    54.2%;
+    left:   10.5%;
+    width:  22.4%;
+    height: 8.8%;
+}
+
+.bet-dozen2 {
+    top:    54.2%;
+    left:   33.5%;
+    width:  22.4%;
+    height: 8.8%;
+}
+
+.bet-dozen3 {
+    top:    54.2%;
+    left:   56.3%;
+    width:  22.4%;
+    height: 8.8%;
+}
+
+.bet-low {        /* “1 à 18” */
+    font-size: 1.3vw;
+    top:    65.3%;
+    left:   10.5%;
+    width:  7.8%;
+    height: 9%;
+}
+
+.bet-even {      /* “Pair” */
+    font-size: 1.3vw;
+    top:    65.3%;
+    left:   18.8%;
+    width:  7.8%;
+    height: 9%;
+}
+
+.bet-red {       /* “Rouge” */
+    top:    65.3%;
+    left:   27.5%;
+    width:  16.7%;
+    height: 9%;
+}
+
+.bet-black {     /* “Noir” */
+    top:    65.3%;
+    left:   44.8%;
+    width:  17%;
+    height: 9%;
+}
+
+.bet-odd {       /* “Impair” */
+    font-size: 1.2vw;
+    top:    65.3%;
+    left:   62.2%;
+    width:  7%;
+    height: 9%;
+}
+
+.bet-high {      /* “19 à 36” */
+    font-size: 1.3vw;
+    top:    65.3%;
+    left:   71%;
+    width:  7.8%;
+    height: 9%;
 }

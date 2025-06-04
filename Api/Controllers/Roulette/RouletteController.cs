@@ -1,33 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CasinoDeYann.Api.Controllers.Roulette.DTOs;
+using CasinoDeYann.Api.Services.Roulette;
+using CasinoDeYann.Api.Services.Roulette.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CasinoDeYann.Api.Controllers.Roulette;
 
 [ApiController]
 [Route("api/[controller]")]
-public class RouletteController : ControllerBase
+public class RouletteController(RouletteService rouletteService) : ControllerBase
 {
-    private readonly Random _random = new();
 
-    // GET /api/roulette/play/{playerNumber}
-    [HttpGet("play/{playerNumber}")]
-    public IActionResult Play(int playerNumber)
+    // GET /api/roulette/play/
+    [HttpPost("play/")]
+    public async Task<IActionResult> Play([FromBody] RouletteRequest bets)
     {
-        if (playerNumber < 0 || playerNumber > 36)
+        if (User.Identity == null || User.Identity.Name == null)
         {
-            return BadRequest("Le numéro doit être compris entre 0 et 36.");
+            return Unauthorized();
         }
 
-        int winningNumber = _random.Next(0, 37); // 0 à 36 inclus
-        bool isWin = playerNumber == winningNumber;
-
-        return Ok(new
+        if (bets.Singles != null)
         {
-            playerNumber,
-            winningNumber,
-            isWin,
-            message = isWin
-                ? "🎉 Félicitations, vous avez gagné !"
-                : $"❌ Dommage ! Le numéro gagnant était {winningNumber}."
-        });
+            for (var i = 0; i < bets.Singles.Length; i++)
+            {
+                if (bets.Singles[i].Item1 < 0 || bets.Singles[i].Item2 > 36)
+                    return BadRequest("Le numéro doit être compris entre 0 et 36.");
+            }
+        }
+        
+        RouletteModel res = await rouletteService.play(User.Identity.Name, bets);
+
+        return Ok(new RouletteResponse(
+            res.WinningNumber,
+            res.Gain,
+            res.Message
+        ));
     }
 }

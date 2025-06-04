@@ -2,18 +2,120 @@
 @model CasinoDeYann.Pages.Roulette
 
 @{
-    Layout = null;
+ViewData["Title"] = "Roulette";
+<link rel="stylesheet" href="~/css/Roulette.css" asp-append-version="true" />
 }
 
-<!DOCTYPE html>
+<div class="roulette-page">
+    <div class="carpet-container">
+        <img src="~/assets/Roulette/carpet.png" alt="Carpet" class="carpet" />
+    </div>
 
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+    <div class="wheel-container">
+        <div class="wheel-wrapper">
+            <!-- SUPPORT IMAGE: sits directly behind the wheel -->
+            <img
+                src="~/assets/Roulette/roulette_support.png"
+                alt="Roulette Support"
+                class="roulette-support"
+            />
+
+            <!-- WHEEL -->
+            <img
+                id="roulette-wheel"
+                src="~/assets/Roulette/roulette.png"
+                alt="Roulette Wheel"
+                class="roulette-wheel"
+            />
+
+            <!-- BALL WRAPPER -->
+            <div id="ball-wrapper" class="ball-wrapper">
+                <img
+                    id="roulette-ball"
+                    src="~/assets/Roulette/ball.png"
+                    alt="Roulette Ball"
+                    class="roulette-ball"
+                />
+            </div>
+        </div>
+        <div id="result-message" class="result-message"></div>
+    </div>
 </div>
-</body>
-</html>
+
+<button id="play-button" type="button"></button>
+
+@section Scripts {
+<script>
+    (function() {
+        const wheel = document.getElementById("roulette-wheel");
+        const ballWrapper = document.getElementById("ball-wrapper");
+        const ball = document.getElementById("roulette-ball");
+        const playButton = document.getElementById("play-button");
+        const resultMessage = document.getElementById("result-message");
+        let running = false;
+
+        // European roulette pockets in strict clockwise order,
+        // starting from “0” at 12 o’clock, then “32” just to its right, etc.
+        const numbers = [
+            0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8,
+            23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26
+        ];
+        const segmentAngle = 360 / numbers.length; // ≈ 9.7297°
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        playButton.addEventListener("click", () => {
+            if (running) return;
+            running = true;
+            resultMessage.textContent = "";
+
+            // === RESET THE BALL POSITION ===
+            ball.classList.remove("fall");
+            ball.style.opacity = "0";
+            void ball.offsetHeight;
+
+            // === CHOOSE A RANDOM WINNING NUMBER FIRST ===
+            const winningIndex = getRandomInt(0, numbers.length);
+            const result = numbers[winningIndex];
+
+            // === INVERT THE ORIGINAL “offsetIndex” FORMULA ===
+            // original: winningIndex = (numbers.length − offsetIndex) % numbers.length
+            const offsetIndex = (numbers.length - winningIndex) % numbers.length;
+
+            // === COMPUTE THE MIDPOINT ANGLE OF THAT SEGMENT ===
+            // Each segment is 'segmentAngle' degrees wide, so its center lies at:
+            //    offsetIndex * segmentAngle + segmentAngle / 2
+            const midSegmentAngle = offsetIndex * segmentAngle + (segmentAngle / 2);
+
+            // === PICK A RANDOM NUMBER OF FULL SPINS (3–6) ===
+            const fullSpins = getRandomInt(3, 7); // 3, 4, 5, or 6 full turns
+
+            // === FINAL ANGLE = full turns + exact segment midpoint ===
+            const finalAngle = fullSpins * 360 + midSegmentAngle;
+
+            // === RESET & SPIN THE WHEEL ===
+            wheel.style.transition = "none";
+            wheel.style.transform = "rotate(0deg)";
+            void wheel.offsetHeight;
+
+            ballWrapper.classList.remove("animate");
+            void ballWrapper.offsetHeight;
+            ball.style.opacity = "1";
+            ballWrapper.classList.add("animate");
+
+            wheel.style.transition = "transform 5s ease-out";
+            wheel.style.transform = `rotate(${finalAngle}deg)`;
+
+            // === AFTER 5 SECONDS: drop the ball & show the chosen number ===
+            setTimeout(() => {
+                ball.classList.add("fall");
+                resultMessage.textContent = `Le numéro est ${result}`;
+                running = false;
+            }, 5000);
+        });
+    })();
+</script>
+}
+

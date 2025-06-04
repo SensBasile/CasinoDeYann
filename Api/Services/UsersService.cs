@@ -4,28 +4,33 @@ using CasinoDeYann.Api.DataAccess.Interfaces;
 
 namespace CasinoDeYann.Api.Services;
 
-public class UsersService
+public class UsersService(IUsersRepository usersRepository, IStatsRepository statsRepository)
 {
-    private readonly IUsersRepository _usersRepository;
-    private readonly IStatsRepository _statsRepository;
-
-    public UsersService(IUsersRepository usersRepository, IStatsRepository statsRepository)
+    public async Task<User> GetUser(string username)
     {
-        _usersRepository = usersRepository;
-        _statsRepository = statsRepository;
+        return await usersRepository.GetOneByName(username);
     }
-    
+
+    public async Task<bool> Pay(string username, long amount)
+    {
+        var user = await usersRepository.GetOneByName(username);
+        if (user.Money < amount) return false;
+        user.Money -= amount;
+        await usersRepository.Update(user);
+        return true;
+    }
+
     public async Task<IEnumerable<User>> GetLeaderboard()
     {
-        return (await _usersRepository.Get())
+        return (await usersRepository.Get())
             .OrderByDescending(u => u.Money)
             .Take(10);
     }
 
     public async Task<UserStatsSummary> GetStats(string name)
     {
-        var user = await _usersRepository.GetOneByName(name);
-        return _statsRepository.GetStats(user.Id);
+        var user = await usersRepository.GetOneByName(name);
+        return statsRepository.GetStats(user.Id);
     }
 
     public async Task<UserProfileModel> GetUserProfileAsync(string userName)
@@ -52,6 +57,6 @@ public class UsersService
 
     public async Task<bool> DeleteAccountAsync(string userName)
     {
-        return await _usersRepository.DeleteOneByName(userName);
+        return await usersRepository.DeleteOneByName(userName);
     }
 }

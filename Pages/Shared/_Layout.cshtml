@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - CasinoDeYann</title>
     <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <!--<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>-->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -16,58 +19,55 @@
         var currentUser = await UserContextService.GetCurrentUserAsync();
     }
 
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">Le Casino de Yann</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
+    <nav>
+        <div class="navbar-container">
+            <ul class="navbar">
+                <div class="nav-left">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Accueil</a>
+                        <a asp-page="/Index">🎰 Le Casino de Yann</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/SlotMachine">Machine à sous</a>
+                        <a asp-page="/Index">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Blackjack">Blackjack</a>
+                        <a asp-page="/SlotMachine">Machine à sous</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Roulette">Roulette</a>
+                        <a asp-page="/Roulette">Roulette</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/GoldMine">Mine d'or</a>
+                        <a asp-page="/GoldMine">Mine d'or</a>
                     </li>
+                </div>
+
+                <div class="nav-right">
                     @if (currentUser != null)
                     {
-                        <div class="navbar-text text-end balance">
-                            <span id="user-money">@currentUser.Money</span> <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp"/>
-                        </div>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/UserProfile">@currentUser.Username</a>
+                            <span id="user-money">@currentUser.Money</span>
+                            <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp" />
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Account/Logout">Déconnexion</a>
+                            <a asp-page="/UserProfile">@currentUser.Username</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a asp-page="/Account/Logout">Déconnexion</a>
+                        </li>
                     }
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Connexion</a>
+                            <a asp-page="/Account/Login">Connexion</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Account/Signup">S'enregistrer</a>
+                            <a asp-page="/Account/Signup">S'enregistrer</a>
                         </li>
                     }
-                    
-
-                </ul>
-            </div>
+                </div>
+            </ul>
         </div>
     </nav>
+
 </header>
 
 <div class="container-fluid p-0">

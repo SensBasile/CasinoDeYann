@@ -3,6 +3,8 @@ namespace CasinoDeYann.Api.DataAccess.EFModels;
 public class TStats : IObjectWithId
 {
     public long Id { get; set; }
+    
+    public DateTime  Date { get; set; }
     public long Gain { get; set; }
     public long Bet { get; set; }
     public string Game { get; set; }

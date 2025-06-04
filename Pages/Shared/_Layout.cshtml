@@ -48,7 +48,9 @@
                             <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp" />
                         </li>
                         <li class="nav-item">
-                            <a asp-page="/UserProfile">@currentUser.Username</a>
+                            <a asp-page="/user" asp-route-username="@currentUser.Username">
+                                @currentUser.Username
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a asp-page="/Account/Logout">Déconnexion</a>

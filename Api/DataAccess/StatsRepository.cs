@@ -14,15 +14,32 @@ public class StatsRepository: Repository<TStats, Stats>, IStatsRepository
 
     public UserStatsSummary GetStats(long userId)
     {
+        var userStats = _context.Stats.Where(s => s.UserId == userId).ToList();
+
+        var totalWon = userStats.Sum(s => s.Gain);
+        var totalLost = userStats.Sum(s => s.Bet);
+
+        var gamesPlayedPerGame = userStats
+            .GroupBy(s => s.Game)
+            .ToDictionary(g => g.Key, g => g.Count());
+
+        var gamesPlayedPerDay = userStats
+            .GroupBy(s => s.Date.Date)
+            .ToDictionary(g => g.Key, g => g.Count());
+
         return new UserStatsSummary
         {
             UserId = userId,
-            NumberOfGames = _context.Stats.Where(s => s.UserId == userId).Select(s => s.Game).Distinct().Count(),
-            HighestGain = _context.Stats.Where(s => s.UserId == userId).Max(s => (long?)s.Gain) ?? 0,
-            History = _mapper.Map<List<Stats>>(_context.Stats.Where(s => s.UserId == userId)
-                .OrderByDescending(s => s.Id)
+            NumberOfGames = userStats.Count(),
+            HighestGain = userStats.Max(s => (long?)s.Gain) ?? 0,
+            History = _mapper.Map<List<Stats>>(userStats
+                .OrderByDescending(s => s.Date)
                 .Take(15)
-                .ToList())
+                .ToList()),
+            TotalWon = totalWon,
+            TotalLost = totalLost,
+            GamesPlayedPerGame = gamesPlayedPerGame,
+            GamesPlayedPerDay = gamesPlayedPerDay,
         };
     }
     

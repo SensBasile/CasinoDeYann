@@ -27,7 +27,10 @@
         {
             <tr>
                 <td>@rank</td>
-                <td>@user.Username</td>
+                <td>                            
+                    <a asp-page="/user" asp-route-username="@user.Username">
+                    @user.Username
+                </a></td>
                 <td>@user.Money.ToString("C")</td>
                 <td>@user.Xp</td>
             </tr>

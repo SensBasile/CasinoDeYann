@@ -54,7 +54,7 @@ public class SlotMachineService(IUsersRepository usersRepository, StatsService s
         
         callingUser = await usersRepository.AddMoney(callingUser.Username, gain);
         
-        await statsService.Create(new GameHistoryEntryModel(callingUser.Id, "Slot Machine", bet, gain));
+        await statsService.Create(new GameHistoryEntryModel(callingUser.Id, DateTime.Now, "Slot Machine", bet, gain));
         
         return new SlotMachineModel(
             grid.ToArray(),

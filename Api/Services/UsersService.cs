@@ -43,7 +43,7 @@ public class UsersService(IUsersRepository usersRepository, IStatsRepository sta
 
         foreach (var stat in stats.History)
         {
-            history.Add(new GameHistoryEntryModel(user.Id, stat.Game, stat.Bet, stat.Gain));
+            history.Add(new GameHistoryEntryModel(user.Id, stat.Date, stat.Game, stat.Bet, stat.Gain));
         }
 
 
@@ -51,8 +51,10 @@ public class UsersService(IUsersRepository usersRepository, IStatsRepository sta
             user.Xp % 1000, 
             user.Money, history, stats.HighestGain, 
             stats.NumberOfGames,
-            -1, 
-            -1, new Dictionary<string, int>());
+            stats.TotalWon,
+            stats.TotalLost, 
+            stats.GamesPlayedPerGame, 
+            stats.GamesPlayedPerDay);
     }
 
     public async Task<bool> DeleteAccountAsync(string userName)

@@ -16,7 +16,7 @@ public class GoldMineService(IUsersRepository usersRepository, StatsService stat
         if (callingUser.Money >= 100) return new GoldMineModel(false);
         callingUser = await usersRepository.AddMoney(callingUser.Username, mineValue);
         
-        await statsService.Create(new GameHistoryEntryModel(callingUser.Id, "Gold Mine", 0, mineValue));
+        await statsService.Create(new GameHistoryEntryModel(callingUser.Id, DateTime.Now, "Gold Mine", 0, mineValue));
 
         return new GoldMineModel(true);
     }

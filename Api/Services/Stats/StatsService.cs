@@ -15,11 +15,12 @@ public class StatsService
     {
         var stats = new DataAccess.Dbo.Stats();
         stats.UserId = model.UserId;
+        stats.Date = model.Date;
         stats.Bet = model.Bet;
         stats.Gain = model.Gain;
         stats.Game = model.Game; 
         var res = await _statsRepository.Insert(stats);
         
-        return new GameHistoryEntryModel(res.UserId, res.Game, res.Bet, res.Gain);
+        return new GameHistoryEntryModel(res.UserId, res.Date, res.Game, res.Bet, res.Gain);
     }
 }

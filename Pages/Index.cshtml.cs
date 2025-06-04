@@ -13,7 +13,7 @@ public class IndexModel : PageModel
         _usersService = usersService;
     }
 
-    public IEnumerable<User> TopUsers { get; private set; }
+    public IEnumerable<Api.DataAccess.Dbo.User> TopUsers { get; private set; }
 
     public async Task OnGet()
     {

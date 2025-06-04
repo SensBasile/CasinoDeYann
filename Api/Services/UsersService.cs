@@ -1,3 +1,4 @@
+using AutoMapper;
 using CasinoDeYann.Api.DataAccess.Dbo;
 using CasinoDeYann.Api.DataAccess.Interfaces;
 
@@ -29,7 +30,24 @@ public class UsersService
 
     public async Task<UserProfileModel> GetUserProfileAsync(string userName)
     {
-        throw new NotImplementedException();
+        var stats = await GetStats(userName);
+        
+        var user = await _usersRepository.GetOneByName(userName); 
+        
+        List<GameHistoryEntryModel> history = new List<GameHistoryEntryModel>();
+
+        foreach (var stat in stats.History)
+        {
+            history.Add(new GameHistoryEntryModel(user.Id, stat.Game, stat.Bet, stat.Gain));
+        }
+
+
+        return new UserProfileModel(
+            user.Xp % 1000, 
+            user.Money, history, stats.HighestGain, 
+            stats.NumberOfGames,
+            -1, 
+            -1, new Dictionary<string, int>());
     }
 
     public async Task<bool> DeleteAccountAsync(string userName)

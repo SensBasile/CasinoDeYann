@@ -6,4 +6,6 @@ public class Stats : EFModels.IObjectWithId, IObjectWithId
     public long Gain { get; set; }
     public long Bet { get; set; }
     public string Game { get; set; }
+    
+    public long UserId { get; set; }
 }

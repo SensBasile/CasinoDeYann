@@ -1,9 +1,10 @@
 using CasinoDeYann.Api.DataAccess.Interfaces;
 using CasinoDeYann.Api.Services.SlotMachine.Models;
+using CasinoDeYann.Api.Services.Stats;
 
 namespace CasinoDeYann.Api.Services.SlotMachine;
 
-public class SlotMachineService(IUsersRepository usersRepository)
+public class SlotMachineService(IUsersRepository usersRepository, StatsService statsService)
 {
     private const int W = 5;
     private const int H = 5;
@@ -52,6 +53,8 @@ public class SlotMachineService(IUsersRepository usersRepository)
         var gain = ComputeGain(grid.ToArray(), bet, patterns);
         
         callingUser = await usersRepository.AddMoney(callingUser.Username, gain);
+        
+        await statsService.Create(new GameHistoryEntryModel(callingUser.Id, "Slot Machine", bet, gain));
         
         return new SlotMachineModel(
             grid.ToArray(),

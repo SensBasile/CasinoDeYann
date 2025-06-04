@@ -7,7 +7,7 @@ namespace CasinoDeYann.Pages;
 public class UserProfile(UsersService usersService) : PageModel
 {
     // ------------ PROPRIÉTÉS POUR LE RAZOR ----------------
-        public int Level { get; private set; }
+        public long Level { get; private set; }
 
         // Solde actuel
         public decimal Balance { get; private set; }
@@ -36,13 +36,11 @@ public class UserProfile(UsersService usersService) : PageModel
             Level = dto.Level;
             Balance = dto.Balance;
             History = dto.History;  // List<GameHistoryEntry>
-            MaxWin = dto.MaxWin;
-            TotalPlayed = dto.TotalPlayed;
+            MaxWin = dto.HighestGain;
+            TotalPlayed = dto.NumberOfGames;
             TotalWon = dto.TotalWon;
             TotalLost = dto.TotalLost;
-            MaxWinStreak = dto.MaxWinStreak;
             GamesPlayedPerGame = dto.GamesPlayedPerGame;
-            GamesPlayedPerWeek = dto.GamesPlayedPerWeek;
         }
 
         // ------------ HANDLER DE SUPPRESSION DE COMPTE ----------------
@@ -50,7 +48,8 @@ public class UserProfile(UsersService usersService) : PageModel
         public async Task<IActionResult> OnPostDeleteAccountAsync()
         {
             var userName = User.Identity.Name ?? throw new InvalidOperationException("Utilisateur non authentifié.");
-            await usersService.DeleteAccountAsync(userName);
+            // FIXME
+            /// await usersService.DeleteAccountAsync(userName);
             return RedirectToPage("/Index");
         }
     }

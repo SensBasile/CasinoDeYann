@@ -1,14 +1,14 @@
 ﻿namespace CasinoDeYann.Api.Services;
 
 public record UserProfileModel(
-    int Level,
+    long Level,
     long Balance,
-    List<GameHistoryEntryModel> History,
-    long MaxWin,
-    long TotalPlayed,
+    List<GameHistoryEntryModel> History, 
+    long HighestGain,
+    int NumberOfGames,
     long TotalWon,
     long TotalLost,
-    int MaxWinStreak,
-    Dictionary<string, int> GamesPlayedPerGame,
-    Dictionary<string, int> GamesPlayedPerWeek
+    // FIXME: chiant int MaxWinStreak,
+    Dictionary<string, int> GamesPlayedPerGame
+    // FIXME: on a plus la temporalité Dictionary<string, int> GamesPlayedPerWeek
     );

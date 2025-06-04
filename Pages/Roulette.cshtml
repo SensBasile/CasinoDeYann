@@ -7,8 +7,23 @@ ViewData["Title"] = "Roulette";
 }
 
 <div class="roulette-page">
+    
     <div class="carpet-container">
-        <img src="~/assets/Roulette/carpet.png" alt="Carpet" class="carpet" />
+
+        <div class="bet-wrapper">
+            <img 
+                src="~/assets/Roulette/carpet.png" 
+                alt="Table Carpet" 
+                class="carpet" 
+            />
+            
+            <div class="button-overlay">
+                <button class="bet-button bet-0" data-number="0">0</button>
+                <button class="bet-button bet-1" data-number="1">1</button>
+                <button class="bet-button bet-2" data-number="2">2</button>
+
+            </div>
+        </div>
     </div>
 
     <div class="wheel-container">

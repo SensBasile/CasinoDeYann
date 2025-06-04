@@ -32,14 +32,14 @@
     display: flex;
     justify-content: center;
 
-    column-gap: 7%;
+    column-gap: 9.3%;
     width: 100%;
     margin: 0;
     padding: 0;
 }
 
 .slot-symbol {
-    width: 9%;
+    width: 7%;
     height: auto;
 }
 

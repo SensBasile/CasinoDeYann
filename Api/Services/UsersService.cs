@@ -37,7 +37,7 @@ public class UsersService(IUsersRepository usersRepository, IStatsRepository sta
     {
         var stats = await GetStats(userName);
         
-        var user = await _usersRepository.GetOneByName(userName); 
+        var user = await usersRepository.GetOneByName(userName); 
         
         List<GameHistoryEntryModel> history = new List<GameHistoryEntryModel>();
 

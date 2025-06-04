@@ -165,48 +165,43 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────── */
-/* HORRORS BEHIND HUMAN COMPREHENSION BELOW, PROCEED WITH CAUTION */
+/* HORRORS BEYOND HUMAN COMPREHENSION BELOW, PROCEED WITH CAUTION */
 /* ─────────────────────────────────────────────────────────────────── */
 
 .bet-button {
-    position: absolute;      /* positioned relative to .button-overlay (and therefore .bet-wrapper) */
-    width: 6%;               /* adjust this until one button exactly covers one pocket */
-    aspect-ratio: 1 / 1;     /* keep it square, no matter how the carpet scales */
-    background-color: rgba(255,255,255,0.1);
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    position: absolute;
+    width: 5%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    background-color: transparent;
+    border-radius: 100%;
+    border: none;
+    font-family: Consolas;
     color: #fff;
-    font-size: 0.8rem;
+    font-size: 2vw;
     text-align: center;
-    line-height: 1rem;
+    line-height: 100%;
     cursor: pointer;
     transition: background-color 0.2s;
-    pointer-events: auto;    /* re-enable clicks on the actual button */
-    z-index: 5;              /* just above carpet but below the wheel on the right side */
+    pointer-events: auto;
+    z-index: 5;
 }
 
 .bet-button:hover {
     background-color: rgba(255,255,255,0.3);
 }
 
-/* ─────────────────────────────────────────────────────────────────── */
-/* 3) ABSOLUTE POSITIONING FOR EACH EXAMPLE BUTTON
-   You will replicate this pattern for .bet-3 through .bet-36 and tweak each. */
-
-/* ● Number 0: near the top center of your carpet */
 .bet-0 {
-    top:  0%;
-    left: 0%;
+    top:  32.7%;
+    left: 4%;
 }
 
-/* ● Number 1: bottom-left of the 1-2-3 row */
 .bet-1 {
-    top: 0%;
-    left: 12%;
+    top: 22.2%;
+    left: 10.5%;
 }
 
-/* ● Number 2: next to #1 (in that same row) */
 .bet-2 {
-    top: 62%;
-    left: 30%;
+    top: 22.2%;
+    left: 16.3%;
 }

@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using CasinoDeYann.Api.Services;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CasinoDeYann.Pages;
 
-public class Roulette : PageModel
+public class Roulette(UserContextService userContextService) : PageModel
 {
-    public void OnGet()
+    public Api.DataAccess.Dbo.User? CurrentUser;
+    
+    public async Task OnGetAsync()
     {
-        
+        CurrentUser = await userContextService.GetCurrentUserAsync();
     }
 }

@@ -1,0 +1,179 @@
+﻿.stats-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    max-width: 900px;
+    width: 100%;
+}
+/* === Your original CSS rules stay exactly the same === */
+
+.machine-container {
+    position: relative;
+    display: block;
+    width: 50vw;
+    max-width: 100vw;
+    margin: 5vw auto;
+}
+
+.machine-gif {
+    display: block;
+    width: 50vw;
+    height: auto;
+    margin: 0 auto;
+}
+
+.slot-machine {
+    position: absolute;
+    top:    30%;
+    width:  100%;
+    height: 60%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 1%;
+}
+
+.slot-machine .row {
+    display: flex;
+    justify-content: center;
+    column-gap: 9.3%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.slot-symbol {
+    width: 7%;
+    height: auto;
+}
+
+#spin {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18%;
+    height: 20.5%;
+    background-image: url('../assets/SlotMachine/ui/spin_button.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#spin:hover {
+    background-image: url('../assets/SlotMachine/ui/spin_button_hover.png');
+}
+
+#spin:active {
+    background-image: url('../assets/SlotMachine/ui/spin_button_pressed.png');
+}
+
+#result-message {
+    text-align: center;
+    margin-top: 2vw;
+    font-weight: bold;
+}
+
+/* === NEW: Bet‐Amount Display and Plus/Minus Buttons === */
+.info {
+    position: absolute;
+    transform: translateX(-50%);
+    font-family: "Jersey 10", cursive;
+    font-size: 1.7vw;
+    color: #ff0000;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    z-index: 10;
+}
+
+#bet-text {
+    bottom: 28.5%;
+    left: 70.5%;
+}
+
+#bet-amount {
+    bottom: 23.5%;
+    left: 74.5%;
+}
+
+#gain-text {
+    bottom: 28.5%;
+    left: 42%;
+}
+
+#gain-amount {
+    bottom: 23.5%;
+    left: 50%;
+}
+
+#money-text {
+    bottom: 28.5%;
+    left: 15%;
+}
+
+#money-amount {
+    bottom: 23.5%;
+    left: 21%;
+}
+
+#decrease-bet {
+    position: absolute;
+    bottom: 0%;
+    right: 23%;
+    transform: translateX(-50%);
+    width: 8%;
+    height: 20.5%;
+    background-image: url('../assets/SlotMachine/ui/minus_button.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+}
+
+#decrease-bet:hover {
+    background-image: url('../assets/SlotMachine/ui/minus_button_hover.png');
+}
+
+#decrease-bet:active {
+    background-image: url('../assets/SlotMachine/ui/minus_button_pressed.png');
+}
+
+#increase-bet {
+    position: absolute;
+    bottom: 0%;
+    right: 11.5%;
+    transform: translateX(-50%);
+    width: 8%;
+    height: 20.5%;
+    background-image: url('../assets/SlotMachine/ui/plus_button.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+}
+
+#increase-bet:hover {
+    background-image: url('../assets/SlotMachine/ui/plus_button_hover.png');
+}
+
+#increase-bet:active {
+    background-image: url('../assets/SlotMachine/ui/plus_button_pressed.png');
+}

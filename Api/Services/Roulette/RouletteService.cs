@@ -24,13 +24,15 @@ public class RouletteService(UserService userService)
         int winningNumber = _random.Next(0, 37);
 
         long gain = ComputeGains(bets, winningNumber);
-        
+
+        user = await userService.AddMoney(userName, gain);
         _ = await userService.AddExp(userName, gain / 700 + 35);
 
         return new RouletteModel(
             winningNumber,
             gain,
-            gain > totalBet ? $"Bravo vous avez remporté {gain - totalBet} yanns" : $"Dommage vous avez perdu {totalBet - gain} yanns"
+            gain > totalBet ? $"Bravo vous avez remporté {gain - totalBet} yanns" : $"Dommage vous avez perdu {totalBet - gain} yanns",
+            user.Money
         );
     }
 

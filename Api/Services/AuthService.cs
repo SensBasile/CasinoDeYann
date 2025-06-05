@@ -45,7 +45,7 @@ public class AuthService
     
     public async Task<bool> RegisterAsync(string username, string password)
     {
-        var existingUser = _usersRepository.GetOneByName(username);
+        var existingUser = await _usersRepository.GetOneByName(username);
         if (existingUser != null)
             return false;
 

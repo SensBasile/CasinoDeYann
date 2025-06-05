@@ -1,0 +1,106 @@
+@page
+@model Pages.BackOffice.BackofficeModel
+@{
+    ViewData["Title"] = "Game History";
+}
+
+<h2>Game History</h2>
+
+<form method="get">
+    <p>
+        Search by username:
+        <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>
+            <a  asp-page="./Index"
+                asp-route-SortOrder="@Model.DateSort"
+               asp-route-SearchString="@Model.CurrentFilter"
+               asp-route-PageIndex="@Model.PageIndex">
+                Date
+            </a>
+        </th>
+        <th>Game</th>
+        <th>
+            <a  asp-page="./Index"
+                asp-route-SortOrder="@Model.BetSort"
+               asp-route-SearchString="@Model.CurrentFilter"
+               asp-route-PageIndex="@Model.PageIndex">
+                Bet
+            </a>
+        </th>
+        <th>
+            <a  asp-page="./Index"
+                asp-route-SortOrder="@Model.GainSort"
+               asp-route-SearchString="@Model.CurrentFilter"
+               asp-route-PageIndex="@Model.PageIndex">
+                Gain
+            </a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.GameHistory)
+    {
+        <tr>
+            <td>
+                <a asp-page="/BackOffice/User" asp-route-username="@item.Username">
+                    @item.Username
+                </a>
+            </td>
+
+            <td>@item.Date.ToString("g")</td>
+            <td>@item.Game</td>
+            <td>@item.Bet</td>
+            <td>@item.Gain</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+        @if (Model.HasPreviousPage)
+        {
+            <a class="page-link"
+               asp-route-SortOrder="@Model.CurrentSort"
+               asp-route-SearchString="@Model.CurrentFilter"
+               asp-route-PageIndex="@(Model.PageIndex - 1)">
+                Previous
+            </a>
+
+        }
+        else
+        {
+            <span class="page-link disabled">Previous</span>
+        }
+        </li>
+        <li class="page-item disabled">
+            <span class="page-link">Page @Model.PageIndex</span>
+        </li>
+        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+            @if (Model.HasNextPage)
+            {
+                <a class="page-link"
+                   asp-route-SortOrder="@Model.CurrentSort"
+                   asp-route-SearchString="@Model.CurrentFilter"
+                   asp-route-PageIndex="@(Model.PageIndex + 1)"
+                   >
+
+                    Next
+                </a>
+            }
+            else
+            {
+                <span class="page-link disabled">Next</span>
+            }
+        </li>
+    </ul>
+</nav>

@@ -4,11 +4,6 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
 <h2>Leaderboard</h2>
 <table class="table table-striped">
     <thead>
@@ -27,9 +22,12 @@
         {
             <tr>
                 <td>@rank</td>
-                <td>@user.Username</td>
+                <td>                            
+                    <a asp-page="/user" asp-route-username="@user.Username">
+                    @user.Username
+                </a></td>
                 <td>@user.Money.ToString("C")</td>
-                <td>@user.Xp</td>
+                <td>@(user.Xp / 1000)</td>
             </tr>
             rank++;
         }

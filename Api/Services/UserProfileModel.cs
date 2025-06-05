@@ -1,4 +1,6 @@
-﻿namespace CasinoDeYann.Api.Services;
+﻿using System.Runtime.InteropServices.JavaScript;
+
+namespace CasinoDeYann.Api.Services;
 
 public record UserProfileModel(
     long Level,
@@ -9,6 +11,6 @@ public record UserProfileModel(
     long TotalWon,
     long TotalLost,
     // FIXME: chiant int MaxWinStreak,
-    Dictionary<string, int> GamesPlayedPerGame
-    // FIXME: on a plus la temporalité Dictionary<string, int> GamesPlayedPerWeek
+    Dictionary<string, int> GamesPlayedPerGame ,
+    Dictionary<DateTime, int> GamesPlayedPerDay
     );

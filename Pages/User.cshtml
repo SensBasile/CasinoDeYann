@@ -1,10 +1,6 @@
-﻿@page
-@model CasinoDeYann.Pages.UserProfile
+﻿@page "/user/{username}"
+@model CasinoDeYann.Pages.User
 @using System.Text.Json
-
-@{
-    Layout = null;
-}
 
 <!DOCTYPE html>
 
@@ -17,7 +13,7 @@
     <link rel="stylesheet" href="/css/Profile.css"/>
 </head>
 <body>
-    <h1>Profil de @User.Identity.Name</h1>
+    <h1>Profil de @Model.Username</h1>
 
     <!-- 1. Niveau du compte (badge) et solde -->
     <div class="section">
@@ -63,7 +59,7 @@
                     @foreach (var entry in Model.History)
                     {
                         <tr>
-                            <!--<td>entry.Date.ToString("dd/MM/yyyy HH:mm")</td>-->
+                            <td>@entry.Date.ToString("dd/MM/yyyy HH:mm")</td>
                             <td>@entry.Game</td>
                             <td>@entry.Bet.ToString("N2")</td>
                             <td>@entry.Gain.ToString("N2")</td>
@@ -83,24 +79,20 @@
         <h2>Statistiques générales</h2>
         <div class="stats-grid">
             <div class="stat-card">
-                <h3>Gain maximal</h3>
-                <p><strong>@Model.MaxWin.ToString("N2") €</strong></p>
+                <h3>Parties Jouées</h3>
+                <p><strong>@Model.TotalPlayed.ToString("0000")</strong></p>
             </div>
             <div class="stat-card">
-                <h3>Montant total parié</h3>
-                <p><strong>@Model.TotalPlayed.ToString("N2") €</strong></p>
+                <h3>Gain maximal</h3>
+                <p><strong>@Model.MaxWin.ToString("N2") €</strong></p>
             </div>
             <div class="stat-card">
                 <h3>Montant total gagné</h3>
                 <p><strong>@Model.TotalWon.ToString("N2") €</strong></p>
             </div>
             <div class="stat-card">
-                <h3>Montant total perdu</h3>
+                <h3>Montant total parié</h3>
                 <p><strong>@Model.TotalLost.ToString("N2") €</strong></p>
-            </div>
-            <div class="stat-card">
-                <h3>Plus grande série de victoires</h3>
-                <p><strong>@Model.MaxWinStreak</strong> parties</p>
             </div>
         </div>
     </div>
@@ -112,21 +104,25 @@
     </div>
 
     <div class="section">
-        <h2>Parties jouées par semaine</h2>
+        <h2>Parties jouées par jour</h2>
         <canvas id="barChart" width="600" height="300"></canvas>
     </div>
 
     <!-- 5. Boutons “Modifier le mot de passe” & “Supprimer le compte” -->
-    <div class="section">
-        <a asp-page="/ChangePassword" class="btn btn-primary">Modifier le mot de passe</a>
+    @if (User.Identity?.Name == Model.Username)
+    {
+        <div class="section">
+            <a asp-page="/ChangePassword" class="btn btn-primary">Modifier le mot de passe</a>
 
-        <form method="post" asp-page-handler="DeleteAccount" style="display:inline;">
-            <button type="submit" class="btn btn-danger"
-                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte ?');">
-                Supprimer le compte
-            </button>
-        </form>
-    </div>
+            <form method="post" asp-page-handler="DeleteAccount" style="display:inline;">
+                <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte ?');">
+                    Supprimer le compte
+                </button>
+            </form>
+        </div>
+    }
+
 
     <!-- ------------------ SCRIPTS POUR LES GRAPHIQUES ------------------ -->
     <script>
@@ -162,8 +158,8 @@
         });
 
         // Données pour le diagramme en bâtons (bar chart) :
-        const barLabels = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerWeek.Keys));
-        const barValues = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerWeek.Values));
+        const barLabels = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerDay.Keys));
+        const barValues = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerDay.Values));
 
         const ctxBar = document.getElementById('barChart').getContext('2d');
         new Chart(ctxBar, {

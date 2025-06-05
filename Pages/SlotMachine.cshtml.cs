@@ -6,7 +6,7 @@ namespace CasinoDeYann.Pages;
 
 public class SlotMachine(UserContextService userContextService) : PageModel
 {
-    public required User CurrentUser;
+    public Api.DataAccess.Dbo.User? CurrentUser;
     
     public async Task OnGetAsync()
     {

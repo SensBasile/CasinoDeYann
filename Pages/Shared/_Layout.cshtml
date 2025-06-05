@@ -1,4 +1,4 @@
-﻿@using CasinoDeYann.Api.Services
+﻿@using CasinoDeYann.Src.Services
 @inject UserContextService UserContextService
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +43,13 @@
                 <div class="nav-right">
                     @if (currentUser != null)
                     {
+                        <li class="nav-item" style="position: relative;">
+                            <form id="userSearchForm" method="get" onsubmit="redirectToUser(event)">
+                                <input type="text" id="searchInput" placeholder="Rechercher un utilisateur" autocomplete="off" required />
+                                <div id="autocompleteList" class="autocomplete-items"></div>
+                                <button type="submit">🔍</button>
+                            </form>
+                        </li>
                         <li class="nav-item">
                             <span id="user-money">@currentUser.Money</span>
                             <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp" />
@@ -78,22 +85,51 @@
     </main>
 </div>
 
-<!--
-<footer class="border-top footer text-muted ">
-    <h4>Contact & Développeurs</h4>
-    <ul>
-        <li>Yann Lemétayer – <a href="mailto:yann.lemetayer@epita.fr">yann.lemetayer@epita.fr</a></li>
-        <li>Basile Sens – <a href="mailto:basile.sens@epita.fr">basile.sens@epita.fr</a></li>
-        <li>Pierre Maunier – <a href="mailto:pierre.maunier@epita.fr">pierre.maunier@epita.fr</a></li>
-        <li>Alex Blanco – <a href="mailto:alex.blanco@epita.fr">alex.blanco@epita.fr</a></li>
-    </ul>
-    <p><a asp-page="/MentionsLegales">Mentions légales</a></p>
-</footer>
--->
-
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+
+<script>
+    const input = document.getElementById('searchInput');
+    const list = document.getElementById('autocompleteList');
+
+    input.addEventListener('input', async () => {
+        const query = input.value.trim();
+        if (!query) {
+            list.innerHTML = '';
+            return;
+        }
+
+        const response = await fetch(`/api/user?query=${encodeURIComponent(query)}`);
+        const usernames = await response.json();
+
+        list.innerHTML = '';
+        usernames.forEach(username => {
+            const item = document.createElement('div');
+            item.textContent = username;
+            item.className = 'autocomplete-item';
+            item.addEventListener('click', () => {
+                input.value = username;
+                list.innerHTML = '';
+            });
+            list.appendChild(item);
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#userSearchForm')) {
+            list.innerHTML = '';
+        }
+    });
+
+    function redirectToUser(event) {
+        event.preventDefault();
+        const username = input.value.trim();
+        if (username) {
+            window.location.href = `/users/${encodeURIComponent(username)}`;
+        }
+    }
+</script>
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>

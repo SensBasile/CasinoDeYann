@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
-using CasinoDeYann.Api.Services;
+using CasinoDeYann.Src.Services;
 
 namespace CasinoDeYann.Pages.Account
 {
@@ -22,6 +22,9 @@ namespace CasinoDeYann.Pages.Account
 
         [BindProperty]
         public string ConfirmPassword { get; set; }
+        
+        [BindProperty]
+        public bool IsAdmin { get; set; }
 
         public string ErrorMessage { get; set; }
 
@@ -29,13 +32,18 @@ namespace CasinoDeYann.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            
             if (Password != ConfirmPassword)
             {
                 ErrorMessage = "Passwords do not match.";
                 return Page();
             }
 
-            var result = await _authService.RegisterAsync(Username, Password);
+            var result = await _authService.RegisterAsync(Username, Password, IsAdmin ? "Admin" : "User");
             if (!result)
             {
                 ErrorMessage = "Username already taken.";

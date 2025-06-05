@@ -1,12 +1,12 @@
-using CasinoDeYann.Api;
-using CasinoDeYann.Api.DataAccess;
-using CasinoDeYann.Api.DataAccess.EFModels;
-using CasinoDeYann.Api.DataAccess.Interfaces;
-using CasinoDeYann.Api.Services;
-using CasinoDeYann.Api.Services.GoldMineService;
-using CasinoDeYann.Api.Services.Roulette;
-using CasinoDeYann.Api.Services.SlotMachine;
-using CasinoDeYann.Api.Services.Stats;
+using CasinoDeYann.Src;
+using CasinoDeYann.Src.DataAccess;
+using CasinoDeYann.Src.DataAccess.EFModels;
+using CasinoDeYann.Src.DataAccess.Interfaces;
+using CasinoDeYann.Src.Services;
+using CasinoDeYann.Src.Services.GoldMineService;
+using CasinoDeYann.Src.Services.Roulette;
+using CasinoDeYann.Src.Services.SlotMachine;
+using CasinoDeYann.Src.Services.Stats;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 

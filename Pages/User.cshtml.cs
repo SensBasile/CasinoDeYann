@@ -1,5 +1,4 @@
-﻿using CasinoDeYann.Api;
-using CasinoDeYann.Api.Services;
+﻿using CasinoDeYann.Src.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

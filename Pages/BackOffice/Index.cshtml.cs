@@ -1,10 +1,11 @@
 // Pages/Backoffice.cshtml.cs
 
-using CasinoDeYann.Api.Services;
-using CasinoDeYann.Api.Services.Stats;
+using CasinoDeYann.Src.Services;
+using CasinoDeYann.Src.Services.Stats;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CasinoDeYann.Pages.BackOffice;
 
@@ -37,7 +38,7 @@ public class BackofficeModel : PageModel
 
         public async Task OnGetAsync()
         {
-            CurrentSort = SortOrder;
+            CurrentSort = SortOrder.IsNullOrEmpty() ? "date_desc" : SortOrder;
             BetSort = SortOrder == "bet_asc" ? "bet_desc" : "bet_asc";
             GainSort = SortOrder == "gain_asc" ? "gain_desc" : "gain_asc";
             DateSort = SortOrder == "date_asc" ? "date_desc" : "date_asc";
@@ -49,4 +50,12 @@ public class BackofficeModel : PageModel
             HasNextPage = result.HasNext;
             HasPreviousPage = result.HasPrevious;
         }
+        
+        public async Task<IActionResult> OnPostCancelAsync(int id)
+        {
+            await _statsService.Cancel(id);
+            
+            return RedirectToPage();
+        }
+
 }

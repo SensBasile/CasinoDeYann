@@ -1,8 +1,9 @@
+using CasinoDeYann.Src.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
-using CasinoDeYann.Api.Services;
-using Microsoft.AspNetCore.Authorization;
+
+namespace CasinoDeYann.Pages.BackOffice;
 
 [Authorize(Roles = "Admin")]
 public class UserModel : PageModel

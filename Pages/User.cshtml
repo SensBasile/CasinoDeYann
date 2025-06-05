@@ -113,10 +113,10 @@
     <!-- 5. Boutons “Modifier le mot de passe” & “Supprimer le compte” -->
     @if (User.Identity?.Name == Model.Username)
     {
-        <div class="section">
+        <div class="section" id="editSection">
             <a asp-page="/ChangePassword" class="btn btn-primary">Modifier le mot de passe</a>
 
-            <form method="post" asp-page-handler="DeleteAccount" style="display:inline;">
+            <form method="post" asp-page-handler="DeleteAccount">
                 <button type="submit" class="btn btn-danger"
                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte ?');">
                     Supprimer le compte

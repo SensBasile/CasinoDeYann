@@ -197,7 +197,15 @@ ViewData["Title"] = "Roulette";
     betButtons.forEach(button => {
       button.addEventListener("click", () => {
         if (running) return;  // no new bets while spinning
-
+        let totalBet = updateBetAmount()
+        if (totalBet + currentChipValue > playerMoney) {
+          resultMessage.textContent = "Fonds Insuffisants";
+          setTimeout(() => {
+            resultMessage.textContent = "";
+          }, 1000);
+          return;
+        }
+        
         // 1) Create a new <img> for the chosen chip
         const img = document.createElement("img");
         img.src = `/assets/Roulette/chip/chip_${currentChipValue}.png`;
@@ -299,7 +307,7 @@ ViewData["Title"] = "Roulette";
       betStack.forEach(bet => {
         if (bet.type === "single") {
           // Push a JS array [number, amount]:
-          payload.Singles.push({ item1: bet.key, item2: bet.amount });
+          payload.Singles.push({ Number: bet.key, Amount: bet.amount });
         } else {
           // Map your “data-bet” keys onto the DTO’s field names:
           switch (bet.key) {

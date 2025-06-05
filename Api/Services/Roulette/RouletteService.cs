@@ -38,7 +38,7 @@ public class RouletteService(UserService userService)
 
     private long getTotalBetValue(RouletteRequest bets)
     {
-        long acc = bets.Singles?.Sum(s => s.Item2) ?? 0;
+        long acc = bets.Singles?.Sum(s => s.Amount) ?? 0;
 
         var properties = typeof(RouletteRequest).GetProperties();
         
@@ -54,12 +54,12 @@ public class RouletteService(UserService userService)
         return acc;
     }
 
-    private long Singles((int, long)[] bets, int winningNumber)
+    private long Singles(SingleBetRequest[] bets, int winningNumber)
     {
         const float mult = 36f;
         for (int i = 0; i < bets.Length; i++)
         {
-            if (bets[i].Item1 == winningNumber) return (long) Math.Floor(bets[i].Item2 * mult);
+            if (bets[i].Number == winningNumber) return (long) Math.Floor(bets[i].Amount * mult);
         }
         return 0;
     }

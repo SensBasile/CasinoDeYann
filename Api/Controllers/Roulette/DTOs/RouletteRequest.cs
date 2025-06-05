@@ -2,7 +2,7 @@
 
 public class RouletteRequest
 {
-    public (int, long)[]? Singles { get; set; }
+    public SingleBetRequest[]? Singles { get; set; }
     public long? Even { get; set; }
     public long? Odd { get; set; }
     public long? Red { get; set; }

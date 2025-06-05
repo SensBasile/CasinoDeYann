@@ -23,7 +23,7 @@ public class RouletteController(RouletteService rouletteService) : ControllerBas
         {
             for (var i = 0; i < bets.Singles.Length; i++)
             {
-                if (bets.Singles[i].Item1 < 0 || bets.Singles[i].Item2 > 36)
+                if (bets.Singles[i].Number < 0 || bets.Singles[i].Number > 36)
                     return BadRequest("Le numéro doit être compris entre 0 et 36.");
             }
         }

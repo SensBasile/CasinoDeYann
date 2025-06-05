@@ -36,12 +36,13 @@
     <script>
         const nugget = document.getElementById("nugget");
         const button = document.getElementById("spin");
+        const moneyEl = document.getElementById("money-amount");
 
         const blockedOverlay = document.getElementById("machine-blocked");
         
         function refreshBlockedState() {
             let playerMoney = @(Model.CurrentUser?.Money ?? 0);
-            if (playerMoney > 100) {
+            if (playerMoney >= 100) {
                 blockedOverlay.style.display = "block";
                 button.disabled = true;    // optionally disable the spin button
             } else {
@@ -60,7 +61,7 @@
                 nugget.classList.add("shake");
                 const res = await fetch("/api/GoldMine/mine", {method: "POST"});
                 moneyDisplay.textContent = String(amount + 1);
-                moneyAmountEl.textContent = String(amount + 1);
+                moneyEl.textContent = String(amount + 1);
                 refreshBlockedState();
             }
             

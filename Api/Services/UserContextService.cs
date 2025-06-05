@@ -14,12 +14,12 @@ public class UserContextService
         _usersRepository = usersRepository;
     }
 
-    public Task<User> GetCurrentUserAsync()
+    public Task<User?> GetCurrentUserAsync()
     {
         var username = _httpContextAccessor.HttpContext?.User?.Identity?.Name;
         if (string.IsNullOrEmpty(username))
             return Task.FromResult<User?>(null);
 
-        return _usersRepository.GetOneByName(username);
+        return _usersRepository.GetOneByName(username)!;
     }
 }

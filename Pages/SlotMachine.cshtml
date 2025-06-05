@@ -57,7 +57,7 @@ ViewData["Title"] = "Machine à sous";
     <div class="info" id="money-text">Monnaie</div>
     <div class="info" id="bet-text">Mise</div>
     <div class="info" id="gain-amount">0</div>
-    <div class="info" id="money-amount">@Model.CurrentUser.Money</div>
+    <div class="info" id="money-amount">@(Model.CurrentUser?.Money ?? 0)</div>
     <div class="info" id="bet-amount">1</div>
 
     <!-- MINUS AND PLUS BUTTONS -->
@@ -74,7 +74,7 @@ ViewData["Title"] = "Machine à sous";
 <script>
     let running = false;
     
-    let playerMoney = @Model.CurrentUser.Money;
+    let playerMoney = @(Model.CurrentUser?.Money ?? 0);
     
     let bet = 1;
     const betDisplay = document.getElementById("bet-amount");

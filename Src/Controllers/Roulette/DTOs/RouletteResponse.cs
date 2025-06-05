@@ -3,5 +3,6 @@
 public record RouletteResponse(
     int WinningNumber,
     long Gain,
-    string Message
+    string Message,
+    long Money
 );

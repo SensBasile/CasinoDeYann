@@ -24,7 +24,8 @@ public class RouletteService(UserService userService, StatsService statsService)
         int winningNumber = _random.Next(0, 37);
 
         long gain = ComputeGains(bets, winningNumber);
-        
+
+        user = await userService.AddMoney(userName, gain);
         _ = await userService.AddExp(userName, gain / 700 + 35);
         
         await statsService.Create(new GameHistoryEntryModel(-1, userName, DateTime.Now, "Roux'Lette", totalBet, gain, false));
@@ -32,7 +33,8 @@ public class RouletteService(UserService userService, StatsService statsService)
         return new RouletteModel(
             winningNumber,
             gain,
-            gain > totalBet ? $"Bravo vous avez remporté {gain - totalBet} yanns" : $"Dommage vous avez perdu {totalBet - gain} yanns"
+            gain > totalBet ? $"Bravo vous avez remporté {gain - totalBet} yanns" : $"Dommage vous avez perdu {totalBet - gain} yanns",
+            user.Money
         );
     }
 

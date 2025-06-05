@@ -9,191 +9,428 @@ ViewData["Title"] = "Roulette";
 <div class="roulette-page">
     
     <div class="carpet-container">
+      <img
+        src="~/assets/Roulette/rouxlette.png"
+        alt="Rouxlette Logo"
+        class="logo"
+      />
 
-        <div class="bet-wrapper">
-            <img 
-                src="~/assets/Roulette/carpet.png" 
-                alt="Table Carpet" 
-                class="carpet" 
-            />
-            
-            <div class="button-overlay">
-                <button class="bet-button bet-0"  data-number="0">0</button>
-                <button class="bet-button bet-1"  data-number="1">1</button>
-                <button class="bet-button bet-2"  data-number="2">2</button>
-                <button class="bet-button bet-3"  data-number="3">3</button>
-                <button class="bet-button bet-4"  data-number="4">4</button>
-                <button class="bet-button bet-5"  data-number="5">5</button>
-                <button class="bet-button bet-6"  data-number="6">6</button>
-                <button class="bet-button bet-7"  data-number="7">7</button>
-                <button class="bet-button bet-8"  data-number="8">8</button>
-                <button class="bet-button bet-9"  data-number="9">9</button>
-                <button class="bet-button bet-10" data-number="10">10</button>
-                <button class="bet-button bet-11" data-number="11">11</button>
-                <button class="bet-button bet-12" data-number="12">12</button>
-                <button class="bet-button bet-13" data-number="13">13</button>
-                <button class="bet-button bet-14" data-number="14">14</button>
-                <button class="bet-button bet-15" data-number="15">15</button>
-                <button class="bet-button bet-16" data-number="16">16</button>
-                <button class="bet-button bet-17" data-number="17">17</button>
-                <button class="bet-button bet-18" data-number="18">18</button>
-                <button class="bet-button bet-19" data-number="19">19</button>
-                <button class="bet-button bet-20" data-number="20">20</button>
-                <button class="bet-button bet-21" data-number="21">21</button>
-                <button class="bet-button bet-22" data-number="22">22</button>
-                <button class="bet-button bet-23" data-number="23">23</button>
-                <button class="bet-button bet-24" data-number="24">24</button>
-                <button class="bet-button bet-25" data-number="25">25</button>
-                <button class="bet-button bet-26" data-number="26">26</button>
-                <button class="bet-button bet-27" data-number="27">27</button>
-                <button class="bet-button bet-28" data-number="28">28</button>
-                <button class="bet-button bet-29" data-number="29">29</button>
-                <button class="bet-button bet-30" data-number="30">30</button>
-                <button class="bet-button bet-31" data-number="31">31</button>
-                <button class="bet-button bet-32" data-number="32">32</button>
-                <button class="bet-button bet-33" data-number="33">33</button>
-                <button class="bet-button bet-34" data-number="34">34</button>
-                <button class="bet-button bet-35" data-number="35">35</button>
-                <button class="bet-button bet-36" data-number="36">36</button>
+      <div class="bet-wrapper">
 
-                <!-- COLUMN-BET BUTTONS (the “2 à 1” spots on the far right)      -->
-                <button class="bet-button bet-row1" data-bet="row1">2T1</button>
-                <button class="bet-button bet-row2" data-bet="row2">2T1</button>
-                <button class="bet-button bet-row3" data-bet="row3">2T1</button>
+        <img
+          src="~/assets/Roulette/carpet.png"
+          alt="Table Carpet"
+          class="carpet"/>
 
-                <!-- DOZEN-BET BUTTONS (“1ère 12”, “2nde 12”, “3ème 12”)           -->
-                <button class="bet-button bet-dozen1" data-bet="dozen1">1ère 12</button>
-                <button class="bet-button bet-dozen2" data-bet="dozen2">2nde 12</button>
-                <button class="bet-button bet-dozen3" data-bet="dozen3">3ème 12</button>
+        <div class="button-overlay">
+          <button class="bet-button bet-0" data-number="0">0</button>
+          <button class="bet-button bet-1" data-number="1">1</button>
+          <button class="bet-button bet-2" data-number="2">2</button>
+          <button class="bet-button bet-3" data-number="3">3</button>
+          <button class="bet-button bet-4" data-number="4">4</button>
+          <button class="bet-button bet-5" data-number="5">5</button>
+          <button class="bet-button bet-6" data-number="6">6</button>
+          <button class="bet-button bet-7" data-number="7">7</button>
+          <button class="bet-button bet-8" data-number="8">8</button>
+          <button class="bet-button bet-9" data-number="9">9</button>
+          <button class="bet-button bet-10" data-number="10">10</button>
+          <button class="bet-button bet-11" data-number="11">11</button>
+          <button class="bet-button bet-12" data-number="12">12</button>
+          <button class="bet-button bet-13" data-number="13">13</button>
+          <button class="bet-button bet-14" data-number="14">14</button>
+          <button class="bet-button bet-15" data-number="15">15</button>
+          <button class="bet-button bet-16" data-number="16">16</button>
+          <button class="bet-button bet-17" data-number="17">17</button>
+          <button class="bet-button bet-18" data-number="18">18</button>
+          <button class="bet-button bet-19" data-number="19">19</button>
+          <button class="bet-button bet-20" data-number="20">20</button>
+          <button class="bet-button bet-21" data-number="21">21</button>
+          <button class="bet-button bet-22" data-number="22">22</button>
+          <button class="bet-button bet-23" data-number="23">23</button>
+          <button class="bet-button bet-24" data-number="24">24</button>
+          <button class="bet-button bet-25" data-number="25">25</button>
+          <button class="bet-button bet-26" data-number="26">26</button>
+          <button class="bet-button bet-27" data-number="27">27</button>
+          <button class="bet-button bet-28" data-number="28">28</button>
+          <button class="bet-button bet-29" data-number="29">29</button>
+          <button class="bet-button bet-30" data-number="30">30</button>
+          <button class="bet-button bet-31" data-number="31">31</button>
+          <button class="bet-button bet-32" data-number="32">32</button>
+          <button class="bet-button bet-33" data-number="33">33</button>
+          <button class="bet-button bet-34" data-number="34">34</button>
+          <button class="bet-button bet-35" data-number="35">35</button>
+          <button class="bet-button bet-36" data-number="36">36</button>
+
+          <!-- COLUMN-BET BUTTONS (the “2 à 1” spots on the far right)      -->
+          <button class="bet-button bet-row1" data-bet="row1">2T1</button>
+          <button class="bet-button bet-row2" data-bet="row2">2T1</button>
+          <button class="bet-button bet-row3" data-bet="row3">2T1</button>
+
+          <!-- DOZEN-BET BUTTONS (“1ère 12”, “2nde 12”, “3ème 12”)           -->
+          <button class="bet-button bet-dozen1" data-bet="dozen1">1ère 12</button>
+          <button class="bet-button bet-dozen2" data-bet="dozen2">2nde 12</button>
+          <button class="bet-button bet-dozen3" data-bet="dozen3">3ème 12</button>
 
 
-                <!-- “OUTSIDE” BETS (low/high, even/odd, red/black)                -->
-                <button class="bet-button bet-low"   data-bet="low">1-18</button>
-                <button class="bet-button bet-even"  data-bet="even">Pair</button>
-                <button class="bet-button bet-red"   data-bet="red">Rouge</button>
-                <button class="bet-button bet-black" data-bet="black">Noir</button>
-                <button class="bet-button bet-odd"   data-bet="odd">Impair</button>
-                <button class="bet-button bet-high"  data-bet="high">19-36</button>
-                
-                <!-- Chip (bet value) buttons                -->
-                <button class="bet-button chip_1"  data-bet="1">19-36</button>
-                <button class="bet-button chip_5"  data-bet="5">19-36</button>
-                <button class="bet-button chip_25"  data-bet="25">19-36</button>
-                <button class="bet-button chip_50"  data-bet="50">19-36</button>
-                <button class="bet-button chip_100"  data-bet="100">19-36</button>
-                <button class="bet-button chip_500"  data-bet="500">19-36</button>
-                <button class="bet-button chip_1000"  data-bet="1000">19-36</button>
-                
-            </div>
-            <button id="play-button" type="button"></button>
+          <!-- “OUTSIDE” BETS (low/high, even/odd, red/black)                -->
+          <button class="bet-button bet-low" data-bet="low">1-18</button>
+          <button class="bet-button bet-even" data-bet="even">Pair</button>
+          <button class="bet-button bet-red" data-bet="red">Rouge</button>
+          <button class="bet-button bet-black" data-bet="black">Noir</button>
+          <button class="bet-button bet-odd" data-bet="odd">Impair</button>
+          <button class="bet-button bet-high" data-bet="high">19-36</button>
+
+          <!-- Chip (bet value) buttons                -->
+          <button class="bet-button chip-button chip-1" data-chip="1">1</button>
+          <button class="bet-button chip-button chip-5" data-chip="5">5</button>
+          <button class="bet-button chip-button chip-25" data-chip="25">25</button>
+          <button class="bet-button chip-button chip-50" data-chip="50">50</button>
+          <button class="bet-button chip-button chip-100" data-chip="100">100</button>
+          <button class="bet-button chip-button chip-500" data-chip="500">500</button>
+          <button class="bet-button chip-button chip-1000" data-chip="1000">1K</button>
+
+          <div class="info" id="gain-text">Gain</div>
+          <div class="info" id="money-text">Monnaie</div>
+          <div class="info" id="bet-text">Mise</div>
+          <div class="info" id="gain-amount">0</div>
+          <div class="info" id="money-amount">@(Model.CurrentUser?.Money ?? 0)</div>
+          <div class="info" id="bet-amount">0</div>
+
         </div>
+        <button id="play-button" type="button"></button>
+        <button id="cancel-button" type="button"></button>
+      </div>
     </div>
 
     <div class="wheel-container">
-        <div class="wheel-wrapper">
-            <!-- SUPPORT IMAGE: sits directly behind the wheel -->
-            <img
-                src="~/assets/Roulette/roulette_support.png"
-                alt="Roulette Support"
-                class="roulette-support"
-            />
+      <div class="wheel-wrapper">
+        <!-- SUPPORT IMAGE: sits directly behind the wheel -->
+        <img
+          src="~/assets/Roulette/roulette_support.png"
+          alt="Roulette Support"
+          class="roulette-support"
+        />
 
-            <!-- WHEEL -->
-            <img
-                id="roulette-wheel"
-                src="~/assets/Roulette/roulette.png"
-                alt="Roulette Wheel"
-                class="roulette-wheel"
-            />
+        <!-- WHEEL -->
+        <img
+          id="roulette-wheel"
+          src="~/assets/Roulette/roulette.png"
+          alt="Roulette Wheel"
+          class="roulette-wheel"
+        />
 
-            <!-- BALL WRAPPER -->
-            <div id="ball-wrapper" class="ball-wrapper">
-                <img
-                    id="roulette-ball"
-                    src="~/assets/Roulette/ball.png"
-                    alt="Roulette Ball"
-                    class="roulette-ball"
-                />
-            </div>
+        <!-- BALL WRAPPER -->
+        <div id="ball-wrapper" class="ball-wrapper">
+          <img
+            id="roulette-ball"
+            src="~/assets/Roulette/ball.png"
+            alt="Roulette Ball"
+            class="roulette-ball"
+          />
         </div>
-        <div id="result-message" class="result-message"></div>
+      </div>
     </div>
+    <div id="result-message" class="result-message"></div>
 </div>
-
-
-
 @section Scripts {
-<script>
-    (function() {
-        const wheel = document.getElementById("roulette-wheel");
-        const ballWrapper = document.getElementById("ball-wrapper");
-        const ball = document.getElementById("roulette-ball");
-        const playButton = document.getElementById("play-button");
-        const resultMessage = document.getElementById("result-message");
-        let running = false;
+  <script>
+  (function() {
+    // ───────────── Cached references ─────────────
+    const wheel         = document.getElementById("roulette-wheel");
+    const ballWrapper   = document.getElementById("ball-wrapper");
+    const ball          = document.getElementById("roulette-ball");
+    const playButton    = document.getElementById("play-button");
+    const cancelButton  = document.getElementById("cancel-button");
+    const resultMessage = document.getElementById("result-message");
+    
+    const betAmountEl   = document.getElementById("bet-amount");
+    const gainAmountEl  = document.getElementById("gain-amount");
+    const moneyAmountEl = document.getElementById("money-amount");
+    
+    // All bet buttons (single numbers, dozens, rows, outside). We filter out the chip buttons themselves.
+    const betButtons = Array.from(document.querySelectorAll(".bet-button"))
+                        .filter(btn => btn.hasAttribute("data-number") || btn.hasAttribute("data-bet"));
 
-        // European roulette pockets in strict clockwise order,
-        // starting from “0” at 12 o’clock, then “32” just to its right, etc.
-        const numbers = [
-            0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8,
-            23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26
-        ];
-        const segmentAngle = 360 / numbers.length; // ≈ 9.7297°
+    // All chip‐denomination buttons (1, 5, 25, …).
+    const chipButtons = Array.from(document.querySelectorAll(".chip-button"));
 
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
+    // ───────────── Internal state ─────────────
+    let currentChipValue = 1;  // default = 1€
+    let betStack = [];         // will hold { type, key, amount, chipElement }
+
+    // European roulette pockets; used when spinning the wheel.
+    const numbers = [
+      0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 
+      6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 
+      24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 
+      29, 7, 28, 12, 35, 3, 26
+    ];
+    const segmentAngle = 360 / numbers.length; // ≈ 9.7297°
+    
+    let playerMoney = @(Model.CurrentUser?.Money ?? 0);
+    
+    let running = false; // block input while spin is happening
+
+    function updateBetAmount() {
+      const total = betStack.reduce((sum, b) => sum + b.amount, 0);
+      betAmountEl.textContent = total;
+      return total;
+    }
+    
+    // ───────────── Helper: highlight selected chip (default = 1€) ─────────────
+    function updateChipSelection(btn) {
+      chipButtons.forEach(c => c.classList.remove("selected"));
+      btn.classList.add("selected");
+      currentChipValue = parseInt(btn.getAttribute("data-chip"), 10);
+    }
+    // On page load, highlight the “1€” button:
+    chipButtons.forEach(btn => {
+      if (btn.getAttribute("data-chip") === "1") {
+        btn.classList.add("selected");
+      }
+      btn.addEventListener("click", () => {
+        updateChipSelection(btn);
+      });
+    });
+
+    // ───────────── Handle clicks on bet‐buttons (stacking chips) ─────────────
+    betButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        if (running) return;  // no new bets while spinning
+
+        // 1) Create a new <img> for the chosen chip
+        const img = document.createElement("img");
+        img.src = `/assets/Roulette/chip/chip_${currentChipValue}.png`;
+        img.alt = `Chip-${currentChipValue}`;
+        img.classList.add("placed-chip"); 
+        // (Make sure your CSS has exactly “.placed-chip { … }” with an ASCII hyphen.)
+
+        // 2) Append to the button (absolute‐positioned by CSS)
+        button.appendChild(img);
+
+        // 3) Count how many chips are in this button already:
+        const existingChips = button.querySelectorAll(".placed-chip");
+        const index = existingChips.length - 1; 
+        //    index = 0 → first chip, index = 1 → second chip, etc.
+
+        // 4) Compute vertical offset (we’ll lift each chip 10px higher than the one below)
+        const offsetPerChipPx = 10;
+        const totalOffsetPx   = index * offsetPerChipPx;
+
+        // 5) Center it and shift up by totalOffsetPx:
+        img.style.transform = `translate(-50%, calc(-50% - ${totalOffsetPx}px))`;
+
+        // 6) Now push that bet into our betStack
+        if (button.hasAttribute("data-number")) {
+          const number = parseInt(button.getAttribute("data-number"), 10);
+          betStack.push({
+            type:       "single",
+            key:        number,
+            amount:     currentChipValue,
+            chipElement: img
+          });
+        } else {
+          const betKey = button.getAttribute("data-bet");
+          betStack.push({
+            type:       "outside",
+            key:        betKey,
+            amount:     currentChipValue,
+            chipElement: img
+          });
+        }
+        updateBetAmount();
+      });
+    });
+
+    // ───────────── Handle Cancel (pop last bet) ─────────────
+    cancelButton.addEventListener("click", () => {
+      if (running) return;
+      const last = betStack.pop();
+      if (!last) return;
+      last.chipElement.remove();
+      updateBetAmount();
+    });
+
+    // ───────────── Handle Play (build JSON → POST → spin) ─────────────
+    playButton.addEventListener("click", async () => {
+      if (running) return;
+      ball.classList.remove("fall");
+      if (betStack.length === 0) {
+        alert("Veuillez placer au moins un pari avant de jouer.");
+        return;
+      }
+
+      const betTotal = updateBetAmount();
+      
+      if (betTotal > playerMoney) {
+        alert("Fonds insuffisants");
+        return;
+      }
+      running = true;
+      resultMessage.textContent = "";
+
+      // Disable all inputs during the spin:
+      [...betButtons, ...chipButtons, cancelButton, playButton]
+        .forEach(el => el.setAttribute("disabled", "true"));
+
+      // ─── 1) Build the exact JSON payload matching C#’s RouletteRequest ───
+      const payload = {
+        Singles:     [],
+        Even:        null,
+        Odd:         null,
+        Red:         null,
+        Black:       null,
+        FirstTier:   null,
+        SecondTier:  null,
+        ThirdTier:   null,
+        FirstRow:    null,
+        SecondRow:   null,
+        ThirdRow:    null,
+        FirstHalf:   null,
+        SecondHalf:  null
+      };
+
+      // Helper to accumulate outside/dozen/row bets:
+      function accumulate(fieldName, amt) {
+        payload[fieldName] = (payload[fieldName] || 0) + amt;
+      }
+
+      // Walk through each placed bet in the stack:
+      betStack.forEach(bet => {
+        if (bet.type === "single") {
+          // Push a JS array [number, amount]:
+          payload.Singles.push({ item1: bet.key, item2: bet.amount });
+        } else {
+          // Map your “data-bet” keys onto the DTO’s field names:
+          switch (bet.key) {
+            case "even":      accumulate("Even",      bet.amount); break;
+            case "odd":       accumulate("Odd",       bet.amount); break;
+            case "red":       accumulate("Red",       bet.amount); break;
+            case "black":     accumulate("Black",     bet.amount); break;
+            case "dozen1":    accumulate("FirstTier", bet.amount); break;
+            case "dozen2":    accumulate("SecondTier",bet.amount); break;
+            case "dozen3":    accumulate("ThirdTier", bet.amount); break;
+            case "row1":      accumulate("FirstRow",  bet.amount); break;
+            case "row2":      accumulate("SecondRow", bet.amount); break;
+            case "row3":      accumulate("ThirdRow",  bet.amount); break;
+            case "low":       accumulate("FirstHalf", bet.amount); break;
+            case "high":      accumulate("SecondHalf",bet.amount); break;
+            default:
+              console.warn("Clé de pari inconnue:", bet.key);
+          }
+        }
+      });
+
+      // If no single‐number bets, remove that property so it’s not sent as an empty array:
+      if (payload.Singles.length === 0) {
+        delete payload.Singles;
+      }
+      // Remove all zero/”null” outside‐bets so the server sees them as null:
+      [
+        "Even","Odd","Red","Black",
+        "FirstTier","SecondTier","ThirdTier",
+        "FirstRow","SecondRow","ThirdRow",
+        "FirstHalf","SecondHalf"
+      ].forEach(field => {
+        if (!payload[field]) {
+          delete payload[field];
+        }
+      });
+
+      // ─── 2) Debug: log the exact JSON you’re sending ─────────
+      console.log("▶ POST /api/roulette/play/  → ", JSON.stringify(payload));
+
+      // ─── 3) POST to the server ───────────────────────────────
+      let responseJson;
+      try {
+        const resp = await fetch("/api/roulette/play/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!resp.ok) {
+          // If the model binder failed, ASP.NET will return 400 with a JSON “errors” payload:
+          const text = await resp.text();
+          alert("Erreur du serveur : " + text);
+          throw new Error("Server returned " + resp.status);
+        }
+        responseJson = await resp.json();
+      } catch (err) {
+        console.error("PLAY request failed:", err);
+        // Re‐enable all buttons so the user can try again:
+        [...betButtons, ...chipButtons, cancelButton, playButton]
+          .forEach(el => el.removeAttribute("disabled"));
+        running = false;
+        return;
+      }
+
+      // ─── 4) Successfully got JSON back ▶ extract the fields ───
+      console.log("◀ Reçu du serveur :", responseJson);
+      const { winningNumber, gain, message, money } = responseJson;
+      
+      if (winningNumber === undefined || gain === undefined || message === undefined) {
+        // That means the server sent back something unexpected.
+        console.error("Données manquantes dans la réponse :", responseJson);
+        alert("Réponse malformée du serveur ; vérifiez la console.");
+        running = false;
+        [...betButtons, ...chipButtons, cancelButton, playButton]
+          .forEach(el => el.removeAttribute("disabled"));
+        return;
+      }
+      
+      
+      const winningIndex = numbers.indexOf(winningNumber);
+      if (winningIndex < 0) {
+        console.error("Le numéro tiré n’existe pas :", winningNumber);
+      }
+      const offsetIndex = (numbers.length - winningIndex) % numbers.length;
+      const midSegmentAngle = offsetIndex * segmentAngle + (segmentAngle / 2);
+      const fullSpins = Math.floor(Math.random() * (6 - 3 + 1)) + 3;
+      const finalAngle = fullSpins * 360 + midSegmentAngle;
+      
+      wheel.style.transition = "none";
+      wheel.style.transform = "rotate(0deg)";
+      void wheel.offsetHeight;
+
+      ballWrapper.classList.remove("animate");
+      void ballWrapper.offsetHeight;
+      ball.style.opacity = "1";
+      ballWrapper.classList.add("animate");
+
+      wheel.style.transition = "transform 5s ease-out";
+      wheel.style.transform = `rotate(${finalAngle}deg)`;
+      
+      setTimeout(() => {
+        ball.classList.add("fall");
+        resultMessage.textContent = `${message} (Numéro : ${winningNumber}, Gain : ${gain} €)`;
+        running = false;
+
+        // Remove all chip <img> and clear the stack for the next round:
+        betStack.forEach(bet => bet.chipElement.remove());
+        betStack = [];
+        
+        if (gainAmountEl) {
+          gainAmountEl.textContent = gain;
         }
 
-        playButton.addEventListener("click", () => {
-            if (running) return;
-            running = true;
-            resultMessage.textContent = "";
+        const userMoneyDisplay = document.getElementById("user-money");
+        if (userMoneyDisplay) {
+          playerMoney = money;
+          userMoneyDisplay.textContent = money;
+        }
 
-            // === RESET THE BALL POSITION ===
-            ball.classList.remove("fall");
-            ball.style.opacity = "0";
-            void ball.offsetHeight;
+        if (moneyAmountEl) {
+          moneyAmountEl.textContent = money;
+        }
+        
+        updateBetAmount();
+        
+        // Re‐enable everything so the user can bet again:
+        [...betButtons, ...chipButtons, cancelButton, playButton]
+          .forEach(el => el.removeAttribute("disabled"));
+      }, 5000);
+    });
 
-            // === CHOOSE A RANDOM WINNING NUMBER FIRST ===
-            const winningIndex = getRandomInt(0, numbers.length);
-            const result = numbers[winningIndex];
-
-            // === INVERT THE ORIGINAL “offsetIndex” FORMULA ===
-            // original: winningIndex = (numbers.length − offsetIndex) % numbers.length
-            const offsetIndex = (numbers.length - winningIndex) % numbers.length;
-
-            // === COMPUTE THE MIDPOINT ANGLE OF THAT SEGMENT ===
-            // Each segment is 'segmentAngle' degrees wide, so its center lies at:
-            //    offsetIndex * segmentAngle + segmentAngle / 2
-            const midSegmentAngle = offsetIndex * segmentAngle + (segmentAngle / 2);
-
-            // === PICK A RANDOM NUMBER OF FULL SPINS (3–6) ===
-            const fullSpins = getRandomInt(3, 7); // 3, 4, 5, or 6 full turns
-
-            // === FINAL ANGLE = full turns + exact segment midpoint ===
-            const finalAngle = fullSpins * 360 + midSegmentAngle;
-
-            // === RESET & SPIN THE WHEEL ===
-            wheel.style.transition = "none";
-            wheel.style.transform = "rotate(0deg)";
-            void wheel.offsetHeight;
-
-            ballWrapper.classList.remove("animate");
-            void ballWrapper.offsetHeight;
-            ball.style.opacity = "1";
-            ballWrapper.classList.add("animate");
-
-            wheel.style.transition = "transform 5s ease-out";
-            wheel.style.transform = `rotate(${finalAngle}deg)`;
-
-            // === AFTER 5 SECONDS: drop the ball & show the chosen number ===
-            setTimeout(() => {
-                ball.classList.add("fall");
-                resultMessage.textContent = `Le numéro est ${result}`;
-                running = false;
-            }, 5000);
-        });
-    })();
-</script>
+  })();
+  </script>
 }
-

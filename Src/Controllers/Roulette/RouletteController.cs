@@ -33,7 +33,8 @@ public class RouletteController(RouletteService rouletteService) : ControllerBas
         return Ok(new RouletteResponse(
             res.WinningNumber,
             res.Gain,
-            res.Message
+            res.Message,
+            res.Money
         ));
     }
 }

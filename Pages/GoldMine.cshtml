@@ -8,9 +8,15 @@
 
 <div class="goldmine-container">
     <img
-        src="~/assets/GoldMine/machine/machine.png"
+        src="~/assets/GoldMine/machine/machine2.png"
         alt="Gold Mine"
         class="goldmine-gif"
+    />
+    <img
+        src="~/assets/GoldMine/machine/machine_blocked.png"
+        alt="Machine Blocked"
+        id="machine-blocked"
+        class="blocked"
     />
     <div class="nugget-wrapper" id="nugget-wrapper">
         <img
@@ -20,7 +26,8 @@
             id="nugget"
         />
     </div>
-    
+    <div class="info" id="money-text">Monnaie</div>
+    <div class="info" id="money-amount">@(Model.CurrentUser?.Money ?? 0)</div>
     <button id="spin" type="button"></button>
 
 </div>
@@ -30,15 +37,31 @@
         const nugget = document.getElementById("nugget");
         const button = document.getElementById("spin");
 
+        const blockedOverlay = document.getElementById("machine-blocked");
+        
+        function refreshBlockedState() {
+            let playerMoney = @(Model.CurrentUser?.Money ?? 0);
+            if (playerMoney > 100) {
+                blockedOverlay.style.display = "block";
+                button.disabled = true;    // optionally disable the spin button
+            } else {
+                blockedOverlay.style.display = "none";
+                button.disabled = false;
+            }
+}
+        refreshBlockedState();
+        
         button.addEventListener("click", async () => {
-            nugget.classList.add("shake");
-            const res = await fetch("/api/GoldMine/mine", {method: "POST"});
 
             const moneyDisplay = document.getElementById("user-money");
             const amount = parseInt(moneyDisplay.textContent);
             
             if (amount < 100) {
+                nugget.classList.add("shake");
+                const res = await fetch("/api/GoldMine/mine", {method: "POST"});
                 moneyDisplay.textContent = String(amount + 1);
+                moneyAmountEl.textContent = String(amount + 1);
+                refreshBlockedState();
             }
             
             setTimeout(() => {

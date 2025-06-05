@@ -2,6 +2,7 @@ using AutoMapper;
 using CasinoDeYann.Api.DataAccess.Dbo;
 using CasinoDeYann.Api.DataAccess.EFModels;
 using CasinoDeYann.Api.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace CasinoDeYann.Api.DataAccess;
 
@@ -42,5 +43,45 @@ public class StatsRepository: Repository<TStats, Stats>, IStatsRepository
             GamesPlayedPerDay = gamesPlayedPerDay,
         };
     }
-    
+
+    public async Task<PaginatedStats> Get(string sortOrder, string searchString, int pageIndex)
+    {
+        var stats = _context.Stats
+            .Include(s => s.User)
+            .AsNoTracking();
+        
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            stats= stats.Where(s => s.User.Username.Contains(searchString));
+        }
+        
+        switch (sortOrder)
+        {
+            case "bet_asc":
+                stats = stats.OrderBy(s => s.Bet);
+                break;
+            case "bet_desc":
+                stats = stats.OrderByDescending(s => s.Bet);
+                break;
+            case "gain_asc":
+                stats = stats.OrderBy(s => s.Gain);
+                break;
+            case "gain_desc":
+                stats = stats.OrderByDescending(s => s.Gain);
+                break;
+            case "date_asc":
+                stats = stats.OrderBy(s => s.Date);
+                break;
+            case "date_desc":
+                stats = stats.OrderByDescending(s => s.Date);
+                break;
+            default:
+                stats = stats.OrderByDescending(s => s.Date);
+                break;
+        }
+        var items = await stats.Skip(
+                (pageIndex - 1) * 15)
+            .Take(15).ToListAsync();
+        return new PaginatedStats(_mapper.Map<Stats[]>(items), stats.Count() / 15 + 1);
+    }
 }

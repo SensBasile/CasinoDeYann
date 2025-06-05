@@ -42,7 +42,7 @@ public class UserService(IUsersRepository usersRepository, IStatsRepository stat
 
         foreach (var stat in stats.History)
         {
-            history.Add(new GameHistoryEntryModel(user.Id, stat.Date, stat.Game, stat.Bet, stat.Gain));
+            history.Add(new GameHistoryEntryModel(user.Username, stat.Date, stat.Game, stat.Bet, stat.Gain));
         }
 
 
@@ -72,6 +72,13 @@ public class UserService(IUsersRepository usersRepository, IStatsRepository stat
     {
         var user = await GetUser(name);
         user.Xp += amount;
+        return await usersRepository.Update(user);
+    }
+
+    public async Task<User> ChangeRole(string username, string role)
+    {
+        var user = await GetUser(username);
+        user.Role = role;
         return await usersRepository.Update(user);
     }
 }

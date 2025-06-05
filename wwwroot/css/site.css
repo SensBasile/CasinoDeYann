@@ -15,7 +15,7 @@ html {
 html {
   position: relative;
   min-height: 100%;
-}
+  }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
@@ -53,6 +53,12 @@ header h1 {
   padding: 10px;
   width: 100%;
 }
+
+td, th {
+  font-family: "Jersey 10", cursive;
+  font-size: 1.5rem;
+}
+
 .nav-item{
   display: inline;
   float: left;
@@ -102,8 +108,9 @@ h2 {
   text-align: center;
   color: gold;
   margin-top: 2rem;
-  font-size: 2rem;
+  font-size: 2.5rem;
   text-shadow: 1px 1px 4px #000;
+  font-family: "Jersey 10", cursive;
 }
 
 .table {
@@ -114,7 +121,6 @@ h2 {
   color: #f8f8f8;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
 }
 
 .table thead {
@@ -135,25 +141,14 @@ h2 {
   transition: background-color 0.2s ease;
 }
 
-.table td:first-child {
+.table td {
   font-weight: bold;
   color: gold;
 }
 
-.table td:nth-child(3) {
-  color: #00ffcc; /* green-blue for money */
-}
-
-.table td:nth-child(4) {
-  color: #ffa500; /* orange for XP/level */
-}
-
-
-
 /* Navbar Container */
 .navbar-container {
   background-color: #111;
-  border-bottom: 2px solid gold;
   padding: 0.5rem 2rem;
   position: sticky;
   top: 0;
@@ -183,10 +178,11 @@ h2 {
   color: white;
   font-weight: bold;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.5rem;
   position: relative;
   transition: color 0.3s;
   padding: 0.5rem;
+  font-family: "Jersey 10", cursive;
 }
 
 .nav-item a:hover {
@@ -215,6 +211,8 @@ h2 {
   color: gold;
   margin-right: 0.3rem;
   font-weight: bold;
+  font-family: "Jersey 10", cursive;
+  font-size: 1.5rem;
 }
 
 .mini-coin {

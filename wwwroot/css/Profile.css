@@ -34,9 +34,7 @@ table {
     border-collapse: collapse;
     margin-top: 10px;
 }
-table, th, td {
-    border: 1px solid #ddd;
-}
+
 th, td {
     padding: 8px;
     text-align: left;
@@ -75,4 +73,100 @@ th, td {
 
 #editSection{
     display: flex;
+}
+
+/* ========================= */
+/* TABLEAU - STYLE UNIFIÉ   */
+/* ========================= */
+table {
+    width: 90%;
+    margin: 2rem auto;
+    border-collapse: collapse;
+    background-color: #1e1e1e;
+    color: #f8f8f8;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: "Jersey 10", cursive;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+thead {
+    background-color: #333;
+    color: gold;
+    font-size: 1.1rem;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #444;
+    font-weight: bold;
+}
+
+tbody tr:hover {
+    background-color: #2a2a2a;
+    transition: background-color 0.2s ease;
+}
+
+/* ========================= */
+/* TITRE ET STRUCTURE       */
+/* ========================= */
+.section h2 {
+    text-align: center;
+    color: gold;
+    margin-top: 2rem;
+    font-size: 2.5rem;
+    font-family: "Jersey 10", cursive;
+}
+
+.section {
+    margin-bottom: 2.5rem;
+}
+
+.charts-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.chart-container {
+    background-color: #1e1e1e;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    color: gold;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.chart-container canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.chart-title {
+    font-family: "Jersey 10", cursive;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: gold;
+}
+
+.stats-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    max-width: 900px;
+    width: 100%;
 }

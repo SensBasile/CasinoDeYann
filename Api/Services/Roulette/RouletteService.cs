@@ -19,13 +19,13 @@ public class RouletteService(UserService userService)
         long totalBet = getTotalBetValue(bets);
         User user = await userService.Pay(userName, totalBet);
         
-        _ = userService.AddExp(userName, totalBet / 100 + 10);
+        _ = await userService.AddExp(userName, totalBet / 100 + 10);
         
         int winningNumber = _random.Next(0, 37);
 
         long gain = ComputeGains(bets, winningNumber);
         
-        _ = userService.AddExp(userName, gain / 700 + 35);
+        _ = await userService.AddExp(userName, gain / 700 + 35);
 
         return new RouletteModel(
             winningNumber,

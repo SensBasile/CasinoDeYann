@@ -1,4 +1,4 @@
-﻿namespace CasinoDeYann.Src.Controllers.Roulette.DTOs;
+﻿namespace CasinoDeYann.Controllers.Roulette.DTOs;
 
 public class RouletteRequest
 {

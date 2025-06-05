@@ -1,4 +1,5 @@
-﻿using CasinoDeYann.Src.Controllers.Roulette.DTOs;
+﻿using CasinoDeYann.Controllers.Roulette.DTOs;
+using CasinoDeYann.Src.Controllers.Roulette.DTOs;
 using CasinoDeYann.Src.DataAccess.Dbo;
 using CasinoDeYann.Src.Services.Roulette.Models;
 using CasinoDeYann.Src.Services.Stats;

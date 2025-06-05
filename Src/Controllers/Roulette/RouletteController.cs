@@ -1,4 +1,5 @@
-﻿using CasinoDeYann.Src.Controllers.Roulette.DTOs;
+﻿using CasinoDeYann.Controllers.Roulette.DTOs;
+using CasinoDeYann.Src.Controllers.Roulette.DTOs;
 using CasinoDeYann.Src.Services.Roulette;
 using CasinoDeYann.Src.Services.Roulette.Models;
 using Microsoft.AspNetCore.Mvc;

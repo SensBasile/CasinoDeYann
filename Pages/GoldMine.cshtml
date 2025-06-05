@@ -20,13 +20,17 @@
             id="nugget"
         />
     </div>
+    
+    <button id="spin" type="button"></button>
+
 </div>
 
 @section Scripts {
     <script>
         const nugget = document.getElementById("nugget");
+        const button = document.getElementById("spin");
 
-        nugget.addEventListener("click", async () => {
+        button.addEventListener("click", async () => {
             nugget.classList.add("shake");
             const res = await fetch("/api/GoldMine/mine", {method: "POST"});
 

@@ -222,3 +222,11 @@ a {
   text-decoration: none;
   color: white;
 }
+
+.main{
+  margin: 1rem;
+}
+
+.stats-grid{
+  color: black;
+}

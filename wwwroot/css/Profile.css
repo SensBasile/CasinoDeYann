@@ -19,14 +19,15 @@
 /* ... ajoutez autant de classes que de niveaux nécessaires ... */
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    font-family: "Jersey 10", cursive;
 }
 h1 {
     margin-bottom: 10px;
+    font-family: "Jersey 10", cursive;
 }
 .section {
     margin-bottom: 30px;
+    font-size: 1.5rem;
 }
 table {
     width: 100%;

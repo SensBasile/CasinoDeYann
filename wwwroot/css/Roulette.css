@@ -205,6 +205,48 @@
     z-index: 6;
 }
 
+.info {
+    position: absolute;
+    transform: translateX(-50%);
+    font-family: "Jersey 10", cursive;
+    font-size: 1.2vw;
+    color: #ff0000;
+    z-index: 10;
+}
+
+#bet-text {
+    color: rgb(11, 15, 23);
+    bottom: 20%;
+    left: 70.5%;
+}
+
+#bet-amount {
+    bottom: 15.5%;
+    left: 73%;
+}
+
+#gain-text {
+    color: rgb(11, 15, 23);
+    bottom: 10%;
+    left: 13%;
+}
+
+#gain-amount {
+    bottom: 5.5%;
+    left: 16.5%;
+}
+
+#money-text {
+    color: rgb(11, 15, 23);
+    bottom: 20%;
+    left: 14.5%;
+}
+
+#money-amount {
+    bottom: 15.5%;
+    left: 16.5%;
+}
+
 /* ─────────────────────────────────────────────────────────────────── */
 /* HORRORS BEYOND HUMAN COMPREHENSION BELOW, PROCEED WITH CAUTION */
 /* ─────────────────────────────────────────────────────────────────── */

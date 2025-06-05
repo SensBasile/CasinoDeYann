@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CasinoDeYann.Pages;
 
-public class User(UsersService usersService) : PageModel
+public class User(UserService userService) : PageModel
 {
     public string Username { get; private set; }
 
@@ -28,7 +28,7 @@ public class User(UsersService usersService) : PageModel
 
         Username = username;
 
-        var dto = await usersService.GetUserProfileAsync(username);
+        var dto = await userService.GetUserProfileAsync(username);
 
         if (dto == null)
         {
@@ -51,7 +51,7 @@ public class User(UsersService usersService) : PageModel
     public async Task<IActionResult> OnPostDeleteAccountAsync()
     {
         var userName = User.Identity.Name ?? throw new InvalidOperationException("Utilisateur non authentifié.");
-        await usersService.DeleteAccountAsync(userName);
+        await userService.DeleteAccountAsync(userName);
         return RedirectToPage("/Index");
     }
 }

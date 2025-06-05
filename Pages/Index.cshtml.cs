@@ -6,17 +6,17 @@ namespace CasinoDeYann.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly UsersService _usersService;
+    private readonly UserService _userService;
 
-    public IndexModel(UsersService usersService)
+    public IndexModel(UserService userService)
     {
-        _usersService = usersService;
+        _userService = userService;
     }
 
     public IEnumerable<Api.DataAccess.Dbo.User> TopUsers { get; private set; }
 
     public async Task OnGet()
     {
-        TopUsers = await _usersService.GetLeaderboard();
+        TopUsers = await _userService.GetLeaderboard();
     }
 }

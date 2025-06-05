@@ -1,10 +1,11 @@
+using CasinoDeYann.Api.DataAccess.Dbo;
 using CasinoDeYann.Api.DataAccess.Interfaces;
 using CasinoDeYann.Api.Services.SlotMachine.Models;
 using CasinoDeYann.Api.Services.Stats;
 
 namespace CasinoDeYann.Api.Services.SlotMachine;
 
-public class SlotMachineService(IUsersRepository usersRepository, StatsService statsService)
+public class SlotMachineService(UserService userService, StatsService statsService)
 {
     private const int W = 5;
     private const int H = 5;
@@ -33,9 +34,9 @@ public class SlotMachineService(IUsersRepository usersRepository, StatsService s
 
     public async Task<SlotMachineModel> Play(string userName, int bet)
     {
-        var callingUser = await usersRepository.GetOneByName(userName);
-        if (callingUser.Money < bet) throw new BadHttpRequestException("You don't have enough money");
-        callingUser = await usersRepository.AddMoney(callingUser.Username, -bet);
+        User callingUser = await userService.Pay(userName, bet);
+        
+        _ = await userService.AddExp(userName, bet / 50 + 5);
         
         var grid = new List<int[]>();
         
@@ -52,7 +53,8 @@ public class SlotMachineService(IUsersRepository usersRepository, StatsService s
         var patterns = Enumerable.Range(0, H).Select(_ => new bool[W]).ToArray();
         var gain = ComputeGain(grid.ToArray(), bet, patterns);
         
-        callingUser = await usersRepository.AddMoney(callingUser.Username, gain);
+        callingUser = await userService.AddMoney(callingUser.Username, gain);
+        _ = await userService.AddExp(callingUser.Username, gain / 1000 + 50);
         
         await statsService.Create(new GameHistoryEntryModel(callingUser.Id, DateTime.Now, "Slot Machine", bet, gain));
         

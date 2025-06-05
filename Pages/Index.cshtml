@@ -27,7 +27,7 @@
                     @user.Username
                 </a></td>
                 <td>@user.Money.ToString("C")</td>
-                <td>@user.Xp</td>
+                <td>@(user.Xp / 1000)</td>
             </tr>
             rank++;
         }

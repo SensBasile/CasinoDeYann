@@ -4,20 +4,19 @@ using CasinoDeYann.Api.DataAccess.Interfaces;
 
 namespace CasinoDeYann.Api.Services;
 
-public class UsersService(IUsersRepository usersRepository, IStatsRepository statsRepository)
+public class UserService(IUsersRepository usersRepository, IStatsRepository statsRepository)
 {
     public async Task<User> GetUser(string username)
     {
         return await usersRepository.GetOneByName(username);
     }
 
-    public async Task<bool> Pay(string username, long amount)
+    public async Task<User> Pay(string username, long amount)
     {
-        var user = await usersRepository.GetOneByName(username);
-        if (user.Money < amount) return false;
+        User user = await usersRepository.GetOneByName(username);
+        if (user.Money < amount) throw new BadHttpRequestException("You don't have enough money");
         user.Money -= amount;
-        await usersRepository.Update(user);
-        return true;
+        return await usersRepository.Update(user);
     }
 
     public async Task<IEnumerable<User>> GetLeaderboard()
@@ -48,7 +47,7 @@ public class UsersService(IUsersRepository usersRepository, IStatsRepository sta
 
 
         return new UserProfileModel(
-            user.Xp % 1000, 
+            user.Xp / 1000, 
             user.Money, history, stats.HighestGain, 
             stats.NumberOfGames,
             stats.TotalWon,
@@ -60,5 +59,19 @@ public class UsersService(IUsersRepository usersRepository, IStatsRepository sta
     public async Task<bool> DeleteAccountAsync(string userName)
     {
         return await usersRepository.DeleteOneByName(userName);
+    }
+    
+    public async Task<User> AddMoney(string name, long amount)
+    {
+        var user = await GetUser(name);
+        user.Money += amount;
+        return await usersRepository.Update(user);
+    }
+    
+    public async Task<User> AddExp(string name, long amount)
+    {
+        var user = await GetUser(name);
+        user.Xp += amount;
+        return await usersRepository.Update(user);
     }
 }

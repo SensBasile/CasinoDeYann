@@ -27,13 +27,6 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
         }
     }
 
-    public async Task<User> AddMoney(string name, long amount)
-    {
-        var user = await GetOneByName(name);
-        user.Money += amount;
-        return await Update(user);
-    }
-
     public async Task<bool> DeleteOneByName(string name)
     {
         User user = await GetOneByName(name);

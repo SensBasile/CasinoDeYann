@@ -6,17 +6,19 @@ using CasinoDeYann.Api.Services.Stats;
 
 namespace CasinoDeYann.Api.Services.GoldMineService;
 
-public class GoldMineService(IUsersRepository usersRepository, StatsService statsService)
+public class GoldMineService(UserService userService, StatsService statsService)
 {
-    private readonly int mineValue = 1;
+    private const int MineValue = 1;
 
     public async Task<GoldMineModel> Mine(string userName)
     {
-        var callingUser = await usersRepository.GetOneByName(userName);
+        var callingUser = await userService.GetUser(userName);
         if (callingUser.Money >= 100) return new GoldMineModel(false);
-        callingUser = await usersRepository.AddMoney(callingUser.Username, mineValue);
         
-        await statsService.Create(new GameHistoryEntryModel(callingUser.Id, DateTime.Now, "Gold Mine", 0, mineValue));
+        callingUser = await userService.AddMoney(callingUser.Username, MineValue);
+        _ = userService.AddExp(callingUser.Username, MineValue);
+        
+        await statsService.Create(new GameHistoryEntryModel(callingUser.Id, DateTime.Now, "Gold Mine", 0, MineValue));
 
         return new GoldMineModel(true);
     }

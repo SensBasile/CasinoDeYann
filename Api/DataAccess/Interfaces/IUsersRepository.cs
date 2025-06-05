@@ -7,5 +7,4 @@ public interface IUsersRepository : IRepository<TUser, User>
 {
     public Task<User> GetOneByName(string name);
     public Task<bool> DeleteOneByName(string name);
-    public Task<User> AddMoney(string name, long amount);
 }

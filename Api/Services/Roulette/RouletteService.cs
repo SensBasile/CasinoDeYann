@@ -5,7 +5,7 @@ using CasinoDeYann.Api.Services.Roulette.Models;
 
 namespace CasinoDeYann.Api.Services.Roulette;
 
-public class RouletteService(UsersService usersService)
+public class RouletteService(UserService userService)
 {
     private readonly Random _random = new();
     
@@ -17,12 +17,15 @@ public class RouletteService(UsersService usersService)
     public async Task<RouletteModel> play(string userName, RouletteRequest bets)
     {
         long totalBet = getTotalBetValue(bets);
-        if (! await usersService.Pay(userName, totalBet)) 
-            throw new BadHttpRequestException("You don't have enough money");
+        User user = await userService.Pay(userName, totalBet);
+        
+        _ = userService.AddExp(userName, totalBet / 100 + 10);
         
         int winningNumber = _random.Next(0, 37);
 
         long gain = ComputeGains(bets, winningNumber);
+        
+        _ = userService.AddExp(userName, gain / 700 + 35);
 
         return new RouletteModel(
             winningNumber,

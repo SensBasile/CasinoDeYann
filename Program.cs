@@ -35,7 +35,7 @@ builder.Services.AddScoped<UserContextService>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IStatsRepository, StatsRepository>();
 builder.Services.AddScoped<StatsService>();
-builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<SlotMachineService>();
 builder.Services.AddScoped<RouletteService>();
 builder.Services.AddScoped<GoldMineService>();

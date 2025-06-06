@@ -1,179 +1,138 @@
-﻿.stats-wrapper {
+﻿/* === Global Typography & Variables === */
+:root {
+    --font-primary: "Jersey 10", cursive;
+    --font-size-base: 2rem;
+    --btn-padding: 10px 20px;
+    --btn-radius: 6px;
+    --btn-font-size: 1.5rem;
+
+    --form-bg-color: #1e1e1e;      /* dark background for the form frame */
+    --form-border-color: #444;     /* subtle border color */
+    --form-border-width: 2px;
+    --form-radius: 10px;
+    --form-width: 400px;           /* fixed width, adjust as needed */
+    --input-bg-color: #2b2b2b;     /* slightly lighter than form-bg */
+    --input-text-color: #fff;
+    --input-border-color: #555;
+}
+
+/* === Base Typography === */
+p,
+a,
+label,
+.page-title {
+    font-family: "Jersey 10";
+    font-size: var(--font-size-base);
+    font-size: xxx-large;
+    color: gold;
+}
+
+/* === Center the entire form on the page === */
+.form-container {
     display: flex;
+    align-items: center;
     justify-content: center;
+    padding: 1rem;
 }
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-    max-width: 900px;
-    width: 100%;
-}
-/* === Your original CSS rules stay exactly the same === */
-
-.machine-container {
-    position: relative;
-    display: block;
-    width: 50vw;
-    max-width: 100vw;
-    margin: 5vw auto;
+/* === The “frame” around the login form === */
+.form-frame {
+    background-color: var(--form-bg-color);
+    padding: 2rem;
+    border: var(--form-border-width) solid var(--form-border-color);
+    border-radius: var(--form-radius);
+    width: var(--form-width);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.machine-gif {
-    display: block;
-    width: 50vw;
-    height: auto;
-    margin: 0 auto;
-}
-
-.slot-machine {
-    position: absolute;
-    top:    30%;
-    width:  100%;
-    height: 60%;
-
+/* === Spacing & Alignment inside the form === */
+.login-form {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    row-gap: 1%;
+    text-align: left;
 }
 
-.slot-machine .row {
-    display: flex;
-    justify-content: center;
-    column-gap: 9.3%;
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ccc;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
     width: 100%;
-    margin: 0;
-    padding: 0;
+    padding: 0.75rem;
+    font-size: 1.25rem;
+    font-family: "Jersey 10";
+    background-color: var(--input-bg-color);
+    color: var(--input-text-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-.slot-symbol {
-    width: 7%;
-    height: auto;
-}
-
-#spin {
-    position: absolute;
-    bottom: 0%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 18%;
-    height: 20.5%;
-    background-image: url('../assets/SlotMachine/ui/spin_button.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: transparent;
-    border: none;
+.form-control:focus {
     outline: none;
+    border-color: #777;
+}
+
+/* === Button Styles === */
+.btn {
+    display: inline-block;
+    padding: var(--btn-padding);
+    margin-top: 1rem;
+    width: 100%;
+    font-family: "Jersey 10";
+    font-size: var(--btn-font-size);
+    text-decoration: none;
+    border: none;
+    border-radius: var(--btn-radius);
     cursor: pointer;
-    padding: 0;
+    transition: background-color 0.2s ease;
 }
 
-#spin:hover {
-    background-image: url('../assets/SlotMachine/ui/spin_button_hover.png');
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
 }
 
-#spin:active {
-    background-image: url('../assets/SlotMachine/ui/spin_button_pressed.png');
+.btn-primary:hover {
+    background-color: #0069d9;
 }
 
-#result-message {
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.alert {
+    width: var(--form-width);
+    margin: 1rem auto;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 1.25rem;
+    font-family:  "Jersey 10";
     text-align: center;
-    margin-top: 2vw;
-    font-weight: bold;
 }
 
-/* === NEW: Bet‐Amount Display and Plus/Minus Buttons === */
-.info {
-    position: absolute;
-    transform: translateX(-50%);
-    font-family: "Jersey 10", cursive;
-    font-size: 1.7vw;
-    color: #ff0000;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-    z-index: 10;
-}
-
-#bet-text {
-    bottom: 28.5%;
-    left: 70.5%;
-}
-
-#bet-amount {
-    bottom: 23.5%;
-    left: 74.5%;
-}
-
-#gain-text {
-    bottom: 28.5%;
-    left: 42%;
-}
-
-#gain-amount {
-    bottom: 23.5%;
-    left: 50%;
-}
-
-#money-text {
-    bottom: 28.5%;
-    left: 15%;
-}
-
-#money-amount {
-    bottom: 23.5%;
-    left: 21%;
-}
-
-#decrease-bet {
-    position: absolute;
-    bottom: 0%;
-    right: 23%;
-    transform: translateX(-50%);
-    width: 8%;
-    height: 20.5%;
-    background-image: url('../assets/SlotMachine/ui/minus_button.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 10;
-}
-
-#decrease-bet:hover {
-    background-image: url('../assets/SlotMachine/ui/minus_button_hover.png');
-}
-
-#decrease-bet:active {
-    background-image: url('../assets/SlotMachine/ui/minus_button_pressed.png');
-}
-
-#increase-bet {
-    position: absolute;
-    bottom: 0%;
-    right: 11.5%;
-    transform: translateX(-50%);
-    width: 8%;
-    height: 20.5%;
-    background-image: url('../assets/SlotMachine/ui/plus_button.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 10;
-}
-
-#increase-bet:hover {
-    background-image: url('../assets/SlotMachine/ui/plus_button_hover.png');
-}
-
-#increase-bet:active {
-    background-image: url('../assets/SlotMachine/ui/plus_button_pressed.png');
+.alert-danger {
+    background-color: #721c24;
+    color: #f8d7da;
+    border: 1px solid #f5c6cb;
 }

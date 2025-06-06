@@ -105,7 +105,7 @@ public class SlotMachineService(UserService userService, StatsService statsServi
         if (acc < MinAlign) return 0f;
         
         for (int i = 0; i < acc; i++) patterns[i][col] = true;
-        return _alignCoeff[acc - MinAlign] * _symbolsCoeff[t];
+        return _alignCoeff[acc - MinAlign] * _symbolsCoeff[colSymbol];
     }
 
     private float CheckAlignDiagDown(int[][] grid, int startingRow, bool[][] patterns)

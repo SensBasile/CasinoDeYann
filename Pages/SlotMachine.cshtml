@@ -165,6 +165,13 @@ ViewData["Title"] = "Machine à sous";
             document.getElementById("55"),
         ]
     ];
+    
+    const spinAudio = new Audio("/assets/SlotMachine/vfx/spin.mp3");
+    const jackpotAudio = new Audio("/assets/SlotMachine/vfx/jackpot.mp3");
+    const res1Audio = new Audio("/assets/SlotMachine/vfx/result1.mp3");
+    const res2Audio = new Audio("/assets/SlotMachine/vfx/result2.mp3");
+    const res3Audio = new Audio("/assets/SlotMachine/vfx/result3.mp3");
+    const startAudio = new Audio("/assets/SlotMachine/vfx/start.mp3");
 
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -191,6 +198,11 @@ ViewData["Title"] = "Machine à sous";
             setTimeout(() => {
                 animate(col);
                 gridUI[0][col].src = symbols[grid[grid.length - 1 - i][col]]
+                if (i === grid.length - 1) {
+                    if (col === 0) res1Audio.play();
+                    else if (col === 4) res3Audio.play();
+                    else res2Audio.play();
+                }
             },i * 500);
         }
     }
@@ -218,7 +230,9 @@ ViewData["Title"] = "Machine à sous";
             return;
         }
         playerMoney -= bet;
+        await startAudio.play();
         running = true;
+        spinAudio.play();
 
         const roll0 = setInterval(() => animate(0), getRandomInt(80, 120));
         const roll1 = setInterval(() => animate(1), getRandomInt(80, 120));
@@ -257,7 +271,6 @@ ViewData["Title"] = "Machine à sous";
         }, 5000);
 
         setTimeout(() => {
-            showPatterns(data.grid, data.patterns);
             document.getElementById("result-message").textContent = data.message;
 
             const userMoneyDisplay = document.getElementById("user-money");
@@ -274,6 +287,8 @@ ViewData["Title"] = "Machine à sous";
                 gainDisplay.textContent = data.gain;
             }
             if (data.gain > 0) {
+                showPatterns(data.grid, data.patterns);
+                jackpotAudio.play();
                 const machineImg = document.getElementById("machine-gif");
                 machineImg.src = "/assets/SlotMachine/background/slot_win.gif";
                 setTimeout(() => {

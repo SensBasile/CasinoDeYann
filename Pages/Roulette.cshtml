@@ -147,6 +147,9 @@ ViewData["Title"] = "Roulette";
     const gainAmountEl  = document.getElementById("gain-amount");
     const moneyAmountEl = document.getElementById("money-amount");
     
+    const spinAudio = new Audio("/assets/Roulette/vfx/Roulette.mp3")
+    spinAudio.volume = 0.6;
+    
     // All bet buttons (single numbers, dozens, rows, outside). We filter out the chip buttons themselves.
     const betButtons = Array.from(document.querySelectorAll(".bet-button"))
                         .filter(btn => btn.hasAttribute("data-number") || btn.hasAttribute("data-bet"));
@@ -375,6 +378,8 @@ ViewData["Title"] = "Roulette";
       // ─── 4) Successfully got JSON back ▶ extract the fields ───
       console.log("◀ Reçu du serveur :", responseJson);
       const { winningNumber, gain, message, money } = responseJson;
+      
+      spinAudio.play()
       
       if (winningNumber === undefined || gain === undefined || message === undefined) {
         // That means the server sent back something unexpected.

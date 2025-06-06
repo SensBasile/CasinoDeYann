@@ -13,20 +13,20 @@ public class SlotMachineService(UserService userService, StatsService statsServi
 
     private const int WildIndex = 7;
 
-    private readonly float[] _alignCoeff = [2f, 3f, 4f]; // 3 aligned, 4 aligned, 5 aligned
-    private readonly float _vCoeff = 5f;
-    private readonly float[] _mCoeff = [2f, 3.5f, 5f];
+    private readonly float[] _alignCoeff = [1.3f, 1.5f, 2f]; // 3 aligned, 4 aligned, 5 aligned
+    private readonly float _vCoeff = 1.3f;
+    private readonly float[] _mCoeff = [1.3f, 1.5f, 2f];
     
     private readonly float[] _symbolsCoeff = [
-        1f, // bell
-        2f, // cherry
-        5f, // diamond
-        3f, // hearth
-        4f, // horseshoe
-        7f, // seven
-        2.5f, // watermelon
+        1.3f, // bell
+        1.4f, // cherry
+        2f, // diamond
+        1.6f, // hearth
+        1.7f, // horseshoe
+        2.5f, // seven
+        1.5f, // watermelon
         10f, // wildcard
-        15f, // yann
+        3f, // yann
     ];
 
     private readonly Random _random = new();
@@ -44,7 +44,9 @@ public class SlotMachineService(UserService userService, StatsService statsServi
             var row = new List<int>();
             for (int j = 0; j < W; j++)
             {
-                row.Add(_random.Next(SymbolsNumber));
+                int n = _random.Next(SymbolsNumber);
+                if (n == WildIndex && _random.Next(2) == 0) n = _random.Next(SymbolsNumber); // decrease wild chance rate
+                row.Add(n);
             }
             grid.Add(row.ToArray());
         }
@@ -103,7 +105,7 @@ public class SlotMachineService(UserService userService, StatsService statsServi
         if (acc < MinAlign) return 0f;
         
         for (int i = 0; i < acc; i++) patterns[i][col] = true;
-        return _alignCoeff[acc - MinAlign] * _symbolsCoeff[grid[0][col]];
+        return _alignCoeff[acc - MinAlign] * _symbolsCoeff[t];
     }
 
     private float CheckAlignDiagDown(int[][] grid, int startingRow, bool[][] patterns)

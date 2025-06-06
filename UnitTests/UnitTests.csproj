@@ -19,13 +19,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="GoldMine\" />
       <Folder Include="Roulette\" />
       <Folder Include="SlotMachine\" />
       <Folder Include="Stats\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\CasinoDeYann.csproj" />
+      <Folder Include="User\" />
     </ItemGroup>
 
 </Project>

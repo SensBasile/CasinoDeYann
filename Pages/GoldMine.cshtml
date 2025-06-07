@@ -42,6 +42,15 @@
         const blockedOverlay = document.getElementById("machine-blocked");
 
         let isMining = false;
+        
+        const smashAudio = new Audio("/assets/GoldMine/vfx/smash.mp3");
+        smashAudio.volume = 0.5;
+        
+        function playSmash() {
+            smashAudio.pause();
+            smashAudio.currentTime = 0;
+            smashAudio.play();
+        }
 
         function refreshBlockedState() {
             const moneyDisplay = document.getElementById("user-money");
@@ -62,6 +71,7 @@
             if (isMining) return;
             isMining = true;
 
+            playSmash()
             clicks += 1;    
  
             const amount = parseInt(moneyDisplay.textContent, 10);

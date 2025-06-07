@@ -167,11 +167,17 @@ ViewData["Title"] = "Machine à sous";
     ];
     
     const spinAudio = new Audio("/assets/SlotMachine/vfx/spin.mp3");
+    spinAudio.volume = 0.7;
     const jackpotAudio = new Audio("/assets/SlotMachine/vfx/jackpot.mp3");
+    jackpotAudio.volume = 0.5;
     const res1Audio = new Audio("/assets/SlotMachine/vfx/result1.mp3");
+    res1Audio.volume = 0.5;
     const res2Audio = new Audio("/assets/SlotMachine/vfx/result2.mp3");
+    res2Audio.volume = 0.5;
     const res3Audio = new Audio("/assets/SlotMachine/vfx/result3.mp3");
+    res3Audio.volume = 0.5;
     const startAudio = new Audio("/assets/SlotMachine/vfx/start.mp3");
+    startAudio.volume = 0.3;
 
     function getRandomInt(min, max) {
         min = Math.ceil(min);

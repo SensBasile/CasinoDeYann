@@ -143,6 +143,10 @@ ViewData["Title"] = "Roulette";
     const gainAmountEl  = document.getElementById("gain-amount");
     const moneyAmountEl = document.getElementById("money-amount");
     
+    const spinAudio = new Audio("/assets/Roulette/vfx/Roulette.mp3")
+    spinAudio.volume = 0.6;
+    
+    // All bet buttons (single numbers, dozens, rows, outside). We filter out the chip buttons themselves.
     const betButtons = Array.from(document.querySelectorAll(".bet-button"))
                         .filter(btn => btn.hasAttribute("data-number") || btn.hasAttribute("data-bet"));
     
@@ -196,15 +200,17 @@ ViewData["Title"] = "Roulette";
           return;
         }
         
+        
         const img = document.createElement("img");
         img.src = `/assets/Roulette/chip/chip_${currentChipValue}.png`;
         img.alt = `Chip-${currentChipValue}`;
-        img.classList.add("placed-chip"); 
+        img.classList.add("placed-chip");
         
         button.appendChild(img);
         
         const existingChips = button.querySelectorAll(".placed-chip");
         const index = existingChips.length - 1;
+        
         const offsetPerChipPx = 10;
         const totalOffsetPx   = index * offsetPerChipPx;
         
@@ -342,6 +348,8 @@ ViewData["Title"] = "Roulette";
 
 
       const { winningNumber, gain, message, money } = responseJson;
+      
+      spinAudio.play()
       
       if (winningNumber === undefined || gain === undefined || message === undefined) {
         console.error("Données manquantes dans la réponse :", responseJson);

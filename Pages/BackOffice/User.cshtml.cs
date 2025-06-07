@@ -25,6 +25,11 @@ public class UserModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
+        if (string.IsNullOrWhiteSpace(Username))
+        {
+            return NotFound();
+        }
+        
         User = await _userService.GetUserProfileAsync(Username);
         if (User == null)
         {

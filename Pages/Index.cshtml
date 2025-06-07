@@ -4,7 +4,9 @@
     ViewData["Title"] = "Home page";
 }
 
-<h2>Leaderboard</h2>
+<h2 class="bienvenu">Bienvenue dans le</h2>
+<img src="~/assets/Common/logo.png" alt="Casino de Yann" class="leaderboard-logo" />
+<h2 class="title">Leaderboard</h2>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -15,19 +17,31 @@
     </tr>
     </thead>
     <tbody>
+
     @if (Model.TopUsers != null && Model.TopUsers.Any())
     {
         var rank = 1;
         foreach (var user in Model.TopUsers)
         {
+            var level = user.Xp / 1000;
+            var rankIdx = Math.Min(((level - 1) / 3), 15);
+            var rankPath = Url.Content($"~/assets/Ranks/ranks{rankIdx:D2}.png");
             <tr>
                 <td>@rank</td>
-                <td>                            
+                <td>
                     <a asp-page="/user" asp-route-username="@user.Username">
-                    @user.Username
-                </a></td>
-                <td>@user.Money.ToString("C")</td>
-                <td>@(user.Xp / 1000)</td>
+                        @user.Username
+                    </a></td>
+                <td class="money-cell">
+                    @user.Money.ToString("N0") @* or "N2" for two decimals *@
+                    <img src="~/assets/GoldMine/Yanns/yanns.webp" alt="coin" class="money-icon"/>
+                </td>
+                <td class="level-cell">
+                    @level
+                    <img src="@rankPath"
+                         alt="Rank @rankIdx"
+                         class="level-icon right" />
+                </td>
             </tr>
             rank++;
         }

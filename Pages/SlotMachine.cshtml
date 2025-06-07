@@ -10,7 +10,7 @@ ViewData["Title"] = "Machine à sous";
     <!-- slot.gif is now the "machine" graphic itself -->
     <img
         id="machine-gif"
-        src="~/assets/SlotMachine/background/slot2.png"
+        src="~/assets/SlotMachine/background/machine.png"
         alt="SlotMachine"
         class="machine-gif"
     />
@@ -67,9 +67,6 @@ ViewData["Title"] = "Machine à sous";
     <!-- SPIN BUTTON -->
     <button id="spin" type="button"></button>
 </div>
-
-<div id="result-message"></div>
-
 @section Scripts {
 <script>
     let running = false;
@@ -88,6 +85,7 @@ ViewData["Title"] = "Machine à sous";
     let betIndex = 1;
     
     decreaseBtn.addEventListener("click", () => {
+        playButtonAudio()
         if (betIndex > 0) {
             betIndex--;
             bet = bets[betIndex];
@@ -96,7 +94,8 @@ ViewData["Title"] = "Machine à sous";
     });
 
     increaseBtn.addEventListener("click", () => {
-        if (betIndex < bets.length - 1 && bets[betIndex + 1] < playerMoney) {
+        playButtonAudio()
+        if (betIndex < bets.length - 1 && bets[betIndex + 1] <= playerMoney) {
             betIndex++;
             bet = bets[betIndex];
             betDisplay.textContent = `${bet}`;
@@ -178,6 +177,14 @@ ViewData["Title"] = "Machine à sous";
     res3Audio.volume = 0.5;
     const startAudio = new Audio("/assets/SlotMachine/vfx/start.mp3");
     startAudio.volume = 0.3;
+    const buttonAudio = new Audio("/assets/Common/vfx/push_button.mp3");
+    buttonAudio.volume = 0.1;
+    
+    function playButtonAudio() {
+        buttonAudio.pause()
+        buttonAudio.currentTime = 0
+        buttonAudio.play();
+    }
 
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -232,9 +239,10 @@ ViewData["Title"] = "Machine à sous";
         if (running) return;
 
         if (playerMoney < bet) {
-            document.getElementById("result-message").textContent = "You don't have enough money to bet this amount";
             return;
         }
+        
+        playButtonAudio()
         playerMoney -= bet;
         await startAudio.play();
         running = true;
@@ -277,8 +285,6 @@ ViewData["Title"] = "Machine à sous";
         }, 5000);
 
         setTimeout(() => {
-            document.getElementById("result-message").textContent = data.message;
-
             const userMoneyDisplay = document.getElementById("user-money");
             console.log(userMoneyDisplay);
             console.log(data.money);
@@ -298,7 +304,7 @@ ViewData["Title"] = "Machine à sous";
                 const machineImg = document.getElementById("machine-gif");
                 machineImg.src = "/assets/SlotMachine/background/slot_win.gif";
                 setTimeout(() => {
-                    machineImg.src = "/assets/SlotMachine/background/slot2.png";
+                    machineImg.src = "/assets/SlotMachine/background/machine.png";
                 }, 3000);
             }
             running = false;

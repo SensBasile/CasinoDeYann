@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
 }
 
-<h2>Game History</h2>
+<h2>Historique de jeu</h2>
 
 <form method="get" class="filter-container">
     <p>
@@ -15,63 +15,6 @@
         <a asp-page="./Index">Annuler le filtre</a>
     </p>
 </form>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>Nom</th>
-        <th>
-            <a asp-page="./Index"
-               asp-route-SortOrder="@Model.DateSort"
-               asp-route-SearchString="@Model.CurrentFilter">
-                Date @(Model.CurrentSort == "date_asc" ? "↑" : Model.CurrentSort == "date_desc" ? "↓" : "-")
-            </a>
-        </th>
-        <th>Jeu</th>
-        <th>
-            <a asp-page="./Index"
-               asp-route-SortOrder="@Model.BetSort"
-               asp-route-SearchString="@Model.CurrentFilter">
-                Pari @(Model.CurrentSort == "bet_asc" ? "↑" : Model.CurrentSort == "bet_desc" ? "↓" : "-")
-            </a>
-        </th>
-        <th>
-            <a asp-page="./Index"
-               asp-route-SortOrder="@Model.GainSort"
-               asp-route-SearchString="@Model.CurrentFilter">
-                Gain @(Model.CurrentSort == "gain_asc" ? "↑" : Model.CurrentSort == "gain_desc" ? "↓" : "-")
-            </a>
-        </th>
-        <th>Actions</th> 
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model.GameHistory)
-    {
-        <tr>
-            <td><a asp-page="/BackOffice/User" asp-route-username="@item.Username">@item.Username</a></td>
-            <td>@item.Date.ToString("g")</td>
-            <td>@item.Game</td>
-            <td>@item.Bet</td>
-            <td>@item.Gain</td>
-            <td>
-                @if (item.IsCancelled)
-                {
-                    <span>[ Annulé ]</span>
-                }
-                else
-                {
-                    <form method="post" asp-page-handler="Cancel">
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit" class="btn btn-danger btn-sm">Annuler transaction</button>
-                    </form>
-                }
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
-
 <nav>
     <ul class="pagination">
         <!-- Previous Page Link -->
@@ -131,3 +74,60 @@
         </li>
     </ul>
 </nav>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nom</th>
+        <th>
+            <a asp-page="./Index"
+               asp-route-SortOrder="@Model.DateSort"
+               asp-route-SearchString="@Model.CurrentFilter">
+                Date @(Model.CurrentSort == "date_asc" ? "↑" : Model.CurrentSort == "date_desc" ? "↓" : "-")
+            </a>
+        </th>
+        <th>Jeu</th>
+        <th>
+            <a asp-page="./Index"
+               asp-route-SortOrder="@Model.BetSort"
+               asp-route-SearchString="@Model.CurrentFilter">
+                Pari @(Model.CurrentSort == "bet_asc" ? "↑" : Model.CurrentSort == "bet_desc" ? "↓" : "-")
+            </a>
+        </th>
+        <th>
+            <a asp-page="./Index"
+               asp-route-SortOrder="@Model.GainSort"
+               asp-route-SearchString="@Model.CurrentFilter">
+                Gain @(Model.CurrentSort == "gain_asc" ? "↑" : Model.CurrentSort == "gain_desc" ? "↓" : "-")
+            </a>
+        </th>
+        <th>Actions</th> 
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.GameHistory)
+    {
+        <tr>
+            <td><a asp-page="/BackOffice/User" asp-route-username="@item.Username">@item.Username</a></td>
+            <td>@item.Date.ToString("g")</td>
+            <td>@item.Game</td>
+            <td>@item.Bet</td>
+            <td>@item.Gain</td>
+            <td>
+                @if (item.IsCancelled)
+                {
+                    <span>[ Annulé ]</span>
+                }
+                else
+                {
+                    <form method="post" asp-page-handler="Cancel">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">Annuler transaction</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+

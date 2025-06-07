@@ -2,29 +2,37 @@
 @model UserModel
 @{
     ViewData["Title"] = $"Admin - {Model.Username}";
+    <link rel="stylesheet" href="~/css/BackofficeUser.css" asp-append-version="true" />
 }
 
-<h1>Administration utilisateur : @Model.Username</h1>
+<div class="backoffice-container">
+    <h1 class="user-admin-title">Administration utilisateur : </h1>
+    <h1 class="user-admin-title user-admin-name">@Model.Username</h1>
 
-@if (Model.User != null)
-{
-    <p><strong>Solde :</strong> @Model.User.Balance €</p>
+    @if (Model.User != null)
+    {
+        <p class="user-balance">
+            <strong>Solde :</strong> @Model.User.Balance €
+        </p>
 
-    <form method="post" asp-page-handler="AddMoney">
-        <label>Montant à ajouter ou soustraire :</label>
-        <input type="number" asp-for="Amount" />
-        <button type="submit">Valider</button>
-    </form>
+        <form method="post" asp-page-handler="AddMoney" class="money-form">
+            <label>Montant à ajouter ou soustraire :</label>
+            <input type="number" asp-for="Amount" />
+            <button type="submit">Valider</button>
+        </form>
+        
+        <div class="user-admin-actions">
+            <form method="post" asp-page-handler="MakeAdmin">
+                <button type="submit" class="btn admin-btn">Passer en admin</button>
+            </form>
+            <form method="post" asp-page-handler="Delete">
+                <button type="submit" class="btn delete-btn">Supprimer l'utilisateur</button>
+            </form>
 
-    <form method="post" asp-page-handler="MakeAdmin">
-        <button type="submit">Passer en admin</button>
-    </form>
-
-    <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
-        <button type="submit" style="color:red;">Supprimer l'utilisateur</button>
-    </form>
-}
-else
-{
-    <p>Utilisateur introuvable.</p>
-}
+        </div>
+    }
+    else
+    {
+        <p>Utilisateur introuvable.</p>
+    }
+</div>

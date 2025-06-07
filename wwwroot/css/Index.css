@@ -7,7 +7,7 @@
     --table-row-hover: #292929;
     --table-border-color: #444;
 
-    --link-color: #ffaf00;       /* e.g. orangeish link accent */
+    --link-color: blue;       /* e.g. orangeish link accent */
     --link-hover-color: #ffbf47;
 
     --pagination-bg: #1e1e1e;
@@ -169,8 +169,8 @@ h2 {
 
 .table tbody td a {
     color: var(--link-color);
-    text-decoration: none;
     font-size: 2.5rem;
+    text-decoration: underline;
 }
 
 .table tbody td a:hover {
@@ -193,6 +193,7 @@ h2 {
 }
 
 .btn-danger {
+    border-radius: 6px;
     background-color: #dc3545;
     color: #fff !important;
 }

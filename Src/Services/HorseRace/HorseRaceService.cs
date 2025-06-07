@@ -13,12 +13,12 @@ public class HorseRaceService(IUserService userService)
     
     public async Task<HorseRaceModel> Play(string username, HorseRaceRequest bet)
     {
+        if (bet.First == null) throw new BadHttpRequestException("You must bet on the first");
         if (bet.Third != null && bet.Second == null) throw new BadHttpRequestException("You have to bet on a second if you bet on a third");
         
-        long totalBet = TotalBet(bet);
-        var callingUser = await userService.Pay(username, totalBet);
+        var callingUser = await userService.Pay(username, bet.Amount);
         
-        _ = await userService.AddExp(username, totalBet / 100 + 20);
+        _ = await userService.AddExp(username, bet.Amount / 100 + 20);
 
         List<(int, int)[]> paces = [];
         for (int i = 0; i < HorsesNumber; i++)
@@ -27,7 +27,7 @@ public class HorseRaceService(IUserService userService)
             int dist = 0;
             while (dist < TrackLength)
             {
-                var pace = (TrackLength - dist < 20 ? TrackLength - dist : _random.Next(5, 20), _random.Next(50, 150));
+                var pace = (TrackLength - dist < 20 ? TrackLength - dist : _random.Next(5, 20), _random.Next(35, 60));
                 dist += pace.Item1;
                 pacesList.Add((pace.Item1, pace.Item2));
             }
@@ -54,22 +54,22 @@ public class HorseRaceService(IUserService userService)
     {
         long gains = 0;
         
-        if (bet.First.Horse == results[0]) gains += bet.First.Amount * 4;
-        if (bet.Second != null && bet.Second.Horse == results[1]) gains += bet.Second.Amount * 3;
-        if (bet.Third != null && bet.Third.Horse == results[2]) gains += bet.Third.Amount * 2;
+        if (bet.First == results[0]) gains += bet.Amount * 4;
+        if (bet.Second == results[1]) gains *= 3;
+        if (bet.Third == results[2]) gains *= 2;
 
         return gains;
     }
 
     private int[] FinishOrder((int, int)[][] paces)
     {
-        var sums = new List<(int, float)>();
+        var sums = new List<(int, int)>();
         for (int i = 0; i < HorsesNumber; i++)
         {
-            float sum = 0f;
+            int sum = 0;
             for (int j = 0; j < paces[i].Length; j++)
             {
-                sum += paces[i][j].Item1 * (1f / paces[i][j].Item2);
+                sum += paces[i][j].Item1 * paces[i][j].Item2;
             }
             sums.Add((i, sum));
         }
@@ -77,7 +77,7 @@ public class HorseRaceService(IUserService userService)
         var result = new List<int>();
         for (int i = 0; i < HorsesNumber; i++)
         {
-            (int, float) max = (-1, 0);
+            (int, int) max = (-1, 0);
             for (int j = 0; j < sums.Count; j++)
             {
                 if (sums[j].Item2 > max.Item2) max = sums[j];
@@ -87,10 +87,5 @@ public class HorseRaceService(IUserService userService)
         }
         
         return result.ToArray();
-    }
-
-    private long TotalBet(HorseRaceRequest bet)
-    {
-        return bet.First.Amount + (bet.Second?.Amount ?? 0) + (bet.Third?.Amount ?? 0);
     }
 }

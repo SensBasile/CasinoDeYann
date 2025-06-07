@@ -5,12 +5,12 @@
     --btn-radius: 6px;
     --btn-font-size: 1.5rem;
 
-    --form-bg-color: #1e1e1e;      /* dark background for the form frame */
-    --form-border-color: #444;     /* subtle border color */
+    --form-bg-color: #1e1e1e;
+    --form-border-color: #444;
     --form-border-width: 2px;
     --form-radius: 10px;
-    --form-width: 400px;           /* fixed width, adjust as needed */
-    --input-bg-color: #2b2b2b;     /* slightly lighter than form-bg */
+    --form-width: 400px;
+    --input-bg-color: #2b2b2b;
     --input-text-color: #fff;
     --input-border-color: #555;
 }
@@ -20,13 +20,11 @@ a,
 label,
 .page-title {
     font-family: "Jersey 10";
-    font-size: var(--font-size-base);
-    font-size: xxx-large;
     color: gold;
 }
 
 h2 {
-    font-size: 6rem;
+    font-size: 4rem;
 }
 
 .form-container {
@@ -55,6 +53,7 @@ h2 {
     display: block;
     margin-bottom: 0.5rem;
     color: #ccc;
+    font-size: var(--font-size-base);
 }
 
 .form-group {

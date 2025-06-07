@@ -144,7 +144,23 @@ ViewData["Title"] = "Roulette";
     const moneyAmountEl = document.getElementById("money-amount");
     
     const spinAudio = new Audio("/assets/Roulette/vfx/Roulette.mp3")
-    spinAudio.volume = 0.6;
+    spinAudio.volume = 0.8;
+    const chipPosedAudio = new Audio("/assets/Roulette/vfx/jeton.mp3")
+    chipPosedAudio.volume = 0.8;
+    const buttonAudio = new Audio("/assets/Common/vfx/push_button.mp3");
+    buttonAudio.volume = 0.1;
+    
+    function playChipAudio() {
+      chipPosedAudio.pause()
+      chipPosedAudio.currentTime = 0;
+      chipPosedAudio.play();
+    }
+
+    function playButtonAudio() {
+      buttonAudio.pause()
+      buttonAudio.currentTime = 0
+      buttonAudio.play();
+    }
     
     // All bet buttons (single numbers, dozens, rows, outside). We filter out the chip buttons themselves.
     const betButtons = Array.from(document.querySelectorAll(".bet-button"))
@@ -200,6 +216,7 @@ ViewData["Title"] = "Roulette";
           return;
         }
         
+        // playChipAudio();
         
         const img = document.createElement("img");
         img.src = `/assets/Roulette/chip/chip_${currentChipValue}.png`;
@@ -239,6 +256,7 @@ ViewData["Title"] = "Roulette";
 
     cancelButton.addEventListener("click", () => {
       if (running) return;
+      playButtonAudio()
       const last = betStack.pop();
       if (!last) return;
       last.chipElement.remove();
@@ -247,6 +265,7 @@ ViewData["Title"] = "Roulette";
     
     playButton.addEventListener("click", async () => {
       if (running) return;
+      playButtonAudio()
       ball.classList.remove("fall");
       if (betStack.length === 0) {
         resultMessage.textContent = "Vous n'avez rien parié";

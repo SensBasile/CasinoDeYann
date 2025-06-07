@@ -10,7 +10,7 @@ ViewData["Title"] = "Machine à sous";
     <!-- slot.gif is now the "machine" graphic itself -->
     <img
         id="machine-gif"
-        src="~/assets/SlotMachine/background/slot2.png"
+        src="~/assets/SlotMachine/background/machine.png"
         alt="SlotMachine"
         class="machine-gif"
     />
@@ -304,7 +304,7 @@ ViewData["Title"] = "Machine à sous";
                 const machineImg = document.getElementById("machine-gif");
                 machineImg.src = "/assets/SlotMachine/background/slot_win.gif";
                 setTimeout(() => {
-                    machineImg.src = "/assets/SlotMachine/background/slot2.png";
+                    machineImg.src = "/assets/SlotMachine/background/machine.png";
                 }, 3000);
             }
             running = false;

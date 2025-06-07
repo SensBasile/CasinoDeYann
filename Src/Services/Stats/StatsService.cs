@@ -1,3 +1,4 @@
+using CasinoDeYann.DataAccess.Dbo;
 using CasinoDeYann.DataAccess.Interfaces;
 
 namespace CasinoDeYann.Services.Stats;

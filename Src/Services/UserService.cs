@@ -5,7 +5,7 @@ namespace CasinoDeYann.Services;
 
 public class UserService(IUsersRepository _usersRepository, IStatsRepository _statsRepository)
 {
-    public async Task<User> GetUser(string username)
+    public async Task<User?> GetUser(string username)
     {
         return await _usersRepository.GetOneByName(username);
     }
@@ -17,7 +17,7 @@ public class UserService(IUsersRepository _usersRepository, IStatsRepository _st
 
     public async Task<User> Pay(string username, long amount)
     {
-        User user = await _usersRepository.GetOneByName(username);
+        User? user = await _usersRepository.GetOneByName(username);
         if (user.Money < amount) throw new BadHttpRequestException("You don't have enough money");
         user.Money -= amount;
         return await _usersRepository.Update(user);

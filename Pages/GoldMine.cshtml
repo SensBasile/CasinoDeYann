@@ -48,7 +48,7 @@
             const amount = parseInt(moneyDisplay.textContent);
             if (amount >= 100) {
                 blockedOverlay.style.display = "block";
-                button.disabled = true;    // optionally disable the spin button
+                button.disabled = true;
             } else {
                 blockedOverlay.style.display = "none";
                 button.disabled = false;
@@ -56,27 +56,35 @@
 }
         refreshBlockedState();
         
-        button.addEventListener("click", async () => {
+        let clicks = 0;
 
+        button.addEventListener("click", async () => {
             if (isMining) return;
             isMining = true;
 
+            clicks += 1;    
+ 
             const amount = parseInt(moneyDisplay.textContent, 10);
             refreshBlockedState();
 
             if (amount < 100) {
                 nugget.classList.add("shake");
-                moneyDisplay.textContent = String(amount + 1);
-                moneyEl.textContent      = String(amount + 1);
-                try {
-                    await fetch("/api/GoldMine/mine", { method: "POST" });
-                } catch (err) {
-                    console.error("Mining failed:", err);
-                } finally {
-                    isMining = false;
+
+                if (clicks >= 5) {
+                    moneyDisplay.textContent = String(amount + 5);
+                    moneyEl.textContent      = String(amount + 5);
+                    clicks = 0;
+                    try {
+                        await fetch("/api/GoldMine/mine", { method: "POST" });
+                    } catch (err) {
+                        console.error("Mining failed:", err);
+                    }
                 }
+
+                isMining = false;
             }
 
+            // remove shake after animation
             setTimeout(() => {
                 nugget.classList.remove("shake");
             }, 300);

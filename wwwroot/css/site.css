@@ -341,10 +341,16 @@ a {
   margin: 1.5rem auto;
   width: 40%;
 }
+
+.money-icon {
+  width: 1.5rem;
+}
+
 .bienvenu {
   padding-top: 20px;
   font-size: 5rem;
 }
+
 .level-icon.right {
   width: 3rem;
   height: auto;

@@ -40,7 +40,7 @@ namespace CasinoDeYann.Services.Stats.Tests
                 IsCanceled: false
             );
 
-            var user = new User.Models.User() { Id = 10, Username = "johndoe", Xp = 2000, Money = 500 };
+            var user = new User.Models.User(10, "johndoe", 2000, 500 , "User");
             _userServiceMock
                 .Setup(s => s.GetUser("johndoe"))
                 .ReturnsAsync(user);
@@ -85,7 +85,7 @@ namespace CasinoDeYann.Services.Stats.Tests
         public async Task GetPlayerStats_ShouldMapDataAndPagingCorrectly()
         {
             // Arrange
-            var user = new User.Models.User() { Id = 5, Username = "alice", Xp = 1500, Money = 300 };
+            var user = new User.Models.User( 5, "alice", 1500, 300, "User");
 
             var summary = new UserStatsSummary
             {
@@ -132,7 +132,7 @@ namespace CasinoDeYann.Services.Stats.Tests
         public async Task GetUserProfileAsync_ShouldReturnProfileWithStats()
         {
             // Arrange
-            var user = new User.Models.User() { Id = 7, Username = "bob", Xp = 2500, Money = 1000 };
+            var user = new User.Models.User(7, "bob", 2500, 1000, "User");
             _userServiceMock
                 .Setup(s => s.GetUser("bob"))
                 .ReturnsAsync(user);
@@ -200,7 +200,7 @@ namespace CasinoDeYann.Services.Stats.Tests
                 .Setup(r => r.GetOneById(5, ""))
                 .ReturnsAsync(stat);
 
-            var user = new User.Models.User() { Id = 9, Username = "eve", Xp = 0, Money = 0 };
+            var user = new User.Models.User(9, "eve", 0, 0, "User");
             _userServiceMock
                 .Setup(s => s.GetUser(9))
                 .ReturnsAsync(user);

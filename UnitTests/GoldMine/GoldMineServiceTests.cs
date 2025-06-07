@@ -24,7 +24,7 @@ namespace UnitTests.GoldMine
         public async Task Mine_ShouldReturnFalse_WhenUserHasEnoughMoney()
         {
             var username = "testuser";
-            var user = new CasinoDeYann.Services.User.Models.User { Username = username, Money = 100 };
+            var user = new CasinoDeYann.Services.User.Models.User(1, username, 100, 100, "User");
 
             _userServiceMock.Setup(s => s.GetUser(username)).ReturnsAsync(user);
 
@@ -41,8 +41,8 @@ namespace UnitTests.GoldMine
         public async Task Mine_ShouldCreditUser_WhenUserHasLessThan100Money()
         {
             var username = "testuser";
-            var user = new CasinoDeYann.Services.User.Models.User { Username = username, Money = 50 };
-            var updatedUser = new CasinoDeYann.Services.User.Models.User { Username = username, Money = 51 };
+            var user = new CasinoDeYann.Services.User.Models.User(1, username, 50,  100, "User");
+            var updatedUser = new CasinoDeYann.Services.User.Models.User(1,  username, 51, 100, "User");
 
             _userServiceMock.Setup(s => s.GetUser(username)).ReturnsAsync(user);
             _userServiceMock.Setup(s => s.AddMoney(username, 1)).ReturnsAsync(updatedUser.Money);

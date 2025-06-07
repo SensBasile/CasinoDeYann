@@ -57,8 +57,8 @@ public class HorseRaceService(IUserService userService)
         long gains = 0;
         
         if (bet.First == results[0]) gains += bet.Amount * 4;
-        if (bet.Second == results[1]) gains *= 3;
-        if (bet.Third == results[2]) gains *= 2;
+        if (bet.Second != null) gains *= bet.Second == results[1] ? 3 : 0;
+        if (bet.Third != null) gains *= bet.Third == results[2] ? 2 : 0;
 
         return gains;
     }

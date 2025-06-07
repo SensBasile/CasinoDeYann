@@ -13,26 +13,26 @@ ViewData["Title"] = "Course de chevaux";
     <h1>Pariez sur la course</h1>
     <div>
         <label>1er</label>
-        <button class="horse-select" data-rank="First" data-value="1">1</button>
-        <button class="horse-select" data-rank="First" data-value="2">2</button>
-        <button class="horse-select" data-rank="First" data-value="3">3</button>
-        <button class="horse-select" data-rank="First" data-value="4">4</button>
+        <button class="horse-select" data-rank="First" data-value="0">1</button>
+        <button class="horse-select" data-rank="First" data-value="1">2</button>
+        <button class="horse-select" data-rank="First" data-value="2">3</button>
+        <button class="horse-select" data-rank="First" data-value="3">4</button>
         <p id="selected-First" class="selected-value"></p>
     </div>
     <div>
         <label>2e</label>
-        <button class="horse-select" data-rank="Second" data-value="1">1</button>
-        <button class="horse-select" data-rank="Second" data-value="2">2</button>
-        <button class="horse-select" data-rank="Second" data-value="3">3</button>
-        <button class="horse-select" data-rank="Second" data-value="4">4</button>
+        <button class="horse-select" data-rank="Second" data-value="0">1</button>
+        <button class="horse-select" data-rank="Second" data-value="1">2</button>
+        <button class="horse-select" data-rank="Second" data-value="2">3</button>
+        <button class="horse-select" data-rank="Second" data-value="3">4</button>
         <p id="selected-Second" class="selected-value"></p>
     </div>
     <div>
         <label>3e</label>
-        <button class="horse-select" data-rank="Third" data-value="1">1</button>
-        <button class="horse-select" data-rank="Third" data-value="2">2</button>
-        <button class="horse-select" data-rank="Third" data-value="3">3</button>
-        <button class="horse-select" data-rank="Third" data-value="4">4</button>
+        <button class="horse-select" data-rank="Third" data-value="0">1</button>
+        <button class="horse-select" data-rank="Third" data-value="1">2</button>
+        <button class="horse-select" data-rank="Third" data-value="2">3</button>
+        <button class="horse-select" data-rank="Third" data-value="3">4</button>
         <p id="selected-Third" class="selected-value"></p>
     </div>
     <div>
@@ -172,7 +172,7 @@ document.getElementById("play-button").addEventListener("click", async function 
         First: selections.First,
         Second: selections.Second,
         Third: selections.Third,
-        Amount: parseInt(document.getElementById("bet-amount").innerText),
+        Amount: betList[betIndex],
     };
     const response = await fetch('/api/HorseRace', {
         method: 'POST',

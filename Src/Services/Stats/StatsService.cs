@@ -1,5 +1,8 @@
 using CasinoDeYann.DataAccess.Dbo;
 using CasinoDeYann.DataAccess.Interfaces;
+using CasinoDeYann.Services.Stats.Models;
+using CasinoDeYann.Services.User;
+using CasinoDeYann.Services.User.Models;
 
 namespace CasinoDeYann.Services.Stats;
 
@@ -29,7 +32,49 @@ public class StatsService
         return new GameHistoryEntryModel(stats.Id, user.Username, res.Date, res.Game, res.Bet, res.Gain, false);
     }
 
+    public async Task<UserStatsModel> GetPlayerStats(string sortOrder, User.Models.User user, int pageIndex)
+    {
+        var stats = await _statsRepository.GetStats(user.Id);
+        var history = await _statsRepository.Get(sortOrder, user.Username, pageIndex, true);
+        
+        List<GameHistoryEntryModel> historyEntries = new();
+        
+        foreach (var stat in history.Stats)
+        {
+            historyEntries.Add(new GameHistoryEntryModel(stat.Id, 
+                user.Username, 
+                stat.Date, 
+                stat.Game, 
+                stat.Bet, 
+                stat.Gain, 
+                stat.IsCanceled));
+        }
+        
+        return new UserStatsModel(
+            History: historyEntries,
+            HasPrevious: pageIndex > 1,
+            HasNext: history.TotalPages == pageIndex,
+            HighestGain: stats.HighestGain,
+            NumberOfGames: stats.NumberOfGames,
+            TotalWon: stats.TotalWon,
+            TotalLost: stats.TotalLost,
+            GamesPlayedPerGame: stats.GamesPlayedPerGame,
+            GamesPlayedPerDay: stats.GamesPlayedPerDay
+        );
+    }
+    
+    public async Task<UserProfileModel> GetUserProfileAsync(string sortOrder, string userName, int pageIndex)
+    {
+        var user = await _usersService.GetUser(userName);
+        var stats = await GetPlayerStats(sortOrder, user, pageIndex);
 
+        return new UserProfileModel(
+            user.Xp / 1000,
+            user.Money, 
+            stats
+        );
+    }
+    
     public async Task<BackOfficeModel> GetBackOffice(string sortOrder, string searchString, int pageIndex)
     {
         var stats = await _statsRepository.Get(sortOrder, searchString, pageIndex);
@@ -66,5 +111,10 @@ public class StatsService
         
         return await _statsRepository.Update(stat);
 
+    }
+
+    public async Task<UserStatsSummary> GetUserStats(long userId)
+    {
+        return await _statsRepository.GetStats(userId);
     }
 }

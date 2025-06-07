@@ -1,10 +1,11 @@
 ﻿using CasinoDeYann.Controllers.HorseRace.DTOs;
 using CasinoDeYann.DataAccess.Dbo;
 using CasinoDeYann.Services.HorseRace.Models;
+using CasinoDeYann.Services.User;
 
 namespace CasinoDeYann.Services.HorseRace;
 
-public class HorseRaceService(UserService userService)
+public class HorseRaceService(IUserService userService)
 {
     private const int HorsesNumber = 4;
     private const int TrackLength = 100;
@@ -15,10 +16,9 @@ public class HorseRaceService(UserService userService)
         if (bet.First == null) throw new BadHttpRequestException("You must bet on the first");
         if (bet.Third != null && bet.Second == null) throw new BadHttpRequestException("You have to bet on a second if you bet on a third");
         
-        long totalBet = TotalBet(bet);
-        User callingUser = await userService.Pay(username, totalBet);
+        var callingUser = await userService.Pay(username, bet.Amount);
         
-        _ = await userService.AddExp(username, totalBet / 100 + 20);
+        _ = await userService.AddExp(username, bet.Amount / 100 + 20);
 
         List<(int, int)[]> paces = [];
         for (int i = 0; i < HorsesNumber; i++)
@@ -54,9 +54,9 @@ public class HorseRaceService(UserService userService)
     {
         long gains = 0;
         
-        if (bet.First.Horse == results[0]) gains += bet.First.Amount * 4;
-        if (bet.Second != null && bet.Second.Horse == results[1]) gains += bet.Second.Amount * 3;
-        if (bet.Third != null && bet.Third.Horse == results[2]) gains += bet.Third.Amount * 2;
+        if (bet.First == results[0]) gains += bet.Amount * 4;
+        if (bet.Second == results[1]) gains *= 3;
+        if (bet.Third == results[2]) gains *= 2;
 
         return gains;
     }
@@ -87,10 +87,5 @@ public class HorseRaceService(UserService userService)
         }
         
         return result.ToArray();
-    }
-
-    private long TotalBet(HorseRaceRequest bet)
-    {
-        return bet.First.Amount + (bet.Second?.Amount ?? 0) + (bet.Third?.Amount ?? 0);
     }
 }

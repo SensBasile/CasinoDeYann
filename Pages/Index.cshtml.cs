@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using CasinoDeYann.Services;
+using CasinoDeYann.Services.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -8,14 +9,14 @@ namespace CasinoDeYann.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
 
-    public IndexModel(UserService userService)
+    public IndexModel(IUserService userService)
     {
         _userService = userService;
     }
 
-    public IEnumerable<DataAccess.Dbo.User> TopUsers { get; private set; }
+    public IEnumerable<Services.User.Models.User> TopUsers { get; private set; }
 
     public async Task<IActionResult> OnGet()
     {

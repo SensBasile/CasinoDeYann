@@ -2,158 +2,204 @@
 @model CasinoDeYann.Pages.HorseRace
 
 @{
-    ViewData["Title"] = "Course de cheveaux";
-    <link rel="stylesheet" href="~/css/HorseRace.css" asp-append-version="true"/>
+ViewData["Title"] = "Course de chevaux";
+<link rel="stylesheet" href="~/css/HorseRace.css" asp-append-version="true"/>
 }
 
-<div id="bet-form">
+<canvas id="canvas" width="1000" height="500"></canvas>
+<div id="live-ranking"></div>
+
+<div id="bet-zone">
     <h1>Pariez sur la course</h1>
-    <form id="raceForm">
-        <div>
-            <label>Cheval 1 (obligatoire):</label>
-            <input type="number" name="firstHorse" min="0" max="3" required />
-            <input type="number" name="firstAmount" min="1" placeholder="Mise" required />
-        </div>
-        <div>
-            <label>Cheval 2 (optionnel):</label>
-            <input type="number" name="secondHorse" min="0" max="3" />
-            <input type="number" name="secondAmount" min="1" placeholder="Mise" />
-        </div>
-        <div>
-            <label>Cheval 3 (optionnel):</label>
-            <input type="number" name="thirdHorse" min="0" max="3" />
-            <input type="number" name="thirdAmount" min="1" placeholder="Mise" />
-        </div>
-        <button type="submit">Lancer la course</button>
-    </form>
-</div>
-
-<div id="race-track" style="display:none;">
-    @for (int i = 0; i < 4; i++)
-    {
-    <div class="horse" id="horse-@i">
-        <img src="/HorseRace/Horses/cheval@(i + 1)_0.png" id="horse-img-@i"/>
+    <div>
+        <label>1er</label>
+        <button class="horse-select" data-rank="First" data-value="1">1</button>
+        <button class="horse-select" data-rank="First" data-value="2">2</button>
+        <button class="horse-select" data-rank="First" data-value="3">3</button>
+        <button class="horse-select" data-rank="First" data-value="4">4</button>
+        <p id="selected-First" class="selected-value"></p>
     </div>
-    }
+    <div>
+        <label>2e</label>
+        <button class="horse-select" data-rank="Second" data-value="1">1</button>
+        <button class="horse-select" data-rank="Second" data-value="2">2</button>
+        <button class="horse-select" data-rank="Second" data-value="3">3</button>
+        <button class="horse-select" data-rank="Second" data-value="4">4</button>
+        <p id="selected-Second" class="selected-value"></p>
+    </div>
+    <div>
+        <label>3e</label>
+        <button class="horse-select" data-rank="Third" data-value="1">1</button>
+        <button class="horse-select" data-rank="Third" data-value="2">2</button>
+        <button class="horse-select" data-rank="Third" data-value="3">3</button>
+        <button class="horse-select" data-rank="Third" data-value="4">4</button>
+        <p id="selected-Third" class="selected-value"></p>
+    </div>
+    <div>
+        <label>Mise</label>
+        <button id="increase-bet">+</button>
+        <button id="decrease-bet">-</button>
+        <p id="bet-amount">1</p>
+    </div>
+    <button id="play-button">Lancer la course</button>
 </div>
 
-<div id="result" style="display:none;"></div>
+<div id="result" style="display:none;"></div>   
 
 <script>
-    const trackLength = 800; // px
-    const totalDistance = 100;
+    const trackLength = 800;
+const totalDistance = 100;
+const speedFactor = 0.0005;
 
-    document.getElementById("raceForm").addEventListener("submit", async function (e) {
-        e.preventDefault();
-        const form = e.target;
+let canvas = document.getElementById('canvas');
+let ctx = canvas.getContext('2d');
+let betList = [1, 5, 10, 20, 50, 100, 250, 500, 750, 1000];
+let betIndex = 0;
+let chevaux = [];
+let raceData;
+let running = false;
+let selections = { First: null, Second: null, Third: null };
 
-        const data = {
-            first: {
-                horse: parseInt(form.firstHorse.value),
-                amount: parseInt(form.firstAmount.value)
-            },
-            second: form.secondHorse.value ? {
-                horse: parseInt(form.secondHorse.value),
-                amount: parseInt(form.secondAmount.value)
-            } : null,
-            third: form.thirdHorse.value ? {
-                horse: parseInt(form.thirdHorse.value),
-                amount: parseInt(form.thirdAmount.value)
-            } : null
-        };
+class Cheval {
+    constructor(index, paces) {
+        this.index = index;
+        this.paces = paces;
+        this.paceIndex = 0;
+        this.distInPace = 0;
+        this.totalDist = 0;
+        this.frame = 0;
+        this.frameTimer = 0;
+        this.finished = false;
+    }
 
-        try {
-            const response = await fetch('/api/HorseRace', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) {
-                const err = await response.text();
-                alert("Erreur: " + err);
+    update(deltaTime) {
+        if (this.finished) return;
+        const pace = this.paces[this.paceIndex];
+        const distToMove = pace.speed * deltaTime * speedFactor;
+        this.distInPace += distToMove;
+        if (this.distInPace >= pace.dist) {
+            this.totalDist += pace.dist;
+            this.paceIndex++;
+            this.distInPace = 0;
+            if (this.paceIndex >= this.paces.length) {
+                this.totalDist = totalDistance;
+                this.finished = true;
                 return;
             }
-
-            const raceData = await response.json();
-            startRace(raceData);
-        } catch (error) {
-            alert("Erreur réseau: " + error);
+        } else {
+            this.totalDist += distToMove;
         }
+        this.frameTimer += deltaTime;
+        const frameDelay = 3000 / pace.speed;
+        if (this.frameTimer >= frameDelay) {
+            this.frameTimer = 0;
+            this.frame = (this.frame + 1) % 12;
+        }
+    }
+
+    draw() {
+        const x = (this.totalDist / totalDistance) * trackLength + 100;
+        const y = 50 + this.index * 100;
+        const img = document.getElementById(`sprite-${this.index}-${this.frame}`);
+        ctx.drawImage(img, x, y, 80, 80);
+    }
+}
+
+function startRace(data) {
+    raceData = data;
+    chevaux = [];
+    for (let i = 0; i < 4; i++) {
+        chevaux.push(new Cheval(i, data.speeds[i]));
+    }
+    lastTimestamp = null;
+    requestAnimationFrame(animateStep);
+}
+
+let lastTimestamp = null;
+function animateStep(timestamp) {
+    if (!lastTimestamp) lastTimestamp = timestamp;
+    const deltaTime = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let allFinished = true;
+    chevaux.forEach(c => {
+        c.update(deltaTime);
+        c.draw();
+        if (!c.finished) allFinished = false;
     });
 
-    function startRace(raceData) {
-        document.getElementById("bet-form").style.display = "none";
-        document.getElementById("race-track").style.display = "block";
+    updateLiveRanking();
 
-        const horses = [];
-
-        for (let i = 0; i < 4; i++) {
-            horses.push({
-                element: document.getElementById("horse-" + i),
-                img: document.getElementById("horse-img-" + i),
-                paces: raceData.speeds[i],
-                paceIndex: 0,
-                distDone: 0,
-                frame: 0,
-                frameTimer: 0
-            });
-        }
-
-        function animateStep(timestamp) {
-            let allFinished = true;
-
-            horses.forEach(h => {
-                if (h.paceIndex >= h.paces.length) return;
-
-                const pace = h.paces[h.paceIndex];
-                const step = pace.speed * 0.02; // ajustement vitesse pixel
-
-                h.distDone += step;
-                if (h.distDone >= pace.dist) {
-                    h.paceIndex++;
-                    h.distDone = 0;
-                }
-
-                let totalDist = 0;
-                for (let j = 0; j < h.paceIndex; j++) {
-                    totalDist += h.paces[j].dist;
-                }
-                totalDist += h.distDone;
-
-                const pos = (totalDist / totalDistance) * trackLength;
-                h.element.style.transform = `translateX(${pos}px)`;
-
-                // synchronisation frame selon vitesse (plus rapide = plus rapide frame)
-                const frameDelay = 3000 / pace.speed; // vitesse inversement proportionnelle
-                h.frameTimer += 16; // environ chaque 16ms par frame (~60fps)
-
-                if (h.frameTimer >= frameDelay) {
-                    h.frameTimer = 0;
-                    h.frame = (h.frame + 1) % 12;
-                    h.img.src = `/HorseRace/Horses/cheval${h.img.id.split('-')[2] + 1}_${h.frame}.png`;
-                }
-
-                if (h.paceIndex < h.paces.length) {
-                    allFinished = false;
-                }
-            });
-
-            if (!allFinished) {
-                requestAnimationFrame(animateStep);
-            } else {
-                showResults(raceData);
-            }
-        }
-
+    if (!allFinished) {
         requestAnimationFrame(animateStep);
+    } else {
+        showResults(raceData);
+        running = false;
     }
+}
 
-    function showResults(raceData) {
-        document.getElementById("result").style.display = "block";
-        document.getElementById("result").innerText =
-            `${raceData.message}\nClassement: ${raceData.results.join(", ")}`;
+function updateLiveRanking() {
+    const positions = chevaux.map(c => ({ index: c.index, dist: c.totalDist })).sort((a, b) => b.dist - a.dist);
+    const rankingDiv = document.getElementById("live-ranking");
+    rankingDiv.innerHTML = "Classement en temps réel: " + positions.map(p => `Cheval ${p.index + 1}`).join(" > ");
+}
+
+const buttons = document.querySelectorAll('.horse-select');
+buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const rank = btn.dataset.rank;
+        const value = parseInt(btn.dataset.value);
+        selections[rank] = value - 1;
+        document.getElementById("selected-" + rank).innerText = "Cheval " + value;
+    });
+});
+
+document.getElementById("increase-bet").addEventListener("click", () => {
+    betIndex = Math.min(betIndex + 1, betList.length - 1);
+    document.getElementById("bet-amount").innerText = betList[betIndex];
+});
+
+document.getElementById("decrease-bet").addEventListener("click", () => {
+    betIndex = Math.max(betIndex - 1, 0);
+    document.getElementById("bet-amount").innerText = betList[betIndex];
+});
+
+document.getElementById("play-button").addEventListener("click", async function () {
+    if (running) return;
+    running = true;
+    const data = {
+        First: selections.First,
+        Second: selections.Second,
+        Third: selections.Third,
+        Amount: parseInt(document.getElementById("bet-amount").innerText),
+    };
+    const response = await fetch('/api/HorseRace', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    });
+    if (response.ok) {
+        const raceData = await response.json();
+        console.log(raceData);
+        startRace(raceData);
+    } else {
+        alert("Erreur: " + await response.text());
+        running = false;
     }
+});
+
+function showResults(data) {
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").innerText = `${data.message}\nClassement: ${data.results.join(", ")}`;
+}
 </script>
+
+<!-- Preload images -->
+<div style="display:none;">
+    @for (int i = 0; i < 4; i++) {
+        @for (int j = 0; j < 12; j++) {
+            <img id="sprite-@(i)-@(j)" src="/assets/HorseRace/Horses/cheval@(i + 1)_@(j).png" />
+        }
+    }
+</div>

@@ -1,16 +1,19 @@
 ﻿using CasinoDeYann.Services;
+using CasinoDeYann.Services.Stats;
+using CasinoDeYann.Services.Stats.Models;
+using CasinoDeYann.Services.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CasinoDeYann.Pages;
 
-public class User(UserService userService) : PageModel
+public class User(IStatsService statsService, IUserService userService) : PageModel
 {
     public string Username { get; private set; }
 
     public long Level { get; private set; }
     public decimal Balance { get; private set; }
-    public List<GameHistoryEntryModel> History { get; private set; } = new();
+    public IEnumerable<GameHistoryEntryModel> History { get; private set; }
     public DateTime Date { get; private set; }
     public decimal MaxWin { get; private set; }
     public decimal TotalPlayed { get; private set; }
@@ -34,7 +37,7 @@ public class User(UserService userService) : PageModel
 
         Username = username;
 
-        var dto = await userService.GetUserProfileAsync(username);
+        var dto = await statsService.GetUserProfileAsync("", username, 1);
 
         if (dto == null)
         {
@@ -43,13 +46,13 @@ public class User(UserService userService) : PageModel
 
         Level = dto.Level;
         Balance = dto.Balance;
-        History = dto.History;
-        MaxWin = dto.HighestGain;
-        TotalPlayed = dto.NumberOfGames;
-        TotalWon = dto.TotalWon;
-        TotalLost = dto.TotalLost;
-        GamesPlayedPerGame = dto.GamesPlayedPerGame;
-        GamesPlayedPerDay = dto.GamesPlayedPerDay;
+        History = dto.stats.History;
+        MaxWin = dto.stats.HighestGain;
+        TotalPlayed = dto.stats.NumberOfGames;
+        TotalWon = dto.stats.TotalWon;
+        TotalLost = dto.stats.TotalLost;
+        GamesPlayedPerGame = dto.stats.GamesPlayedPerGame;
+        GamesPlayedPerDay = dto.stats.GamesPlayedPerDay;
 
         return Page();
     }

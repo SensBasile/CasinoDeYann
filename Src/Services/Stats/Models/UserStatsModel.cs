@@ -1,14 +1,13 @@
-﻿namespace CasinoDeYann.Services;
+﻿namespace CasinoDeYann.Services.Stats.Models;
 
-public record UserProfileModel(
-    long Level,
-    long Balance,
-    List<GameHistoryEntryModel> History, 
+public record UserStatsModel(
+    IEnumerable<GameHistoryEntryModel> History,
+    bool HasPrevious,
+    bool HasNext,
     long HighestGain,
     int NumberOfGames,
     long TotalWon,
     long TotalLost,
-    // FIXME: chiant int MaxWinStreak,
     Dictionary<string, int> GamesPlayedPerGame ,
     Dictionary<DateTime, int> GamesPlayedPerDay
     );

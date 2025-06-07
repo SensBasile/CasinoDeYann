@@ -2,6 +2,7 @@
 
 using CasinoDeYann.Services;
 using CasinoDeYann.Services.Stats;
+using CasinoDeYann.Services.Stats.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,10 +13,10 @@ namespace CasinoDeYann.Pages.BackOffice;
 [Authorize(Roles = "Admin")]
 public class BackofficeModel : PageModel
 {
-    private readonly StatsService _statsService;
+    private readonly IStatsService _statsService;
         private readonly ILogger<IndexModel> _logger;
 
-        public BackofficeModel(StatsService statsService, ILogger<IndexModel> logger)
+        public BackofficeModel(IStatsService statsService, ILogger<IndexModel> logger)
         {
             _statsService = statsService;
             _logger = logger;

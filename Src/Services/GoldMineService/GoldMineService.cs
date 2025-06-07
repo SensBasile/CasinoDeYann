@@ -1,9 +1,11 @@
 using CasinoDeYann.Services.GoldMineService.Models;
 using CasinoDeYann.Services.Stats;
+using CasinoDeYann.Services.Stats.Models;
+using CasinoDeYann.Services.User;
 
 namespace CasinoDeYann.Services.GoldMineService;
 
-public class GoldMineService(UserService userService, StatsService statsService)
+public class GoldMineService(IUserService userService, IStatsService statsService)
 {
     private const int MineValue = 5;
 

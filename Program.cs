@@ -8,6 +8,7 @@ using CasinoDeYann.Services.HorseRace;
 using CasinoDeYann.Services.Roulette;
 using CasinoDeYann.Services.SlotMachine;
 using CasinoDeYann.Services.Stats;
+using CasinoDeYann.Services.User;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,8 +36,8 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UserContextService>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IStatsRepository, StatsRepository>();
-builder.Services.AddScoped<StatsService>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IStatsService, StatsService>();
 builder.Services.AddScoped<SlotMachineService>();
 builder.Services.AddScoped<RouletteService>();
 builder.Services.AddScoped<GoldMineService>();

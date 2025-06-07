@@ -9,7 +9,9 @@ public class AutomapperProfiles : Profile
     public AutomapperProfiles()
     {
         CreateMap<User, TUser>().ReverseMap();
+        CreateMap<Services.User.Models.User, User>().ReverseMap();
         CreateMap<Stats, TStats>()
             .ForMember(dest => dest.User, opt => opt.Ignore()).ReverseMap();
+
     }
 }

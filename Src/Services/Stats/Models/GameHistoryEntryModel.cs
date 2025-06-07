@@ -1,4 +1,4 @@
-﻿namespace CasinoDeYann.Services;
+﻿namespace CasinoDeYann.Services.Stats.Models;
 
 public record GameHistoryEntryModel(
     long Id,

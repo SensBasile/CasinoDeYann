@@ -1,7 +1,8 @@
 ﻿@using CasinoDeYann.Services
+@using CasinoDeYann.Services.User
 @inject UserContextService UserContextService
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -53,7 +54,7 @@
                         </li>
                         <li class="nav-item">
                             <span id="user-money">@currentUser.Money</span>
-                            <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp" />
+                            <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp" alt="coin"/>
                         </li>
                         <li class="nav-item">
                             <a asp-page="/user" asp-route-username="@currentUser.Username">

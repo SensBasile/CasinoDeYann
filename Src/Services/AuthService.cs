@@ -49,7 +49,7 @@ public class AuthService
         if (existingUser != null)
             return false;
 
-        var newUser = new User
+        var newUser = new DataAccess.Dbo.User
         {
             Username = username,
             Password = BCrypt.Net.BCrypt.HashPassword(password),

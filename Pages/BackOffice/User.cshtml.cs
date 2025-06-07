@@ -1,4 +1,8 @@
 using CasinoDeYann.Services;
+using CasinoDeYann.Services.Stats;
+using CasinoDeYann.Services.Stats.Models;
+using CasinoDeYann.Services.User;
+using CasinoDeYann.Services.User.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,11 +12,13 @@ namespace CasinoDeYann.Pages.BackOffice;
 [Authorize(Roles = "Admin")]
 public class UserModel : PageModel
 {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
+    private readonly IStatsService _statsService;
 
-    public UserModel(UserService userService)
+    public UserModel(IUserService userService, IStatsService statsService)
     {
         _userService = userService;
+        _statsService = statsService;
     }
 
     [BindProperty(SupportsGet = true)]
@@ -29,8 +35,8 @@ public class UserModel : PageModel
         {
             return NotFound();
         }
-        
-        User = await _userService.GetUserProfileAsync(Username);
+        // FIXME
+        User = await _statsService.GetUserProfileAsync("", Username, 1);
         if (User == null)
         {
             return NotFound();

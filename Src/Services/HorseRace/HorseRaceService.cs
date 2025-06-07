@@ -1,10 +1,11 @@
 ﻿using CasinoDeYann.Controllers.HorseRace.DTOs;
 using CasinoDeYann.DataAccess.Dbo;
 using CasinoDeYann.Services.HorseRace.Models;
+using CasinoDeYann.Services.User;
 
 namespace CasinoDeYann.Services.HorseRace;
 
-public class HorseRaceService(UserService userService)
+public class HorseRaceService(IUserService userService)
 {
     private const int HorsesNumber = 4;
     private const int TrackLength = 100;
@@ -15,7 +16,7 @@ public class HorseRaceService(UserService userService)
         if (bet.Third != null && bet.Second == null) throw new BadHttpRequestException("You have to bet on a second if you bet on a third");
         
         long totalBet = TotalBet(bet);
-        User callingUser = await userService.Pay(username, totalBet);
+        var callingUser = await userService.Pay(username, totalBet);
         
         _ = await userService.AddExp(username, totalBet / 100 + 20);
 

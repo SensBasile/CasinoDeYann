@@ -1,11 +1,12 @@
 ﻿using CasinoDeYann.Services;
+using CasinoDeYann.Services.User;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CasinoDeYann.Pages;
 
 public class SlotMachine(UserContextService userContextService) : PageModel
 {
-    public DataAccess.Dbo.User? CurrentUser;
+    public Services.User.Models.User? CurrentUser;
     
     public async Task OnGetAsync()
     {

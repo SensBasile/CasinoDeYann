@@ -13,7 +13,7 @@ public class StatsRepository: Repository<TStats, Stats>, IStatsRepository
     }
 
 
-    public UserStatsSummary GetStats(long userId)
+    public async Task<UserStatsSummary> GetStats(long userId)
     {
         var userStats = _context.Stats.Where(s => s.UserId == userId).ToList();
 
@@ -33,10 +33,6 @@ public class StatsRepository: Repository<TStats, Stats>, IStatsRepository
             UserId = userId,
             NumberOfGames = userStats.Count(),
             HighestGain = userStats.Max(s => (long?)s.Gain) ?? 0,
-            History = _mapper.Map<List<Stats>>(userStats
-                .OrderByDescending(s => s.Date)
-                .Take(15)
-                .ToList()),
             TotalWon = totalWon,
             TotalLost = totalLost,
             GamesPlayedPerGame = gamesPlayedPerGame,
@@ -44,7 +40,7 @@ public class StatsRepository: Repository<TStats, Stats>, IStatsRepository
         };
     }
 
-    public async Task<PaginatedStats> Get(string sortOrder, string searchString, int pageIndex)
+    public async Task<PaginatedStats> Get(string sortOrder, string searchString, int pageIndex, bool strictSearch = false)
     {
         var stats = _context.Stats
             .Include(s => s.User)
@@ -52,7 +48,14 @@ public class StatsRepository: Repository<TStats, Stats>, IStatsRepository
         
         if (!String.IsNullOrEmpty(searchString))
         {
-            stats= stats.Where(s => s.User.Username.Contains(searchString));
+            if (strictSearch)
+            {
+                stats = stats.Where(s => s.User.Username.Equals(searchString));
+            }
+            else
+            {
+                stats = stats.Where(s => s.User.Username.Contains(searchString));
+            }
         }
         
         switch (sortOrder)

@@ -335,7 +335,7 @@ ViewData["Title"] = "Roulette";
         if (!resp.ok) {
           const text = await resp.text();
           alert("Erreur du serveur : " + text);
-          throw new Error("Server returned " + resp.status);
+          return;
         }
         responseJson = await resp.json();
       } catch (err) {

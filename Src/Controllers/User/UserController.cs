@@ -1,4 +1,5 @@
 using CasinoDeYann.Services;
+using CasinoDeYann.Services.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CasinoDeYann.Controllers.User;

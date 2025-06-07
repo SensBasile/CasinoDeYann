@@ -1,10 +1,12 @@
 using CasinoDeYann.DataAccess.Dbo;
 using CasinoDeYann.Services.SlotMachine.Models;
 using CasinoDeYann.Services.Stats;
+using CasinoDeYann.Services.Stats.Models;
+using CasinoDeYann.Services.User;
 
 namespace CasinoDeYann.Services.SlotMachine;
 
-public class SlotMachineService(UserService userService, StatsService statsService)
+public class SlotMachineService(IUserService userService, IStatsService statsService)
 {
     private const int W = 5;
     private const int H = 5;
@@ -33,7 +35,7 @@ public class SlotMachineService(UserService userService, StatsService statsServi
 
     public async Task<SlotMachineModel> Play(string userName, int bet)
     {
-        User callingUser = await userService.Pay(userName, bet);
+        User.Models.User callingUser = await userService.Pay(userName, bet);
         
         _ = await userService.AddExp(userName, bet / 50 + 5);
         

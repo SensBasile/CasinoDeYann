@@ -2,10 +2,12 @@
 using CasinoDeYann.DataAccess.Dbo;
 using CasinoDeYann.Services.Roulette.Models;
 using CasinoDeYann.Services.Stats;
+using CasinoDeYann.Services.Stats.Models;
+using CasinoDeYann.Services.User;
 
 namespace CasinoDeYann.Services.Roulette;
 
-public class RouletteService(UserService userService, StatsService statsService)
+public class RouletteService(IUserService userService, IStatsService statsService)
 {
     private readonly Random _random = new();
     
@@ -17,7 +19,7 @@ public class RouletteService(UserService userService, StatsService statsService)
     public async Task<RouletteModel> play(string userName, RouletteRequest bets)
     {
         long totalBet = getTotalBetValue(bets);
-        User user = await userService.Pay(userName, totalBet);
+        var user = await userService.Pay(userName, totalBet);
         
         _ = await userService.AddExp(userName, totalBet / 100 + 10);
         

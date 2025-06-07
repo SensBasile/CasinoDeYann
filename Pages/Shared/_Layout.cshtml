@@ -44,18 +44,19 @@
                 </div>
 
                 <div class="nav-right">
+                    <li class="nav-item" style="position: relative;">
+                        <form id="userSearchForm" method="get" onsubmit="redirectToUser(event)">
+                            <input type="text" id="searchInput" placeholder="Rechercher un utilisateur" autocomplete="off" required />
+                            <div id="autocompleteList" class="autocomplete-items"></div>
+                            <button type="submit">🔍</button>
+                        </form>
+                    </li>
                     @if (currentUser != null)
                     {
-                        <li class="nav-item" style="position: relative;">
-                            <form id="userSearchForm" method="get" onsubmit="redirectToUser(event)">
-                                <input type="text" id="searchInput" placeholder="Rechercher un utilisateur" autocomplete="off" required />
-                                <div id="autocompleteList" class="autocomplete-items"></div>
-                                <button type="submit">🔍</button>
-                            </form>
-                        </li>
+
                         <li class="nav-item">
                             <span id="user-money">@currentUser.Money</span>
-                            <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp" />
+                            <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp"/>
                         </li>
                         <li class="nav-item">
                             <a asp-page="/user" asp-route-username="@currentUser.Username">

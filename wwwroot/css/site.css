@@ -207,6 +207,12 @@ h2 {
   font-family: "Jersey 10", cursive;
 }
 
+input, .autocomplete-item {
+  font-family: "Jersey 10", cursive;
+  font-size: 1.5rem;
+}
+
+
 .nav-item a:hover {
   color: gold;
 }

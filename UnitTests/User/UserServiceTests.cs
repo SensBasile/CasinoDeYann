@@ -1,6 +1,8 @@
-﻿using CasinoDeYann.DataAccess.Dbo;
+﻿using AutoMapper;
+using CasinoDeYann.DataAccess.Dbo;
 using CasinoDeYann.DataAccess.Interfaces;
 using CasinoDeYann.Services;
+using CasinoDeYann.Services.User;
 using Microsoft.AspNetCore.Http;
 using Moq;
 
@@ -10,6 +12,7 @@ public class UserServiceTests
 {
     private readonly Mock<IUsersRepository> _usersRepositoryMock;
     private readonly Mock<IStatsRepository> _statsRepositoryMock;
+    private readonly Mock<IMapper> _mapperMock;
     private readonly UserService _userService;
 
     public UserServiceTests()
@@ -22,9 +25,10 @@ public class UserServiceTests
                 u.Id = 123;
                 return u;
             });
-
+        
+        _mapperMock = new Mock<IMapper>();
         _statsRepositoryMock = new Mock<IStatsRepository>();
-        _userService = new UserService(_usersRepositoryMock.Object, _statsRepositoryMock.Object);
+        _userService = new UserService(_usersRepositoryMock.Object, _mapperMock.Object);
     }
 
     [Fact]
@@ -89,58 +93,6 @@ public class UserServiceTests
         var result = (await _userService.GetLeaderboard()).ToList();
 
         Assert.Equal(5, result.Count);
-    }
-
-    [Fact]
-    public async Task GetStats_ShouldReturnUserStatsSummary()
-    {
-        var username = "testuser";
-        var user = new CasinoDeYann.DataAccess.Dbo.User { Id = 1, Username = username };
-        var statsSummary = new UserStatsSummary();
-
-        _usersRepositoryMock.Setup(repo => repo.GetOneByName(username)).ReturnsAsync(user);
-        _statsRepositoryMock.Setup(repo => repo.GetStats(user.Id)).Returns(statsSummary);
-
-        var result = await _userService.GetStats(username);
-
-        Assert.Equal(statsSummary, result);
-    }
-
-    [Fact]
-    public async Task GetUserProfileAsync_ShouldReturnUserProfile()
-    {
-        var username = "testuser";
-        var user = new CasinoDeYann.DataAccess.Dbo.User { Id = 1, Username = username, Xp = 5000, Money = 2000 };
-        var history = new List<CasinoDeYann.DataAccess.Dbo.Stats>
-        {
-            new() { Date = DateTime.UtcNow, Game = "Roulette", Bet = 100, Gain = 200 }
-        };
-        var statsSummary = new UserStatsSummary
-        {
-            UserId = 1,
-            History = history,
-            HighestGain = 200,
-            NumberOfGames = 10,
-            TotalWon = 1000,
-            TotalLost = 500,
-            GamesPlayedPerGame = new Dictionary<string, int> { { "Roulette", 5 } },
-            GamesPlayedPerDay = new Dictionary<DateTime, int> { { DateTime.Today, 2 } }
-        };
-
-        _usersRepositoryMock.Setup(repo => repo.GetOneByName(username)).ReturnsAsync(user);
-        _statsRepositoryMock.Setup(repo => repo.GetStats(user.Id)).Returns(statsSummary);
-
-        var result = await _userService.GetUserProfileAsync(username);
-
-        Assert.Equal(user.Xp / 1000, result.Level);
-        Assert.Equal(user.Money, result.Balance);
-        Assert.Single(result.History);
-        Assert.Equal(statsSummary.HighestGain, result.HighestGain);
-        Assert.Equal(statsSummary.NumberOfGames, result.NumberOfGames);
-        Assert.Equal(statsSummary.TotalWon, result.TotalWon);
-        Assert.Equal(statsSummary.TotalLost, result.TotalLost);
-        Assert.Equal(statsSummary.GamesPlayedPerGame, result.GamesPlayedPerGame);
-        Assert.Equal(statsSummary.GamesPlayedPerDay, result.GamesPlayedPerDay);
     }
 
     [Fact]

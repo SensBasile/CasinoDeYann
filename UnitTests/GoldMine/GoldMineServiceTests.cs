@@ -45,7 +45,7 @@ namespace UnitTests.GoldMine
             var updatedUser = new CasinoDeYann.Services.User.Models.User { Username = username, Money = 51 };
 
             _userServiceMock.Setup(s => s.GetUser(username)).ReturnsAsync(user);
-            _userServiceMock.Setup(s => s.AddMoney(username, 1)).ReturnsAsync(updatedUser);
+            _userServiceMock.Setup(s => s.AddMoney(username, 1)).ReturnsAsync(updatedUser.Money);
             _userServiceMock.Setup(s => s.AddExp(username, 1)).ReturnsAsync(updatedUser);
             _statsServiceMock.Setup(s => s.Create(It.IsAny<GameHistoryEntryModel>())).Returns((Task<GameHistoryEntryModel>)Task.CompletedTask);
 

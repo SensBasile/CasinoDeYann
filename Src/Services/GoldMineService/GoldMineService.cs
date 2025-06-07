@@ -9,12 +9,12 @@ public class GoldMineService(IUserService userService, IStatsService statsServic
 {
     private const int MineValue = 5;
 
-    public async Task<GoldMineModel> Mine(string userName)
+    public virtual async Task<GoldMineModel> Mine(string userName)
     {
         var callingUser = await userService.GetUser(userName);
         if (callingUser == null || callingUser.Money >= 100) return new GoldMineModel(false);
         
-        callingUser = await userService.AddMoney(callingUser.Username, MineValue);
+        await userService.AddMoney(callingUser.Username, MineValue);
         _ = userService.AddExp(callingUser.Username, MineValue);
         
         await statsService.Create(new GameHistoryEntryModel(-1, callingUser.Username, DateTime.Now, "Gold Mine", 0, MineValue, false));

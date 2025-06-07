@@ -7,5 +7,5 @@ public record GameHistoryEntryModel(
     string Game,
     long Bet,
     long Gain,
-    bool IsCancelled
+    bool IsCanceled
         );

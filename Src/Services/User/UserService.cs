@@ -43,12 +43,12 @@ public class UserService(IUsersRepository usersRepository, IMapper mapper) : IUs
         return await usersRepository.DeleteOneByName(userName);
     }
 
-    public async Task<Models.User> AddMoney(string name, long amount)
+    public async Task<long> AddMoney(string name, long amount)
     {
         var user = await usersRepository.GetOneByName(name);
         user.Money += amount;
-        var updated = await usersRepository.Update(user);
-        return mapper.Map<Models.User>(updated);
+        return (await usersRepository.Update(user)).Money;
+        ;
     }
 
     public async Task<Models.User> AddExp(string name, long amount)

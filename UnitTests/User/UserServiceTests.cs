@@ -115,7 +115,7 @@ public class UserServiceTests
 
         var result = await _userService.AddMoney(username, 500);
 
-        Assert.Equal(1500, result.Money);
+        Assert.Equal(1500, result);
     }
 
     [Fact]

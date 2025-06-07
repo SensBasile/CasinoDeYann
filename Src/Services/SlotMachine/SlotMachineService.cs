@@ -56,7 +56,7 @@ public class SlotMachineService(IUserService userService, IStatsService statsSer
         var patterns = Enumerable.Range(0, H).Select(_ => new bool[W]).ToArray();
         var gain = ComputeGain(grid.ToArray(), bet, patterns);
         
-        callingUser = await userService.AddMoney(callingUser.Username, gain);
+        var userMoney = await userService.AddMoney(callingUser.Username, gain);
         _ = await userService.AddExp(callingUser.Username, gain / 1000 + 50);
         
         await statsService.Create(new GameHistoryEntryModel(-1, callingUser.Username, DateTime.Now, "Slot Machine", bet, gain, false));

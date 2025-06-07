@@ -27,7 +27,7 @@ public class RouletteService(IUserService userService, IStatsService statsServic
 
         long gain = ComputeGains(bets, winningNumber);
 
-        user = await userService.AddMoney(userName, gain);
+        long userMoney = await userService.AddMoney(userName, gain);
         _ = await userService.AddExp(userName, gain / 700 + 35);
         
         await statsService.Create(new GameHistoryEntryModel(-1, userName, DateTime.Now, "Roux'Lette", totalBet, gain, false));
@@ -36,7 +36,7 @@ public class RouletteService(IUserService userService, IStatsService statsServic
             winningNumber,
             gain,
             gain > totalBet ? $"Bravo vous avez remporté {gain - totalBet} yanns" : $"Dommage vous avez perdu {totalBet - gain} yanns",
-            user.Money
+            userMoney
         );
     }
 

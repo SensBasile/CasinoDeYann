@@ -46,13 +46,13 @@ public class User(IStatsService statsService, IUserService userService) : PageMo
 
         Level = dto.Level;
         Balance = dto.Balance;
-        History = dto.stats.History;
-        MaxWin = dto.stats.HighestGain;
-        TotalPlayed = dto.stats.NumberOfGames;
-        TotalWon = dto.stats.TotalWon;
-        TotalLost = dto.stats.TotalLost;
-        GamesPlayedPerGame = dto.stats.GamesPlayedPerGame;
-        GamesPlayedPerDay = dto.stats.GamesPlayedPerDay;
+        History = dto.Stats.History;
+        MaxWin = dto.Stats.HighestGain;
+        TotalPlayed = dto.Stats.NumberOfGames;
+        TotalWon = dto.Stats.TotalWon;
+        TotalLost = dto.Stats.TotalLost;
+        GamesPlayedPerGame = dto.Stats.GamesPlayedPerGame;
+        GamesPlayedPerDay = dto.Stats.GamesPlayedPerDay;
 
         return Page();
     }

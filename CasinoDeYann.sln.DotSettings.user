@@ -6,6 +6,7 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AExecutionContext_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FSourcesCache_003F53b0d531c06faf86bf2ae111a9a2dbce4c52a9153feb9966ade60289c71bf52_003FExecutionContext_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AExecutorFactory_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FSourcesCache_003F804891a5dc5685a3f7409f4e737c7018274e7af1aa111975a024fa3fc08e5c_003FExecutorFactory_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AFuture_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FSourcesCache_003Fb3575a2f41d7c2dbfaa36e866b8a361e11dd7223ff82bc574c1d5d4b7522f735_003FFuture_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AIAuthenticationService_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F4739cfa20188457cbab1aab9c444808cb600_003F0b_003Fffdbdf53_003FIAuthenticationService_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AMonitor_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Fd59ef6fac39747b59bb94cfb57d63549d14e00_003F25_003F2d77289e_003FMonitor_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AQueryable_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Fcbafb95b4df34952928f87356db00c8f27a00_003F04_003Ff2df0409_003FQueryable_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ARazorView_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FSourcesCache_003Fb12bc6498a3360a42c1edc9e39638cd444af4976e6e5b143698067eb2f30_003FRazorView_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
@@ -17,6 +18,16 @@
     &lt;TestId&gt;xUnit::1D4DD001-CB1E-45C3-9D25-77012585056F::net9.0::UnitTests.User.UserControllerTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::1D4DD001-CB1E-45C3-9D25-77012585056F::net9.0::UnitTests.GoldMine.GoldMineServiceTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d9383d34_002D7980_002D4c7e_002D9c15_002D7021fc135204/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AccountControllerTests #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/Users/basile/mti/CasinoDeYann/UnitTests" Presentation="&amp;lt;UnitTests&amp;gt;" /&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f8974c8f_002Dee75_002D4ba5_002D9b73_002D6049563c0f03/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AccountControllerTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::1D4DD001-CB1E-45C3-9D25-77012585056F::net9.0::UnitTests.Auth.AccountControllerTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::1D4DD001-CB1E-45C3-9D25-77012585056F::net9.0::CasinoDeYann.Tests.Services.AuthServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::1D4DD001-CB1E-45C3-9D25-77012585056F::net9.0::UnitTests.Auth.AuthServiceTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=avez/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=dommage/@EntryIndexedValue">True</s:Boolean>

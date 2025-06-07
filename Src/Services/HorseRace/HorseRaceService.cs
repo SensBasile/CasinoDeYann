@@ -38,14 +38,16 @@ public class HorseRaceService(IUserService userService)
         var run = paces.ToArray();
         var results = FinishOrder(run);
         long gains = ComputeGains(results, bet);
+
+        long userMoney = 0;
         
-        if (gains > 0) callingUser = await userService.AddMoney(username, gains);
+        if (gains > 0) userMoney = await userService.AddMoney(username, gains);
         
         return new HorseRaceModel(
             results,
             run,
             gains,
-            callingUser.Money,
+            userMoney,
             gains > 0 ? $"Bravo ! Vous avez gagné {gains} Yans" : "Dommage, retentez votre chance"
             );
     }

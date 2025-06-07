@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true" />
 }
 
-<h2 class="page-title">Signup</h2>
+<h2 class="page-title">S'enregistrer</h2>
 
 @if (!string.IsNullOrEmpty(Model.ErrorMessage))
 {
@@ -16,17 +16,17 @@
     <div class="form-frame">
         <form method="post" class="login-form">
             <div class="form-group">
-                <label asp-for="Username" class="form-label">Username</label>
+                <label asp-for="Username" class="form-label">Nom d'utilisateur</label>
                 <input asp-for="Username" class="form-control" />
             </div>
 
             <div class="form-group">
-                <label asp-for="Password" class="form-label">Password</label>
+                <label asp-for="Password" class="form-label">Mot de passe</label>
                 <input asp-for="Password" class="form-control" type="password" />
             </div>
 
             <div class="form-group">
-                <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                <label asp-for="ConfirmPassword" class="form-label">Confirmer Mot de passe</label>
                 <input asp-for="ConfirmPassword"class="form-control confirm-control"type="password" />
             </div>
 
@@ -37,7 +37,7 @@
                 </label>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create Account</button>
+            <button type="submit" class="btn btn-primary">Créer le compte</button>
         </form>
     </div>
 </div>

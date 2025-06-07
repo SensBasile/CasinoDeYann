@@ -10,9 +10,9 @@ public class StatsService: IStatsService
 {
     private readonly IStatsRepository _statsRepository;
     
-    private readonly UserService _usersService;
+    private readonly IUserService _usersService;
 
-    public StatsService(IStatsRepository statsRepository, UserService usersService)
+    public StatsService(IStatsRepository statsRepository, IUserService usersService)
     {
         _statsRepository = statsRepository;
         _usersService = usersService;

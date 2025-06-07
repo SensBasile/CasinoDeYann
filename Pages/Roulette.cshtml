@@ -104,22 +104,19 @@ ViewData["Title"] = "Roulette";
 
     <div class="wheel-container">
       <div class="wheel-wrapper">
-        <!-- SUPPORT IMAGE: sits directly behind the wheel -->
         <img
           src="~/assets/Roulette/roulette_support.png"
           alt="Roulette Support"
           class="roulette-support"
         />
-
-        <!-- WHEEL -->
+        
         <img
           id="roulette-wheel"
           src="~/assets/Roulette/roulette.png"
           alt="Roulette Wheel"
           class="roulette-wheel"
         />
-
-        <!-- BALL WRAPPER -->
+        
         <div id="ball-wrapper" class="ball-wrapper">
           <img
             id="roulette-ball"
@@ -135,7 +132,6 @@ ViewData["Title"] = "Roulette";
 @section Scripts {
   <script>
   (function() {
-    // ───────────── Cached references ─────────────
     const wheel         = document.getElementById("roulette-wheel");
     const ballWrapper   = document.getElementById("ball-wrapper");
     const ball          = document.getElementById("roulette-ball");
@@ -153,26 +149,23 @@ ViewData["Title"] = "Roulette";
     // All bet buttons (single numbers, dozens, rows, outside). We filter out the chip buttons themselves.
     const betButtons = Array.from(document.querySelectorAll(".bet-button"))
                         .filter(btn => btn.hasAttribute("data-number") || btn.hasAttribute("data-bet"));
-
-    // All chip‐denomination buttons (1, 5, 25, …).
+    
     const chipButtons = Array.from(document.querySelectorAll(".chip-button"));
-
-    // ───────────── Internal state ─────────────
-    let currentChipValue = 1;  // default = 1€
-    let betStack = [];         // will hold { type, key, amount, chipElement }
-
-    // European roulette pockets; used when spinning the wheel.
+    
+    let currentChipValue = 1;
+    let betStack = [];
+    
     const numbers = [
       0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 
       6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 
       24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 
       29, 7, 28, 12, 35, 3, 26
     ];
-    const segmentAngle = 360 / numbers.length; // ≈ 9.7297°
+    const segmentAngle = 360 / numbers.length;
     
     let playerMoney = @(Model.CurrentUser?.Money ?? 0);
     
-    let running = false; // block input while spin is happening
+    let running = false;
 
     function updateBetAmount() {
       const total = betStack.reduce((sum, b) => sum + b.amount, 0);
@@ -180,13 +173,12 @@ ViewData["Title"] = "Roulette";
       return total;
     }
     
-    // ───────────── Helper: highlight selected chip (default = 1€) ─────────────
     function updateChipSelection(btn) {
       chipButtons.forEach(c => c.classList.remove("selected"));
       btn.classList.add("selected");
       currentChipValue = parseInt(btn.getAttribute("data-chip"), 10);
     }
-    // On page load, highlight the “1€” button:
+
     chipButtons.forEach(btn => {
       if (btn.getAttribute("data-chip") === "1") {
         btn.classList.add("selected");
@@ -195,11 +187,10 @@ ViewData["Title"] = "Roulette";
         updateChipSelection(btn);
       });
     });
-
-    // ───────────── Handle clicks on bet‐buttons (stacking chips) ─────────────
+    
     betButtons.forEach(button => {
       button.addEventListener("click", () => {
-        if (running) return;  // no new bets while spinning
+        if (running) return;
         let totalBet = updateBetAmount()
         if (totalBet + currentChipValue > playerMoney) {
           resultMessage.textContent = "Fonds Insuffisants";
@@ -224,7 +215,7 @@ ViewData["Title"] = "Roulette";
         const totalOffsetPx   = index * offsetPerChipPx;
         
         img.style.transform = `translate(-50%, calc(-50% - ${totalOffsetPx}px))`;
-        
+
         if (button.hasAttribute("data-number")) {
           const number = parseInt(button.getAttribute("data-number"), 10);
           betStack.push({
@@ -246,7 +237,6 @@ ViewData["Title"] = "Roulette";
       });
     });
 
-    // ───────────── Handle Cancel (pop last bet) ─────────────
     cancelButton.addEventListener("click", () => {
       if (running) return;
       const last = betStack.pop();
@@ -254,8 +244,7 @@ ViewData["Title"] = "Roulette";
       last.chipElement.remove();
       updateBetAmount();
     });
-
-    // ───────────── Handle Play (build JSON → POST → spin) ─────────────
+    
     playButton.addEventListener("click", async () => {
       if (running) return;
       ball.classList.remove("fall");
@@ -278,8 +267,7 @@ ViewData["Title"] = "Roulette";
       
       [...betButtons, ...chipButtons, cancelButton, playButton]
         .forEach(el => el.setAttribute("disabled", "true"));
-
-      // ─── 1) Build the exact JSON payload matching C#’s RouletteRequest ───
+      
       const payload = {
         Singles:     [],
         Even:        null,
@@ -295,19 +283,15 @@ ViewData["Title"] = "Roulette";
         FirstHalf:   null,
         SecondHalf:  null
       };
-
-      // Helper to accumulate outside/dozen/row bets:
+      
       function accumulate(fieldName, amt) {
         payload[fieldName] = (payload[fieldName] || 0) + amt;
       }
-
-      // Walk through each placed bet in the stack:
+      
       betStack.forEach(bet => {
         if (bet.type === "single") {
-          // Push a JS array [number, amount]:
           payload.Singles.push({ Number: bet.key, Amount: bet.amount });
         } else {
-          // Map your “data-bet” keys onto the DTO’s field names:
           switch (bet.key) {
             case "even":      accumulate("Even",      bet.amount); break;
             case "odd":       accumulate("Odd",       bet.amount); break;
@@ -326,12 +310,10 @@ ViewData["Title"] = "Roulette";
           }
         }
       });
-
-      // If no single‐number bets, remove that property so it’s not sent as an empty array:
+      
       if (payload.Singles.length === 0) {
         delete payload.Singles;
       }
-      // Remove all zero/”null” outside‐bets so the server sees them as null:
       [
         "Even","Odd","Red","Black",
         "FirstTier","SecondTier","ThirdTier",
@@ -342,11 +324,7 @@ ViewData["Title"] = "Roulette";
           delete payload[field];
         }
       });
-
-      // ─── 2) Debug: log the exact JSON you’re sending ─────────
-      console.log("▶ POST /api/roulette/play/  → ", JSON.stringify(payload));
-
-      // ─── 3) POST to the server ───────────────────────────────
+      
       let responseJson;
       try {
         const resp = await fetch("/api/roulette/play/", {
@@ -355,7 +333,6 @@ ViewData["Title"] = "Roulette";
           body: JSON.stringify(payload)
         });
         if (!resp.ok) {
-          // If the model binder failed, ASP.NET will return 400 with a JSON “errors” payload:
           const text = await resp.text();
           alert("Erreur du serveur : " + text);
           throw new Error("Server returned " + resp.status);
@@ -363,21 +340,18 @@ ViewData["Title"] = "Roulette";
         responseJson = await resp.json();
       } catch (err) {
         console.error("PLAY request failed:", err);
-        // Re‐enable all buttons so the user can try again:
         [...betButtons, ...chipButtons, cancelButton, playButton]
           .forEach(el => el.removeAttribute("disabled"));
         running = false;
         return;
       }
 
-      // ─── 4) Successfully got JSON back ▶ extract the fields ───
-      console.log("◀ Reçu du serveur :", responseJson);
+
       const { winningNumber, gain, message, money } = responseJson;
       
       spinAudio.play()
       
       if (winningNumber === undefined || gain === undefined || message === undefined) {
-        // That means the server sent back something unexpected.
         console.error("Données manquantes dans la réponse :", responseJson);
         alert("Réponse malformée du serveur ; vérifiez la console.");
         running = false;
@@ -412,8 +386,7 @@ ViewData["Title"] = "Roulette";
         ball.classList.add("fall");
         resultMessage.textContent = `${message} (Numéro : ${winningNumber}, Gain : ${gain} €)`;
         running = false;
-
-        // Remove all chip <img> and clear the stack for the next round:
+        
         betStack.forEach(bet => bet.chipElement.remove());
         betStack = [];
         
@@ -433,7 +406,6 @@ ViewData["Title"] = "Roulette";
         
         updateBetAmount();
         
-        // Re‐enable everything so the user can bet again:
         [...betButtons, ...chipButtons, cancelButton, playButton]
           .forEach(el => el.removeAttribute("disabled"));
       }, 5000);

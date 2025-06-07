@@ -267,7 +267,10 @@ ViewData["Title"] = "Roulette";
       if (running) return;
       ball.classList.remove("fall");
       if (betStack.length === 0) {
-        alert("Veuillez placer au moins un pari avant de jouer.");
+        resultMessage.textContent = "Vous n'avez rien parié";
+        setTimeout(() => {
+          resultMessage.textContent = "";
+        }, 1000);
         return;
       }
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CasinoDeYann.Controllers.HorseRace;
 
-[Route("api/[controller]")] // Trifecta
+[Route("api/[controller]")] // HorseRace
 [ApiController]
 public class HorseRaceController(HorseRaceService horseRaceService) : Controller
 {

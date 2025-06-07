@@ -2,7 +2,8 @@
 
 public class HorseRaceRequest
 {
-    public required HorseBet First;
-    public HorseBet? Second;
-    public HorseBet? Third;
+    public int First;
+    public int? Second;
+    public int? Third;
+    public int Amount;
 }

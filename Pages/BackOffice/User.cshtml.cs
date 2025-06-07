@@ -1,4 +1,4 @@
-using CasinoDeYann.Src.Services;
+using CasinoDeYann.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

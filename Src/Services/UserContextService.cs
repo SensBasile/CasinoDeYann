@@ -1,7 +1,6 @@
-using CasinoDeYann.Src.DataAccess.Dbo;
-using CasinoDeYann.Src.DataAccess.Interfaces;
+using CasinoDeYann.DataAccess.Dbo;
 
-namespace CasinoDeYann.Src.Services;
+namespace CasinoDeYann.Services;
 
 public class UserContextService(IHttpContextAccessor httpContextAccessor, UserService userService)
 {

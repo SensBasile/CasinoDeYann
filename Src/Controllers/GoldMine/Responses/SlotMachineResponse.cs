@@ -1,3 +1,3 @@
-﻿namespace CasinoDeYann.Src.Controllers.GoldMine.Responses;
+﻿namespace CasinoDeYann.Controllers.GoldMine.Responses;
 
 public record GoldMineResponse(bool Credited);

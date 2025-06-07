@@ -1,7 +1,7 @@
-using CasinoDeYann.Src.Services;
+using CasinoDeYann.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CasinoDeYann.Src.Controllers.User;
+namespace CasinoDeYann.Controllers.User;
 
 [Route("api/[controller]")]
 [ApiController]

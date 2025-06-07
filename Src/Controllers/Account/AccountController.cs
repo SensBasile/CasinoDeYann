@@ -1,7 +1,7 @@
-using CasinoDeYann.Src.Services;
+using CasinoDeYann.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CasinoDeYann.Src.Controllers.Account;
+namespace CasinoDeYann.Controllers.Account;
 
 public class AccountController : Controller
 {

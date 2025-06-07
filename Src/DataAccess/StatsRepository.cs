@@ -1,10 +1,10 @@
 using AutoMapper;
-using CasinoDeYann.Src.DataAccess.Dbo;
-using CasinoDeYann.Src.DataAccess.EFModels;
-using CasinoDeYann.Src.DataAccess.Interfaces;
+using CasinoDeYann.DataAccess.Dbo;
+using CasinoDeYann.DataAccess.EFModels;
+using CasinoDeYann.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace CasinoDeYann.Src.DataAccess;
+namespace CasinoDeYann.DataAccess;
 
 public class StatsRepository: Repository<TStats, Stats>, IStatsRepository
 {

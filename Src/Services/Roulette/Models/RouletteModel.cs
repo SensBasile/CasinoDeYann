@@ -1,4 +1,4 @@
-namespace CasinoDeYann.Src.Services.Roulette.Models
+namespace CasinoDeYann.Services.Roulette.Models
 {
     public record RouletteModel(int WinningNumber, long Gain, string Message, long Money);
 }

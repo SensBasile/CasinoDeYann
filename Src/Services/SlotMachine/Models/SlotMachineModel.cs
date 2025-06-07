@@ -1,6 +1,6 @@
-﻿using CasinoDeYann.Src.Controllers.SlotMachine.Responses;
+﻿using CasinoDeYann.Controllers.SlotMachine.Responses;
 
-namespace CasinoDeYann.Src.Services.SlotMachine.Models
+namespace CasinoDeYann.Services.SlotMachine.Models
 {
     public class SlotMachineModel(int[][] grid, bool[][] patterns, long gain, long money, string message)
     {

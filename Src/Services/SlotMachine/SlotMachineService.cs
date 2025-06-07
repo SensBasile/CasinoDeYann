@@ -1,8 +1,8 @@
-using CasinoDeYann.Src.DataAccess.Dbo;
-using CasinoDeYann.Src.Services.SlotMachine.Models;
-using CasinoDeYann.Src.Services.Stats;
+using CasinoDeYann.DataAccess.Dbo;
+using CasinoDeYann.Services.SlotMachine.Models;
+using CasinoDeYann.Services.Stats;
 
-namespace CasinoDeYann.Src.Services.SlotMachine;
+namespace CasinoDeYann.Services.SlotMachine;
 
 public class SlotMachineService(UserService userService, StatsService statsService)
 {

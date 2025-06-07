@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace CasinoDeYann.Src.DataAccess.EFModels;
+namespace CasinoDeYann.DataAccess.EFModels;
 public class CasinoDbContext : DbContext
 {
     public CasinoDbContext(DbContextOptions<CasinoDbContext> options)

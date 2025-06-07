@@ -1,4 +1,4 @@
-﻿namespace CasinoDeYann.Src.Services;
+﻿namespace CasinoDeYann.Services;
 
 public record UserProfileModel(
     long Level,

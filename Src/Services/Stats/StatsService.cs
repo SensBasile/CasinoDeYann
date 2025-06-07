@@ -1,6 +1,6 @@
-using CasinoDeYann.Src.DataAccess.Interfaces;
+using CasinoDeYann.DataAccess.Interfaces;
 
-namespace CasinoDeYann.Src.Services.Stats;
+namespace CasinoDeYann.Services.Stats;
 
 public class StatsService
 {

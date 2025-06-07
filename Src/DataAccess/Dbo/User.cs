@@ -1,4 +1,4 @@
-namespace CasinoDeYann.Src.DataAccess.Dbo;
+namespace CasinoDeYann.DataAccess.Dbo;
 
 public partial class User : IObjectWithId
 {

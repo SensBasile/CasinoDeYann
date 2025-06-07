@@ -1,9 +1,9 @@
-﻿using CasinoDeYann.Src.Services.GoldMineService;
-using CasinoDeYann.Src.Services.GoldMineService.Models;
+﻿using CasinoDeYann.Services.GoldMineService;
+using CasinoDeYann.Services.GoldMineService.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace CasinoDeYann.Src.Controllers.GoldMine;
+namespace CasinoDeYann.Controllers.GoldMine;
 
 [Route("api/[controller]")]
 [ApiController]

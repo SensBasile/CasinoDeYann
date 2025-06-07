@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CasinoDeYann.Src.DataAccess.Dbo;
-using CasinoDeYann.Src.DataAccess.EFModels;
+using CasinoDeYann.DataAccess.Dbo;
+using CasinoDeYann.DataAccess.EFModels;
 
-namespace CasinoDeYann.Src;
+namespace CasinoDeYann;
 
 public class AutomapperProfiles : Profile
 {

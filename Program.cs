@@ -1,12 +1,13 @@
-using CasinoDeYann.Src;
-using CasinoDeYann.Src.DataAccess;
-using CasinoDeYann.Src.DataAccess.EFModels;
-using CasinoDeYann.Src.DataAccess.Interfaces;
-using CasinoDeYann.Src.Services;
-using CasinoDeYann.Src.Services.GoldMineService;
-using CasinoDeYann.Src.Services.Roulette;
-using CasinoDeYann.Src.Services.SlotMachine;
-using CasinoDeYann.Src.Services.Stats;
+using CasinoDeYann;
+using CasinoDeYann.DataAccess;
+using CasinoDeYann.DataAccess.EFModels;
+using CasinoDeYann.DataAccess.Interfaces;
+using CasinoDeYann.Services;
+using CasinoDeYann.Services.GoldMineService;
+using CasinoDeYann.Services.HorseRace;
+using CasinoDeYann.Services.Roulette;
+using CasinoDeYann.Services.SlotMachine;
+using CasinoDeYann.Services.Stats;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,6 +40,7 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<SlotMachineService>();
 builder.Services.AddScoped<RouletteService>();
 builder.Services.AddScoped<GoldMineService>();
+builder.Services.AddScoped<HorseRaceService>();
 builder.Services.AddHttpClient();
 builder.Services.AddMemoryCache();
 

@@ -1,10 +1,10 @@
 using System.Security.Claims;
-using CasinoDeYann.Src.DataAccess.Dbo;
-using CasinoDeYann.Src.DataAccess.Interfaces;
+using CasinoDeYann.DataAccess.Dbo;
+using CasinoDeYann.DataAccess.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace CasinoDeYann.Src.Services;
+namespace CasinoDeYann.Services;
 
 public class AuthService
 {

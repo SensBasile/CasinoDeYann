@@ -7,12 +7,12 @@ namespace CasinoDeYann.Services.GoldMineService;
 
 public class GoldMineService(IUserService userService, IStatsService statsService)
 {
-    private const int MineValue = 1;
+    private const int MineValue = 5;
 
     public async Task<GoldMineModel> Mine(string userName)
     {
         var callingUser = await userService.GetUser(userName);
-        if (callingUser.Money >= 100) return new GoldMineModel(false);
+        if (callingUser == null || callingUser.Money >= 100) return new GoldMineModel(false);
         
         callingUser = await userService.AddMoney(callingUser.Username, MineValue);
         _ = userService.AddExp(callingUser.Username, MineValue);

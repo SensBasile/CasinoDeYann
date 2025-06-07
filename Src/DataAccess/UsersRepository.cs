@@ -11,7 +11,7 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
     public UsersRepository(CasinoDbContext context, ILogger<UsersRepository> logger, IMapper mapper) : base(context, logger, mapper)
     { }
 
-    public async Task<User> GetOneByName(string name)
+    public async Task<User?> GetOneByName(string name)
     {
         try
         { 
@@ -29,7 +29,7 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
 
     public async Task<bool> DeleteOneByName(string name)
     {
-        User user = await GetOneByName(name);
+        User? user = await GetOneByName(name);
         return await Delete(user.Id);
     }
 

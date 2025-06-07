@@ -1,4 +1,3 @@
-using AutoMapper;
 using CasinoDeYann.DataAccess.Dbo;
 using CasinoDeYann.DataAccess.Interfaces;
 using CasinoDeYann.Services.Stats.Models;
@@ -7,15 +6,16 @@ using CasinoDeYann.Services.User.Models;
 
 namespace CasinoDeYann.Services.Stats;
 
-public class StatsService : IStatsService
+public class StatsService: IStatsService
 {
     private readonly IStatsRepository _statsRepository;
-    private readonly IUserService _usersService;
+    
+    private readonly UserService _usersService;
 
-    public StatsService(IStatsRepository statsRepository, IUserService userService)
+    public StatsService(IStatsRepository statsRepository, UserService usersService)
     {
         _statsRepository = statsRepository;
-        _usersService = userService;
+        _usersService = usersService;
     }
 
     public async Task<GameHistoryEntryModel> Create(GameHistoryEntryModel model)
@@ -77,13 +77,13 @@ public class StatsService : IStatsService
     
     public async Task<BackOfficeModel> GetBackOffice(string sortOrder, string searchString, int pageIndex)
     {
-        var  history = await _statsRepository.Get(sortOrder, searchString, pageIndex);
+        var stats = await _statsRepository.Get(sortOrder, searchString, pageIndex);
         
         
         
         List<GameHistoryEntryModel> models = new List<GameHistoryEntryModel>();
 
-        foreach (var stat in  history.Stats)
+        foreach (var stat in stats.Stats)
         {
             models.Add(new GameHistoryEntryModel(
                 stat.Id,
@@ -96,7 +96,7 @@ public class StatsService : IStatsService
                 ));
         }
         
-        return new BackOfficeModel(models, pageIndex > 1,  history.TotalPages > pageIndex);
+        return new BackOfficeModel(models, pageIndex > 1, stats.TotalPages > pageIndex);
     }
 
     public async Task<DataAccess.Dbo.Stats> Cancel(int id)

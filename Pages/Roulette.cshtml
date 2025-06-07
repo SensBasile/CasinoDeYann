@@ -209,29 +209,22 @@ ViewData["Title"] = "Roulette";
           return;
         }
         
-        // 1) Create a new <img> for the chosen chip
+        
         const img = document.createElement("img");
         img.src = `/assets/Roulette/chip/chip_${currentChipValue}.png`;
         img.alt = `Chip-${currentChipValue}`;
-        img.classList.add("placed-chip"); 
-        // (Make sure your CSS has exactly “.placed-chip { … }” with an ASCII hyphen.)
-
-        // 2) Append to the button (absolute‐positioned by CSS)
+        img.classList.add("placed-chip");
+        
         button.appendChild(img);
-
-        // 3) Count how many chips are in this button already:
+        
         const existingChips = button.querySelectorAll(".placed-chip");
-        const index = existingChips.length - 1; 
-        //    index = 0 → first chip, index = 1 → second chip, etc.
-
-        // 4) Compute vertical offset (we’ll lift each chip 10px higher than the one below)
+        const index = existingChips.length - 1;
+        
         const offsetPerChipPx = 10;
         const totalOffsetPx   = index * offsetPerChipPx;
-
-        // 5) Center it and shift up by totalOffsetPx:
+        
         img.style.transform = `translate(-50%, calc(-50% - ${totalOffsetPx}px))`;
-
-        // 6) Now push that bet into our betStack
+        
         if (button.hasAttribute("data-number")) {
           const number = parseInt(button.getAttribute("data-number"), 10);
           betStack.push({
@@ -282,8 +275,7 @@ ViewData["Title"] = "Roulette";
       }
       running = true;
       resultMessage.textContent = "";
-
-      // Disable all inputs during the spin:
+      
       [...betButtons, ...chipButtons, cancelButton, playButton]
         .forEach(el => el.setAttribute("disabled", "true"));
 

@@ -28,7 +28,10 @@
                     <a asp-page="/user" asp-route-username="@user.Username">
                     @user.Username
                 </a></td>
-                <td>@user.Money.ToString("C", new System.Globalization.CultureInfo("ja-JP"))</td>
+                <td class="money-cell">
+                    @user.Money.ToString("N0")  @* or "N2" for two decimals *@
+                    <img src="~/assets/GoldMine/Yanns/yanns.webp" alt="coin" class="money-icon"/>
+                </td>
                 <td>@(user.Xp / 1000)</td>
             </tr>
             rank++;

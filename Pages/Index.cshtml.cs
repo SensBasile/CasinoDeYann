@@ -20,8 +20,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGet()
     {
-        if (User.IsInRole("Admin")
-            )
+        if (User.IsInRole("Admin"))
         {
             return Redirect("/BackOffice");
         }

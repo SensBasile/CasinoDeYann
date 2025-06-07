@@ -27,6 +27,9 @@ public class GoldMineController(GoldMineService goldMineService, IMemoryCache ca
 
         cache.Set(cacheKey, true, Cooldown);
         GoldMineModel res = await goldMineService.Mine(username);
+
+        cacheKey = cacheKey;
+        
         return Ok(res.ToResponse());
     }
 }

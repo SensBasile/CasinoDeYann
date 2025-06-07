@@ -8,13 +8,20 @@ namespace CasinoDeYann.Services.User;
 
 public class UserService(IUsersRepository usersRepository, IMapper mapper) : IUserService
 {
-    public async Task<Models.User> GetUser(string username)
+    public async Task<Models.User?> GetUser(string username)
     {
         var user = await usersRepository.GetOneByName(username);
-        return mapper.Map<Models.User>(user);
+        if (user == null) return null;
+        return new Models.User(
+            user.Id,
+            user.Username,
+            user.Money,
+            user.Xp,
+            user.Role
+            );
     }
     
-    public async Task<Models.User> GetUser(long id)
+    public async Task<Models.User?> GetUser(long id)
     {
         var user = await usersRepository.GetOneById(id);
         return mapper.Map<Models.User>(user);

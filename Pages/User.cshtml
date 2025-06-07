@@ -28,7 +28,7 @@
             <img src="@rankImgPath" alt="Rank @rankIndex" class="rank-icon"/>
             @if (rankIndex < 3)
             {
-                <span class="badge-bronze">Niveau 1</span>
+                <span class="badge-bronze">Niveau @Model.Level</span>
             }
             else if (rankIndex >= 3 && rankIndex < 6)
             {

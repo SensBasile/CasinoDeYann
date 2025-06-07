@@ -28,7 +28,7 @@
                     <a asp-page="/user" asp-route-username="@user.Username">
                     @user.Username
                 </a></td>
-                <td>@user.Money.ToString("C")</td>
+                <td>@user.Money.ToString("C", new System.Globalization.CultureInfo("ja-JP"))</td>
                 <td>@(user.Xp / 1000)</td>
             </tr>
             rank++;

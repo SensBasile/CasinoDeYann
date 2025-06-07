@@ -1,6 +1,8 @@
 ﻿using CasinoDeYann.Services;
 using CasinoDeYann.Services.GoldMineService;
 using CasinoDeYann.Services.Stats;
+using CasinoDeYann.Services.Stats.Models;
+using CasinoDeYann.Services.User;
 using Moq;
 
 namespace UnitTests.GoldMine

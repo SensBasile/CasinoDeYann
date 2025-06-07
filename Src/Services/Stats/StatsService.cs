@@ -6,7 +6,7 @@ using CasinoDeYann.Services.User.Models;
 
 namespace CasinoDeYann.Services.Stats;
 
-public class StatsService
+public class StatsService: IStatsService
 {
     private readonly IStatsRepository _statsRepository;
     

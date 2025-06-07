@@ -1,5 +1,6 @@
 ﻿using CasinoDeYann.Controllers.User;
 using CasinoDeYann.Services;
+using CasinoDeYann.Services.User;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 

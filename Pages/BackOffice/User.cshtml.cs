@@ -25,6 +25,11 @@ public class UserModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
+        if (string.IsNullOrWhiteSpace(Username))
+        {
+            return NotFound();
+        }
+        
         User = await _userService.GetUserProfileAsync(Username);
         if (User == null)
         {
@@ -49,6 +54,6 @@ public class UserModel : PageModel
     public async Task<IActionResult> OnPostDeleteAsync()
     {
         await _userService.DeleteAccountAsync(Username);
-        return RedirectToPage("/Backoffice/UserList"); // or wherever you want to redirect
+        return RedirectToPage("/BackOffice/Index");
     }
 }

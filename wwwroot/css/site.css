@@ -55,7 +55,6 @@ header h1 {
 
 td, th {
   font-family: "Jersey 10", cursive;
-  font-size: 1.5rem;
 }
 
 .nav-item{
@@ -70,7 +69,11 @@ td, th {
   float: right;
 }
 
-
+.nav-logo {
+  height: 3rem;
+  width: auto;
+  vertical-align: middle;
+}
 
 nav a {
   color: white;
@@ -102,15 +105,19 @@ main.game-interface {
   vertical-align: middle;
 }
 
-/* Leaderboard Section */
+/* === Leaderboard Section (no CSS variables) === */
+/* === Leaderboard Section === */
+
+/* Centered gold title */
 h2 {
   text-align: center;
   color: gold;
   margin-top: 2rem;
-  font-size: 2.5rem;
+  font-size: 7rem;                 /* whatever you want, e.g. 4rem @16px = 64px */
   font-family: "Jersey 10", cursive;
 }
 
+/* Table base */
 .table {
   width: 90%;
   margin: 2rem auto;
@@ -119,32 +126,51 @@ h2 {
   color: #f8f8f8;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
+/* Header row container */
 .table thead {
-  background-color: #333;
+  background-color: #2b2b2b;
+  border-bottom: 2px solid #444;
+}
+
+.table thead th {
   color: gold;
-  font-size: 1.1rem;
+  font-size: 2.4rem;
+  padding: 1.5rem;
+  font-family: "Jersey 10", cursive;
+  text-align: center;
 }
 
 .table th,
 .table td {
-  padding: 1rem;
-  text-align: center;
   border-bottom: 1px solid #444;
 }
 
+.table tbody td {
+  font-weight: bold;
+  color: white;
+  font-size: 32px;
+  padding: 1.5rem;
+  text-align: center;
+  font-family: "Jersey 10", cursive;
+}
+
 .table tbody tr:hover {
-  background-color: #2a2a2a;
+  background-color: #292929;
   transition: background-color 0.2s ease;
 }
 
-.table td {
-  font-weight: bold;
-  color: gold;
+.table a {
+  color: blue;
+  text-decoration: underline;
 }
 
-/* Navbar Container */
+.table a:hover {
+  color: #ffbf47;
+}
+
 .navbar-container {
   background-color: #111;
   padding: 0.5rem 2rem;
@@ -153,7 +179,6 @@ h2 {
   z-index: 999;
 }
 
-/* Flex layout */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -181,6 +206,12 @@ h2 {
   padding: 0.5rem;
   font-family: "Jersey 10", cursive;
 }
+
+input, .autocomplete-item {
+  font-family: "Jersey 10", cursive;
+  font-size: 1.5rem;
+}
+
 
 .nav-item a:hover {
   color: gold;
@@ -287,4 +318,24 @@ a {
 .autocomplete-item:hover {
   background-color: gold;
   color: #000;
+}
+
+.nav-item:first-child a,
+.nav-item:first-child a img {
+  text-decoration: none !important;
+}
+
+.nav-item:first-child a::after {
+  display: none !important;
+}
+
+.leaderboard-logo {
+  display: block;
+  padding-bottom: 2rem;
+  margin: 1.5rem auto;
+  width: 40%;
+}
+.bienvenu {
+  padding-top: 20px;
+  font-size: 5rem;
 }

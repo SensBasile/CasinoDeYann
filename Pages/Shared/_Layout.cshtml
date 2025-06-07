@@ -25,16 +25,18 @@
             <ul class="navbar">
                 <div class="nav-left">
                     <li class="nav-item">
-                        <a asp-page="/Index">🎰 Le Casino de Yann</a>
+                        <a asp-page="/Index">
+                            <img src="~/assets/Common/logo_text.png" alt="Casino de Yann" class="nav-logo" />
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a asp-page="/Index">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-page="/SlotMachine">Machine à sous</a>
+                        <a asp-page="/SlotMachine">YannMania</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-page="/Roulette">Roulette</a>
+                        <a asp-page="/Roulette">Roux'lette</a>
                     </li>
                     <li class="nav-item">
                         <a asp-page="/GoldMine">Mine d'or</a>
@@ -42,18 +44,19 @@
                 </div>
 
                 <div class="nav-right">
+                    <li class="nav-item" style="position: relative;">
+                        <form id="userSearchForm" method="get" onsubmit="redirectToUser(event)">
+                            <input type="text" id="searchInput" placeholder="Rechercher un utilisateur" autocomplete="off" required />
+                            <div id="autocompleteList" class="autocomplete-items"></div>
+                            <button type="submit">🔍</button>
+                        </form>
+                    </li>
                     @if (currentUser != null)
                     {
-                        <li class="nav-item" style="position: relative;">
-                            <form id="userSearchForm" method="get" onsubmit="redirectToUser(event)">
-                                <input type="text" id="searchInput" placeholder="Rechercher un utilisateur" autocomplete="off" required />
-                                <div id="autocompleteList" class="autocomplete-items"></div>
-                                <button type="submit">🔍</button>
-                            </form>
-                        </li>
+
                         <li class="nav-item">
                             <span id="user-money">@currentUser.Money</span>
-                            <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp" />
+                            <img class="mini-coin" src="/assets/GoldMine/Yanns/yanns.webp"/>
                         </li>
                         <li class="nav-item">
                             <a asp-page="/user" asp-route-username="@currentUser.Username">
@@ -127,7 +130,7 @@
         event.preventDefault();
         const username = input.value.trim();
         if (username) {
-            window.location.href = `/users/${encodeURIComponent(username)}`;
+            window.location.href = `/user/${encodeURIComponent(username)}`;
         }
     }
 </script>

@@ -352,6 +352,6 @@ public class SlotMachineService(UserService userService, StatsService statsServi
             sum += (long) Math.Floor(bet * CheckMUp(grid, i, patterns));
             sum += (long) Math.Floor(bet * CheckMDown(grid, H - 1 - i, patterns));
         }
-        return sum;
+        return sum / 2;
     }
 }

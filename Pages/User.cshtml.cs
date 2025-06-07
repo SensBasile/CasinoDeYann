@@ -23,7 +23,13 @@ public class User(UserService userService) : PageModel
     {
         if (string.IsNullOrWhiteSpace(username))
         {
-            return NotFound(); // or RedirectToPage("/Error")
+            return NotFound();
+        }
+        
+        if (User.IsInRole("Admin")
+           )
+        {
+            return Redirect("/BackOffice/" + username);
         }
 
         Username = username;

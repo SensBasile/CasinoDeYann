@@ -1,17 +1,16 @@
-﻿/* Container holding carpet on the left and wheel on the right */
-.roulette-page {
+﻿.roulette-page {
     display: flex;
-    width: 85vw;       /* adjust as you like (formerly 60vw). */
-    height: 60vh;      /* or whatever fixed height you prefer */
-    margin: 5vh auto;  /* center‐horizontally on the page */
+    width: 85vw;
+    height: 60vh;
+    margin: 5vh auto;
     position: relative;
 }
 
 .carpet-container {
     flex: 2;
     display: flex;
-    justify-content: flex-start; /* still flush-left */
-    align-items: center;         /* keep it roughly centered */
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .carpet {
@@ -21,10 +20,9 @@
     object-fit: contain;
 }
 
-/* RIGHT SIDE: Wheel + Ball */
 .wheel-container {
     top: 10%;
-    flex: 1;                     /* give this 1/3 of the total flex width */
+    flex: 1;
     position: relative;
     display: flex;
     justify-content: center;
@@ -36,7 +34,6 @@
     width: 100%;
 }
 
-/* SUPPORT IMAGE: sits behind the wheel */
 .roulette-support {
     position: absolute;
     top: 50%;
@@ -47,7 +44,6 @@
     z-index: -1;
 }
 
-/* The roulette wheel itself */
 .roulette-wheel {
     width: 100%;
     height: auto;
@@ -69,13 +65,12 @@
 
 .roulette-ball {
     position: absolute;
-    /* Move the ball slightly further from center: */
-    top: -5%;          /* originally was “0%”; now sits a bit outside the wheel rim */
+    top: -5%;
     left: 50%;
     width: 5%;
     height: auto;
     transform: translate(-50%, -50%);
-    opacity: 0;        /* start hidden; JavaScript will set to “1” when spin begins */
+    opacity: 0;
     transition: top 0.5s ease-in, opacity 0.3s ease;
 }
 
@@ -89,10 +84,9 @@
 }
 
 .roulette-ball.fall {
-    top: 16%;    /* Adjust so that “14%” lands the ball neatly into its final pocket */
+    top: 16%;
 }
 
-/* Display the result beneath the wheel */
 .result-message {
     position: absolute;
     bottom: -3rem;
@@ -117,7 +111,6 @@
     margin-bottom: 1rem;  
 }
 
-/* CANCEL BUTTON */
 #cancel-button {
     position: absolute;
     bottom: 4%;
@@ -143,7 +136,6 @@
     background-image: url('../assets/Roulette/ui/cancel_button_pressed.png');
 }
 
-/* PLAY BUTTON at bottom center */
 #play-button {
     position: absolute;
     bottom: 4.5%;
@@ -171,34 +163,29 @@
 
 .betting-board {
     position: relative;
-    width: 90%;       /* or whatever % of its parent (.carpet-container) you want */
-    margin: 0 auto;   /* center horizontally inside .carpet-container if needed */
+    width: 90%;
+    margin: 0 auto;
 }
 
 .betting-board .carpet {
-    display: block;   /* so the container’s height exactly matches the image’s height */
-    width: 100%;      /* carpet fills the .betting-board width */
+    display: block;
+    width: 100%;
     height: auto;
     object-fit: contain;
 }
 
 .bet-wrapper {
-    display: inline-block;    /* shrink‐wrap to the <img class="carpet"> inside */
-    position: relative;       /* so that .button-overlay can be absolute within it */
+    display: inline-block;
+    position: relative;
 }
 
-/* .carpet belongs to your existing styles: we do NOT override it here.
-   It still has margin-top:10%; width:90%; height:auto; etc.  */
-
-/* .button-overlay sits exactly on top of the carpet (100%×100% of .bet-wrapper) */
 .button-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* no extra margin/padding—just a transparent layer */
-    pointer-events: none; /* Let clicks “pass through” to the buttons inside. */
+    pointer-events: none;
 }
 
 .chip-button.selected {
@@ -206,7 +193,6 @@
     outline-offset: 2px;
 }
 
-/* ─────────────── Placed‐chip styling ─────────────── */
 .placed-chip {
     position: absolute;
     top: 50%;
@@ -457,7 +443,6 @@
     height: auto;
 }
 
-/* Middle (2–5–8–…–35) */
 .bet-row2 {
     font-size: 1.3vw;
     top:    32.7%;

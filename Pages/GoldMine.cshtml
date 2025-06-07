@@ -37,9 +37,12 @@
         const nugget = document.getElementById("nugget");
         const button = document.getElementById("spin");
         const moneyEl = document.getElementById("money-amount");
-
-        const blockedOverlay = document.getElementById("machine-blocked");
+        const moneyDisplay = document.getElementById("user-money");
         
+        const blockedOverlay = document.getElementById("machine-blocked");
+
+        let isMining = false;
+
         function refreshBlockedState() {
             const moneyDisplay = document.getElementById("user-money");
             const amount = parseInt(moneyDisplay.textContent);
@@ -55,17 +58,25 @@
         
         button.addEventListener("click", async () => {
 
-            const moneyDisplay = document.getElementById("user-money");
-            const amount = parseInt(moneyDisplay.textContent);
+            if (isMining) return;
+            isMining = true;
+
+            const amount = parseInt(moneyDisplay.textContent, 10);
             refreshBlockedState();
-            
+
             if (amount < 100) {
                 nugget.classList.add("shake");
-                const res = await fetch("/api/GoldMine/mine", {method: "POST"});
                 moneyDisplay.textContent = String(amount + 1);
-                moneyEl.textContent = String(amount + 1);
+                moneyEl.textContent      = String(amount + 1);
+                try {
+                    await fetch("/api/GoldMine/mine", { method: "POST" });
+                } catch (err) {
+                    console.error("Mining failed:", err);
+                } finally {
+                    isMining = false;
+                }
             }
-            
+
             setTimeout(() => {
                 nugget.classList.remove("shake");
             }, 300);

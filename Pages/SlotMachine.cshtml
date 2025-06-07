@@ -67,9 +67,6 @@ ViewData["Title"] = "Machine à sous";
     <!-- SPIN BUTTON -->
     <button id="spin" type="button"></button>
 </div>
-
-<div id="result-message"></div>
-
 @section Scripts {
 <script>
     let running = false;
@@ -96,7 +93,7 @@ ViewData["Title"] = "Machine à sous";
     });
 
     increaseBtn.addEventListener("click", () => {
-        if (betIndex < bets.length - 1 && bets[betIndex + 1] < playerMoney) {
+        if (betIndex < bets.length - 1 && bets[betIndex + 1] <= playerMoney) {
             betIndex++;
             bet = bets[betIndex];
             betDisplay.textContent = `${bet}`;
@@ -232,7 +229,6 @@ ViewData["Title"] = "Machine à sous";
         if (running) return;
 
         if (playerMoney < bet) {
-            document.getElementById("result-message").textContent = "You don't have enough money to bet this amount";
             return;
         }
         playerMoney -= bet;
@@ -277,8 +273,6 @@ ViewData["Title"] = "Machine à sous";
         }, 5000);
 
         setTimeout(() => {
-            document.getElementById("result-message").textContent = data.message;
-
             const userMoneyDisplay = document.getElementById("user-money");
             console.log(userMoneyDisplay);
             console.log(data.money);

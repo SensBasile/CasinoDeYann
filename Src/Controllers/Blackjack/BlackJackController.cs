@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CasinoDeYann.Src.Controllers.Blackjack;
+namespace CasinoDeYann.Controllers.Blackjack;
 
 [Route("api/[controller]")]
 [ApiController]

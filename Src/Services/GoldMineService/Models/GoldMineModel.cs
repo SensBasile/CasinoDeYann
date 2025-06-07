@@ -1,6 +1,6 @@
-using CasinoDeYann.Src.Controllers.GoldMine.Responses;
+using CasinoDeYann.Controllers.GoldMine.Responses;
 
-namespace CasinoDeYann.Src.Services.GoldMineService.Models
+namespace CasinoDeYann.Services.GoldMineService.Models
 {
     public class GoldMineModel(bool credited)
     {

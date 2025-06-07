@@ -1,4 +1,4 @@
-namespace CasinoDeYann.Src.DataAccess.Interfaces;
+namespace CasinoDeYann.DataAccess.Interfaces;
 
 public interface IRepository<DBEntity, ModelEntity>
 {

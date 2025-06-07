@@ -1,7 +1,7 @@
-using CasinoDeYann.Src.Services.GoldMineService.Models;
-using CasinoDeYann.Src.Services.Stats;
+using CasinoDeYann.Services.GoldMineService.Models;
+using CasinoDeYann.Services.Stats;
 
-namespace CasinoDeYann.Src.Services.GoldMineService;
+namespace CasinoDeYann.Services.GoldMineService;
 
 public class GoldMineService(UserService userService, StatsService statsService)
 {

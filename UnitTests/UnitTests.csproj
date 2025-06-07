@@ -18,14 +18,4 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Roulette\" />
-      <Folder Include="SlotMachine\" />
-      <Folder Include="Stats\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\CasinoDeYann.csproj" />
-    </ItemGroup>
-
 </Project>

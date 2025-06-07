@@ -1,4 +1,4 @@
-namespace CasinoDeYann.Src.DataAccess.EFModels;
+namespace CasinoDeYann.DataAccess.EFModels;
 
 public class TStats : IObjectWithId
 {

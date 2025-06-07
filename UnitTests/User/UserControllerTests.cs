@@ -1,6 +1,6 @@
 ﻿namespace UnitTests.User;
 
-public class UserService
+public class UserControllerTests
 {
     
 }

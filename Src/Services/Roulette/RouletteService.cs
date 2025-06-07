@@ -1,10 +1,9 @@
 ﻿using CasinoDeYann.Controllers.Roulette.DTOs;
-using CasinoDeYann.Src.Controllers.Roulette.DTOs;
-using CasinoDeYann.Src.DataAccess.Dbo;
-using CasinoDeYann.Src.Services.Roulette.Models;
-using CasinoDeYann.Src.Services.Stats;
+using CasinoDeYann.DataAccess.Dbo;
+using CasinoDeYann.Services.Roulette.Models;
+using CasinoDeYann.Services.Stats;
 
-namespace CasinoDeYann.Src.Services.Roulette;
+namespace CasinoDeYann.Services.Roulette;
 
 public class RouletteService(UserService userService, StatsService statsService)
 {

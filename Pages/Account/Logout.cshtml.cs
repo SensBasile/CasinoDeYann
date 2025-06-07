@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
-using CasinoDeYann.Src.Services;
+using CasinoDeYann.Services;
 
 namespace CasinoDeYann.Pages.Account
 {

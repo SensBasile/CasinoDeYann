@@ -17,4 +17,26 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="UnitTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="UnitTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="UnitTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="UnitTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="UnitTests\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="UnitTests\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="UnitTests\obj\UnitTests.csproj.nuget.dgspec.json" />
+    </ItemGroup>
+
 </Project>

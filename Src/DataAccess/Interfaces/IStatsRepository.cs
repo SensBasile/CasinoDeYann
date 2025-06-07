@@ -1,7 +1,7 @@
-using CasinoDeYann.Src.DataAccess.Dbo;
-using CasinoDeYann.Src.DataAccess.EFModels;
+using CasinoDeYann.DataAccess.Dbo;
+using CasinoDeYann.DataAccess.EFModels;
 
-namespace CasinoDeYann.Src.DataAccess.Interfaces;
+namespace CasinoDeYann.DataAccess.Interfaces;
 
 public interface IStatsRepository : IRepository<TStats, Stats>
 {

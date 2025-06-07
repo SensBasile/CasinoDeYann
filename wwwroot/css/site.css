@@ -69,7 +69,11 @@ td, th {
   float: right;
 }
 
-
+.nav-logo {
+  height: 3rem;
+  width: auto;
+  vertical-align: middle;
+}
 
 nav a {
   color: white;
@@ -109,7 +113,7 @@ h2 {
   text-align: center;
   color: gold;
   margin-top: 2rem;
-  font-size: 64px;                 /* whatever you want, e.g. 4rem @16px = 64px */
+  font-size: 7rem;                 /* whatever you want, e.g. 4rem @16px = 64px */
   font-family: "Jersey 10", cursive;
 }
 
@@ -308,4 +312,24 @@ a {
 .autocomplete-item:hover {
   background-color: gold;
   color: #000;
+}
+
+.nav-item:first-child a,
+.nav-item:first-child a img {
+  text-decoration: none !important;
+}
+
+.nav-item:first-child a::after {
+  display: none !important;
+}
+
+.leaderboard-logo {
+  display: block;
+  padding-bottom: 2rem;
+  margin: 1.5rem auto;
+  width: 40%;
+}
+.bienvenu {
+  padding-top: 20px;
+  font-size: 5rem;
 }

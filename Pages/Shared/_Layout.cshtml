@@ -41,6 +41,9 @@
                     <li class="nav-item">
                         <a asp-page="/GoldMine">Mine d'or</a>
                     </li>
+                    <li class="nav-item">
+                        <a asp-page="/HorseRace">Course de cheveaux</a>
+                    </li>
                 </div>
 
                 <div class="nav-right">
@@ -52,7 +55,7 @@
                         </form>
                     </li>
                     @{
-                        var rankIdx = Math.Min((((currentUser.Xp / 1000) - 1) / 3), 15);
+                        var rankIdx = currentUser != null ? Math.Min((((currentUser.Xp / 1000) - 1) / 3), 15) : 0;
                         var rankPath = $"/assets/Ranks/ranks{rankIdx:D2}.png";
                     }
                     @if (currentUser != null)

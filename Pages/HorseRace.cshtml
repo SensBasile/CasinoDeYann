@@ -1,0 +1,159 @@
+﻿@page
+@model CasinoDeYann.Pages.HorseRace
+
+@{
+    ViewData["Title"] = "Course de cheveaux";
+    <link rel="stylesheet" href="~/css/HorseRace.css" asp-append-version="true"/>
+}
+
+<div id="bet-form">
+    <h1>Pariez sur la course</h1>
+    <form id="raceForm">
+        <div>
+            <label>Cheval 1 (obligatoire):</label>
+            <input type="number" name="firstHorse" min="0" max="3" required />
+            <input type="number" name="firstAmount" min="1" placeholder="Mise" required />
+        </div>
+        <div>
+            <label>Cheval 2 (optionnel):</label>
+            <input type="number" name="secondHorse" min="0" max="3" />
+            <input type="number" name="secondAmount" min="1" placeholder="Mise" />
+        </div>
+        <div>
+            <label>Cheval 3 (optionnel):</label>
+            <input type="number" name="thirdHorse" min="0" max="3" />
+            <input type="number" name="thirdAmount" min="1" placeholder="Mise" />
+        </div>
+        <button type="submit">Lancer la course</button>
+    </form>
+</div>
+
+<div id="race-track" style="display:none;">
+    @for (int i = 0; i < 4; i++)
+    {
+    <div class="horse" id="horse-@i">
+        <img src="/HorseRace/Horses/cheval@(i + 1)_0.png" id="horse-img-@i"/>
+    </div>
+    }
+</div>
+
+<div id="result" style="display:none;"></div>
+
+<script>
+    const trackLength = 800; // px
+    const totalDistance = 100;
+
+    document.getElementById("raceForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const form = e.target;
+
+        const data = {
+            first: {
+                horse: parseInt(form.firstHorse.value),
+                amount: parseInt(form.firstAmount.value)
+            },
+            second: form.secondHorse.value ? {
+                horse: parseInt(form.secondHorse.value),
+                amount: parseInt(form.secondAmount.value)
+            } : null,
+            third: form.thirdHorse.value ? {
+                horse: parseInt(form.thirdHorse.value),
+                amount: parseInt(form.thirdAmount.value)
+            } : null
+        };
+
+        try {
+            const response = await fetch('/api/HorseRace', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                const err = await response.text();
+                alert("Erreur: " + err);
+                return;
+            }
+
+            const raceData = await response.json();
+            startRace(raceData);
+        } catch (error) {
+            alert("Erreur réseau: " + error);
+        }
+    });
+
+    function startRace(raceData) {
+        document.getElementById("bet-form").style.display = "none";
+        document.getElementById("race-track").style.display = "block";
+
+        const horses = [];
+
+        for (let i = 0; i < 4; i++) {
+            horses.push({
+                element: document.getElementById("horse-" + i),
+                img: document.getElementById("horse-img-" + i),
+                paces: raceData.speeds[i],
+                paceIndex: 0,
+                distDone: 0,
+                frame: 0,
+                frameTimer: 0
+            });
+        }
+
+        function animateStep(timestamp) {
+            let allFinished = true;
+
+            horses.forEach(h => {
+                if (h.paceIndex >= h.paces.length) return;
+
+                const pace = h.paces[h.paceIndex];
+                const step = pace.speed * 0.02; // ajustement vitesse pixel
+
+                h.distDone += step;
+                if (h.distDone >= pace.dist) {
+                    h.paceIndex++;
+                    h.distDone = 0;
+                }
+
+                let totalDist = 0;
+                for (let j = 0; j < h.paceIndex; j++) {
+                    totalDist += h.paces[j].dist;
+                }
+                totalDist += h.distDone;
+
+                const pos = (totalDist / totalDistance) * trackLength;
+                h.element.style.transform = `translateX(${pos}px)`;
+
+                // synchronisation frame selon vitesse (plus rapide = plus rapide frame)
+                const frameDelay = 3000 / pace.speed; // vitesse inversement proportionnelle
+                h.frameTimer += 16; // environ chaque 16ms par frame (~60fps)
+
+                if (h.frameTimer >= frameDelay) {
+                    h.frameTimer = 0;
+                    h.frame = (h.frame + 1) % 12;
+                    h.img.src = `/HorseRace/Horses/cheval${h.img.id.split('-')[2] + 1}_${h.frame}.png`;
+                }
+
+                if (h.paceIndex < h.paces.length) {
+                    allFinished = false;
+                }
+            });
+
+            if (!allFinished) {
+                requestAnimationFrame(animateStep);
+            } else {
+                showResults(raceData);
+            }
+        }
+
+        requestAnimationFrame(animateStep);
+    }
+
+    function showResults(raceData) {
+        document.getElementById("result").style.display = "block";
+        document.getElementById("result").innerText =
+            `${raceData.message}\nClassement: ${raceData.results.join(", ")}`;
+    }
+</script>

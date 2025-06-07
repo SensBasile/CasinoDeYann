@@ -1,6 +1,4 @@
-﻿/* === Your original CSS rules stay exactly the same === */
-
-.machine-container {
+﻿.machine-container {
     position: relative;
     display: block;
     width: 50vw;
@@ -73,7 +71,6 @@
     font-weight: bold;
 }
 
-/* === NEW: Bet‐Amount Display and Plus/Minus Buttons === */
 .info {
     position: absolute;
     transform: translateX(-50%);

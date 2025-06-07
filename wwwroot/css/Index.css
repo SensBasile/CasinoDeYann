@@ -1,5 +1,4 @@
-﻿/* === Global Typography & Variables (reuse from site) === */
-:root {
+﻿:root {
     --font-primary: "Jersey 10", cursive;
     --font-size-base: 4rem;
 
@@ -19,7 +18,6 @@
     --pagination-disabled-color: #555;
 }
 
-/* === Body / Container Styling === */
 .backoffice-container h2{
     padding: 2rem;
     background-color: #121212; /* page background */
@@ -95,14 +93,12 @@ h2 {
 }
 
 
-/* === Page Title === */
 .backoffice-container > h2 {
     margin-bottom: 1.5rem;
     font-size: 4rem;
     color: #fff;
 }
 
-/* === Filter Form === */
 .backoffice-container form[method="get"] p {
     font-size: 4rem;
     margin-bottom: 1.5rem;
@@ -138,7 +134,6 @@ h2 {
     background-color: #0056b3;
 }
 
-/* === Table Styling === */
 .table {
     width: 90%;
     border-collapse: collapse;
@@ -182,7 +177,6 @@ h2 {
     color: var(--link-hover-color);
 }
 
-/* Sorting arrows (↑ ↓) */
 .table thead th a {
     color: #e0e0e0;
     text-decoration: none;
@@ -192,14 +186,12 @@ h2 {
     color: #fff;
 }
 
-/* === "Cancel transaction" Button in Table === */
 .btn-sm {
     font-family: "Jersey 10", cursive;
     padding: 0.25rem 0.5rem;
     font-size: 2rem;
 }
 
-/* Reuse .btn-danger from your global CSS, if you have it. If not: */
 .btn-danger {
     background-color: #dc3545;
     color: #fff !important;
@@ -209,7 +201,6 @@ h2 {
     background-color: #c82333;
 }
 
-/* === Pagination Styling === */
 .pagination {
     display: flex;
     list-style: none;
@@ -252,5 +243,3 @@ h2 {
     border-color: var(--pagination-active-bg);
     cursor: default;
 }
-
-/* Because we set “Page N” as disabled, it will inherit .disabled styles */

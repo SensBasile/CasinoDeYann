@@ -171,23 +171,20 @@ tbody tr:hover {
 }
 
 .stat-card {
-    flex: 0 1 300px;        /* same as before: base width of 300px */
+    flex: 0 1 300px;
     min-width: 300px;
-    max-width: 400px;       /* optional max if you want to cap width */
+    max-width: 400px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #cccccc;
-
-    /* reduce padding on top/bottom but keep some space */
+    
     padding: 0px 30px;
-
-    /* remove forced height */
+    
     min-height: auto;
-
-    /* stack items in a column, but align at the top */
+    
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;  /* not centered vertically anymore */
+    justify-content: flex-start;
 }
 
 h1 {

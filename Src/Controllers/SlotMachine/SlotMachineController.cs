@@ -1,8 +1,8 @@
-﻿using CasinoDeYann.Src.Services.SlotMachine;
-using CasinoDeYann.Src.Services.SlotMachine.Models;
+﻿using CasinoDeYann.Services.SlotMachine;
+using CasinoDeYann.Services.SlotMachine.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CasinoDeYann.Src.Controllers.SlotMachine;
+namespace CasinoDeYann.Controllers.SlotMachine;
 
 [Route("api/[controller]")] // SlotMachine
 [ApiController]

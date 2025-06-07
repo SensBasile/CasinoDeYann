@@ -1,7 +1,7 @@
 // Pages/Backoffice.cshtml.cs
 
-using CasinoDeYann.Src.Services;
-using CasinoDeYann.Src.Services.Stats;
+using CasinoDeYann.Services;
+using CasinoDeYann.Services.Stats;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

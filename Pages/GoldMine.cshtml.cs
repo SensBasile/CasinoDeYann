@@ -1,12 +1,11 @@
-﻿using CasinoDeYann.Src.Services;
-using CasinoDeYann.Src.Services;
+﻿using CasinoDeYann.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CasinoDeYann.Pages;
 
 public class GoldMine(UserContextService userContextService) : PageModel
 {
-    public Src.DataAccess.Dbo.User? CurrentUser;
+    public DataAccess.Dbo.User? CurrentUser;
     
     public async Task OnGetAsync()
     {

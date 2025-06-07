@@ -1,6 +1,6 @@
 ﻿namespace UnitTests.GoldMine;
 
-public class GoldMineServiceTest
+public class GoldMineControllerTests
 {
     
 }

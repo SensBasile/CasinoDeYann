@@ -1,9 +1,9 @@
 using AutoMapper;
-using CasinoDeYann.Src.DataAccess.EFModels;
-using CasinoDeYann.Src.DataAccess.Interfaces;
+using CasinoDeYann.DataAccess.EFModels;
+using CasinoDeYann.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace CasinoDeYann.Src.DataAccess;
+namespace CasinoDeYann.DataAccess;
 
 public class Repository<DBEntity, ModelEntity> : IRepository<DBEntity, ModelEntity>
       where DBEntity : class, IObjectWithId, new()

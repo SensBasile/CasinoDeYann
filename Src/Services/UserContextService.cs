@@ -1,25 +1,15 @@
-using CasinoDeYann.Src.DataAccess.Dbo;
-using CasinoDeYann.Src.DataAccess.Interfaces;
+using CasinoDeYann.DataAccess.Dbo;
 
-namespace CasinoDeYann.Src.Services;
+namespace CasinoDeYann.Services;
 
-public class UserContextService
+public class UserContextService(IHttpContextAccessor httpContextAccessor, UserService userService)
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IUsersRepository _usersRepository;
-
-    public UserContextService(IHttpContextAccessor httpContextAccessor, IUsersRepository usersRepository)
-    {
-        _httpContextAccessor = httpContextAccessor;
-        _usersRepository = usersRepository;
-    }
-
     public Task<User?> GetCurrentUserAsync()
     {
-        var username = _httpContextAccessor.HttpContext?.User?.Identity?.Name;
+        var username = httpContextAccessor.HttpContext?.User?.Identity?.Name;
         if (string.IsNullOrEmpty(username))
             return Task.FromResult<User?>(null);
 
-        return _usersRepository.GetOneByName(username)!;
+        return userService.GetUser(username)!;
     }
 }

@@ -2,25 +2,24 @@
 @model Pages.BackOffice.BackofficeModel
 @{
     ViewData["Title"] = "Game History";
+    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
 }
 
 <h2>Game History</h2>
 
-<form method="get">
+<form method="get" class="filter-container">
     <p>
-        Filter by username:
-        <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-        <input type="submit" value="Search" />
-        <a  asp-page="./Index">
-            Enlever les filtres
-        </a>
+        <label for="SearchString">Filtrer par nom:</label>
+        <input type="text" name="SearchString" id="SearchString" value="@Model.CurrentFilter" />
+        <input type="submit" value="Appliquer" />
+        <a asp-page="./Index">Annuler le filtre</a>
     </p>
 </form>
 
 <table class="table">
     <thead>
     <tr>
-        <th>Username</th>
+        <th>Nom</th>
         <th>
             <a asp-page="./Index"
                asp-route-SortOrder="@Model.DateSort"
@@ -28,12 +27,12 @@
                 Date @(Model.CurrentSort == "date_asc" ? "↑" : Model.CurrentSort == "date_desc" ? "↓" : "-")
             </a>
         </th>
-        <th>Game</th>
+        <th>Jeu</th>
         <th>
             <a asp-page="./Index"
                asp-route-SortOrder="@Model.BetSort"
                asp-route-SearchString="@Model.CurrentFilter">
-                Bet @(Model.CurrentSort == "bet_asc" ? "↑" : Model.CurrentSort == "bet_desc" ? "↓" : "-")
+                Pari @(Model.CurrentSort == "bet_asc" ? "↑" : Model.CurrentSort == "bet_desc" ? "↓" : "-")
             </a>
         </th>
         <th>
@@ -58,13 +57,13 @@
             <td>
                 @if (item.IsCancelled)
                 {
-                    <span>Cancelled</span>
+                    <span>[ Annulé ]</span>
                 }
                 else
                 {
                     <form method="post" asp-page-handler="Cancel">
                         <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit" class="btn btn-danger btn-sm">Cancel transaction</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Annuler transaction</button>
                     </form>
                 }
             </td>
@@ -75,46 +74,59 @@
 
 <nav>
     <ul class="pagination">
+        <!-- Previous Page Link -->
         <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
-        @if (Model.HasPreviousPage)
-        {
-            <a class="page-link"
-               asp-route-SortOrder="@Model.CurrentSort"
-               asp-route-SearchString="@Model.CurrentFilter"
-               asp-route-PageIndex="@(Model.PageIndex - 1)">
-                Previous |
-            </a>
-            <a class="page-link"
-               asp-route-SortOrder="@Model.CurrentSort"
-               asp-route-SearcString="@Model.CurrentFilter"
-               asp-route-PageIndex="1)">
-                | Back to first
-            </a>
-
-        }
-        else
-        {
-            <span class="page-link disabled">Previous</span>
-        }
+            @if (Model.HasPreviousPage)
+            {
+                <a class="page-link"
+                   asp-route-SortOrder="@Model.CurrentSort"
+                   asp-route-SearchString="@Model.CurrentFilter"
+                   asp-route-PageIndex="@(Model.PageIndex - 1)">
+                    &laquo; Précédent
+                </a>
+            }
+            else
+            {
+                <span class="page-link disabled">&laquo; Précédent</span>
+            }
         </li>
+
+        <!-- Back to First Page Link -->
+        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+            @if (Model.HasPreviousPage)
+            {
+                <a class="page-link"
+                   asp-route-SortOrder="@Model.CurrentSort"
+                   asp-route-SearchString="@Model.CurrentFilter"
+                   asp-route-PageIndex="1">
+                    Première page
+                </a>
+            }
+            else
+            {
+                <span class="page-link disabled">Première page</span>
+            }
+        </li>
+
+        <!-- Current Page Indicator -->
         <li class="page-item disabled">
             <span class="page-link">Page @Model.PageIndex</span>
         </li>
+
+        <!-- Next Page Link -->
         <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
             @if (Model.HasNextPage)
             {
                 <a class="page-link"
                    asp-route-SortOrder="@Model.CurrentSort"
                    asp-route-SearchString="@Model.CurrentFilter"
-                   asp-route-PageIndex="@(Model.PageIndex + 1)"
-                   >
-
-                    Next
+                   asp-route-PageIndex="@(Model.PageIndex + 1)">
+                    Suivant &raquo;
                 </a>
             }
             else
             {
-                <span class="page-link disabled">Next</span>
+                <span class="page-link disabled">Suivant &raquo;</span>
             }
         </li>
     </ul>

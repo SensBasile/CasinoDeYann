@@ -27,7 +27,7 @@ h1 {
 }
 .section {
     margin-bottom: 30px;
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 table {
     width: 100%;
@@ -68,7 +68,7 @@ th, td {
     background-color: #dc3545;
     color: #fff;
     font-family: "Jersey 10", cursive;
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 #editSection{
@@ -87,14 +87,13 @@ table {
     border-radius: 8px;
     overflow: hidden;
     font-family: "Jersey 10", cursive;
-    font-size: 1.5rem;
+    font-size: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 thead {
     background-color: #333;
     color: gold;
-    font-size: 1.1rem;
 }
 
 th, td {
@@ -153,7 +152,7 @@ tbody tr:hover {
 
 .chart-title {
     font-family: "Jersey 10", cursive;
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 1rem;
     color: gold;
 }
@@ -164,9 +163,47 @@ tbody tr:hover {
 }
 
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-    max-width: 900px;
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: auto;
 }
+
+.stat-card {
+    flex: 0 1 300px;        /* same as before: base width of 300px */
+    min-width: 300px;
+    max-width: 400px;       /* optional max if you want to cap width */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #cccccc;
+
+    /* reduce padding on top/bottom but keep some space */
+    padding: 0px 30px;
+
+    /* remove forced height */
+    min-height: auto;
+
+    /* stack items in a column, but align at the top */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;  /* not centered vertically anymore */
+}
+
+h1 {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.section:first-of-type p {
+    text-align: center;
+    font-size: 3rem;
+}
+
+#editSection {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 2rem;
+}
+

@@ -1,7 +1,7 @@
-using CasinoDeYann.Src.DataAccess.Dbo;
-using CasinoDeYann.Src.DataAccess.Interfaces;
+using CasinoDeYann.DataAccess.Dbo;
+using CasinoDeYann.DataAccess.Interfaces;
 
-namespace CasinoDeYann.Src.Services;
+namespace CasinoDeYann.Services;
 
 public class UserService(IUsersRepository _usersRepository, IStatsRepository _statsRepository)
 {

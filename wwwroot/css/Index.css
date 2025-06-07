@@ -1,0 +1,256 @@
+﻿/* === Global Typography & Variables (reuse from site) === */
+:root {
+    --font-primary: "Jersey 10", cursive;
+    --font-size-base: 4rem;
+
+    --table-bg-color: #1e1e1e;
+    --table-header-bg: #2b2b2b;
+    --table-row-hover: #292929;
+    --table-border-color: #444;
+
+    --link-color: #ffaf00;       /* e.g. orangeish link accent */
+    --link-hover-color: #ffbf47;
+
+    --pagination-bg: #1e1e1e;
+    --pagination-border: #444;
+    --pagination-active-bg: #007bff;
+    --pagination-active-color: #fff;
+    --pagination-hover-bg: #2b2b2b;
+    --pagination-disabled-color: #555;
+}
+
+/* === Body / Container Styling === */
+.backoffice-container h2{
+    padding: 2rem;
+    background-color: #121212; /* page background */
+    color: #e0e0e0;
+    font-family: var(--font-primary);
+    
+}
+
+h2 {
+    font-size: 5rem;
+}
+
+.filter-container {
+    background-color: #1e1e1e;
+    padding: 1.5rem 2rem;
+    margin: 0 auto 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    width: 90%;
+    max-width: 1200px;
+}
+
+.filter-container p {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    gap: 1rem;
+    font-size: 3rem;
+    color: #e0e0e0;
+    font-family: var(--font-primary);
+    justify-content: center;
+}
+
+.filter-container label {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.filter-container input[type="text"] {
+    flex: 1;
+    max-width: 400px;
+    padding: 0.5rem;
+    font-size: 2rem;
+    font-family: var(--font-primary);
+    background-color: #2b2b2b;
+    color: #fff;
+    border: 1px solid var(--table-border-color);
+    border-radius: 4px;
+}
+
+.filter-container input[type="submit"],
+.filter-container a {
+    padding: 0.5rem 1rem;
+    font-size: 2rem;
+    font-family: var(--font-primary);
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.filter-container input[type="submit"]:hover,
+.filter-container a:hover {
+    background-color: #0056b3;
+}
+
+.filter-container a {
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+
+/* === Page Title === */
+.backoffice-container > h2 {
+    margin-bottom: 1.5rem;
+    font-size: 4rem;
+    color: #fff;
+}
+
+/* === Filter Form === */
+.backoffice-container form[method="get"] p {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.backoffice-container input[type="text"][name="SearchString"] {
+    padding: 0.5rem;
+    font-size: 4rem;
+    font-family: var(--font-primary);
+    background-color: #2b2b2b;
+    color: #fff;
+    border: 1px solid var(--table-border-color);
+    border-radius: 4px;
+    margin-right: 0.5rem;
+}
+
+.backoffice-container input[type="submit"],
+.backoffice-container a[asp-page="./Index"] {
+    padding: 0.5rem 1rem;
+    font-size: 4rem;
+    font-family: var(--font-primary);
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-right: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.backoffice-container input[type="submit"]:hover,
+.backoffice-container a[asp-page="./Index"]:hover {
+    background-color: #0056b3;
+}
+
+/* === Table Styling === */
+.table {
+    width: 90%;
+    border-collapse: collapse;
+    background-color: var(--table-bg-color);
+    margin-bottom: 2rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.table th:last-child,
+.table td:last-child {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    text-align: left;
+    font-size: 2rem;
+    border-bottom: 1px solid var(--table-border-color);
+}
+
+.table thead th {
+    background-color: var(--table-header-bg);
+    color: #fff;
+    font-size: 2.4rem;
+    border-bottom: 2px solid var(--table-border-color);
+}
+
+.table tbody tr:hover {
+    background-color: var(--table-row-hover);
+}
+
+.table tbody td a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-size: 2.5rem;
+}
+
+.table tbody td a:hover {
+    color: var(--link-hover-color);
+}
+
+/* Sorting arrows (↑ ↓) */
+.table thead th a {
+    color: #e0e0e0;
+    text-decoration: none;
+}
+
+.table thead th a:hover {
+    color: #fff;
+}
+
+/* === "Cancel transaction" Button in Table === */
+.btn-sm {
+    font-family: "Jersey 10", cursive;
+    padding: 0.25rem 0.5rem;
+    font-size: 2rem;
+}
+
+/* Reuse .btn-danger from your global CSS, if you have it. If not: */
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff !important;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* === Pagination Styling === */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.pagination .page-item {
+    margin: 0 0.25rem;
+}
+
+.pagination .page-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    color: #e0e0e0;
+    background-color: var(--pagination-bg);
+    border: 1px solid var(--pagination-border);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: var(--pagination-hover-bg);
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: var(--pagination-disabled-color);
+    cursor: default;
+    background-color: var(--pagination-bg);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--pagination-active-bg);
+    color: var(--pagination-active-color);
+    border-color: var(--pagination-active-bg);
+    cursor: default;
+}
+
+/* Because we set “Page N” as disabled, it will inherit .disabled styles */

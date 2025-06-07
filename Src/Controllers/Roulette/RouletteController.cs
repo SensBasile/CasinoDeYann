@@ -1,10 +1,9 @@
 ﻿using CasinoDeYann.Controllers.Roulette.DTOs;
-using CasinoDeYann.Src.Controllers.Roulette.DTOs;
-using CasinoDeYann.Src.Services.Roulette;
-using CasinoDeYann.Src.Services.Roulette.Models;
+using CasinoDeYann.Services.Roulette;
+using CasinoDeYann.Services.Roulette.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CasinoDeYann.Src.Controllers.Roulette;
+namespace CasinoDeYann.Controllers.Roulette;
 
 [ApiController]
 [Route("api/[controller]")]

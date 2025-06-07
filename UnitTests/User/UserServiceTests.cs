@@ -15,6 +15,14 @@ public class UserServiceTests
     public UserServiceTests()
     {
         _usersRepositoryMock = new Mock<IUsersRepository>();
+        _usersRepositoryMock
+            .Setup(repo => repo.Update(It.IsAny<CasinoDeYann.DataAccess.Dbo.User>()))
+            .ReturnsAsync((CasinoDeYann.DataAccess.Dbo.User u) =>
+            {
+                u.Id = 123;
+                return u;
+            });
+
         _statsRepositoryMock = new Mock<IStatsRepository>();
         _userService = new UserService(_usersRepositoryMock.Object, _statsRepositoryMock.Object);
     }
@@ -37,7 +45,6 @@ public class UserServiceTests
         var username = "testuser";
         var user = new CasinoDeYann.DataAccess.Dbo.User { Username = username, Money = 1000 };
         _usersRepositoryMock.Setup(repo => repo.GetOneByName(username)).ReturnsAsync(user);
-        _usersRepositoryMock.Setup(repo => repo.Update(It.IsAny<CasinoDeYann.DataAccess.Dbo.User>())).ReturnsAsync((CasinoDeYann.DataAccess.Dbo.User u) => u);
 
         var result = await _userService.Pay(username, 500);
 
@@ -153,7 +160,6 @@ public class UserServiceTests
         var username = "testuser";
         var user = new CasinoDeYann.DataAccess.Dbo.User { Username = username, Money = 1000 };
         _usersRepositoryMock.Setup(repo => repo.GetOneByName(username)).ReturnsAsync(user);
-        _usersRepositoryMock.Setup(repo => repo.Update(It.IsAny<CasinoDeYann.DataAccess.Dbo.User>())).ReturnsAsync((CasinoDeYann.DataAccess.Dbo.User u) => u);
 
         var result = await _userService.AddMoney(username, 500);
 
@@ -166,7 +172,6 @@ public class UserServiceTests
         var username = "testuser";
         var user = new CasinoDeYann.DataAccess.Dbo.User { Username = username, Xp = 2000 };
         _usersRepositoryMock.Setup(repo => repo.GetOneByName(username)).ReturnsAsync(user);
-        _usersRepositoryMock.Setup(repo => repo.Update(It.IsAny<CasinoDeYann.DataAccess.Dbo.User>())).ReturnsAsync((CasinoDeYann.DataAccess.Dbo.User u) => u);
 
         var result = await _userService.AddExp(username, 1000);
 
@@ -179,7 +184,6 @@ public class UserServiceTests
         var username = "testuser";
         var user = new CasinoDeYann.DataAccess.Dbo.User { Username = username, Role = "User" };
         _usersRepositoryMock.Setup(repo => repo.GetOneByName(username)).ReturnsAsync(user);
-        _usersRepositoryMock.Setup(repo => repo.Update(It.IsAny<CasinoDeYann.DataAccess.Dbo.User>())).ReturnsAsync((CasinoDeYann.DataAccess.Dbo.User u) => u);
 
         var newRole = "Admin";
 

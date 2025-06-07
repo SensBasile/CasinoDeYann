@@ -85,6 +85,7 @@ ViewData["Title"] = "Machine à sous";
     let betIndex = 1;
     
     decreaseBtn.addEventListener("click", () => {
+        playButtonAudio()
         if (betIndex > 0) {
             betIndex--;
             bet = bets[betIndex];
@@ -93,6 +94,7 @@ ViewData["Title"] = "Machine à sous";
     });
 
     increaseBtn.addEventListener("click", () => {
+        playButtonAudio()
         if (betIndex < bets.length - 1 && bets[betIndex + 1] <= playerMoney) {
             betIndex++;
             bet = bets[betIndex];
@@ -175,6 +177,14 @@ ViewData["Title"] = "Machine à sous";
     res3Audio.volume = 0.5;
     const startAudio = new Audio("/assets/SlotMachine/vfx/start.mp3");
     startAudio.volume = 0.3;
+    const buttonAudio = new Audio("/assets/Common/vfx/push_button.mp3");
+    buttonAudio.volume = 0.1;
+    
+    function playButtonAudio() {
+        buttonAudio.pause()
+        buttonAudio.currentTime = 0
+        buttonAudio.play();
+    }
 
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -231,6 +241,8 @@ ViewData["Title"] = "Machine à sous";
         if (playerMoney < bet) {
             return;
         }
+        
+        playButtonAudio()
         playerMoney -= bet;
         await startAudio.play();
         running = true;

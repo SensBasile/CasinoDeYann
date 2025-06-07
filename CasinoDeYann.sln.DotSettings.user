@@ -10,6 +10,8 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::1D4DD001-CB1E-45C3-9D25-77012585056F::net9.0::UnitTests.Auth.AuthServiceTests.Test1&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::1D4DD001-CB1E-45C3-9D25-77012585056F::net9.0::UnitTests.User.UserServiceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1D4DD001-CB1E-45C3-9D25-77012585056F::net9.0::UnitTests.User.UserControllerTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1D4DD001-CB1E-45C3-9D25-77012585056F::net9.0::UnitTests.GoldMine.GoldMineServiceTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=avez/@EntryIndexedValue">True</s:Boolean>

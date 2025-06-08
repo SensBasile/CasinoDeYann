@@ -29,10 +29,11 @@ public class StatsService: IStatsService
         stats.Game = model.Game; 
         var res = await _statsRepository.Insert(stats);
         
-        return new GameHistoryEntryModel(stats.Id, user.Username, res.Date, res.Game, res.Bet, res.Gain, false);
+        return new GameHistoryEntryModel(res.Id, user.Username, res.Date, res.Game, res.Bet, res.Gain, false);
     }
 
-    public async Task<UserStatsModel> GetPlayerStats(string sortOrder, User.Models.User user, int pageIndex)
+    // Ugly virtual function, virtual keyword only needed for unit tests :(
+    public virtual async Task<UserStatsModel> GetPlayerStats(string sortOrder, User.Models.User user, int pageIndex)
     {
         var stats = await _statsRepository.GetStats(user.Id);
         var history = await _statsRepository.Get(sortOrder, user.Username, pageIndex, true);
@@ -53,7 +54,7 @@ public class StatsService: IStatsService
         return new UserStatsModel(
             History: historyEntries,
             HasPrevious: pageIndex > 1,
-            HasNext: history.TotalPages == pageIndex,
+            HasNext: history.TotalPages != pageIndex,
             HighestGain: stats.HighestGain,
             NumberOfGames: stats.NumberOfGames,
             TotalWon: stats.TotalWon,

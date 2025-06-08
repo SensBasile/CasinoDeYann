@@ -261,45 +261,45 @@ ViewData["Title"] = "Machine à sous";
 
         setTimeout(() => {
             clearInterval(roll0);
-            setCol(0, data.grid);
+            setCol(0, data.Grid);
         }, 1000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll1);
-            setCol(1, data.grid);
+            setCol(1, data.Grid);
         }, 2000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll2);
-            setCol(2, data.grid);
+            setCol(2, data.Grid);
         }, 3000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll3);
-            setCol(3, data.grid);
+            setCol(3, data.Grid);
         }, 4000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll4);
-            setCol(4, data.grid);
+            setCol(4, data.Grid);
         }, 5000);
 
         setTimeout(() => {
             const userMoneyDisplay = document.getElementById("user-money");
             console.log(userMoneyDisplay);
-            console.log(data.money);
-            if (userMoneyDisplay && data.money !== undefined) {
-                playerMoney = data.money;
-                userMoneyDisplay.textContent = data.money;
+            console.log(data.Money);
+            if (userMoneyDisplay && data.Money !== undefined) {
+                playerMoney = data.Money;
+                userMoneyDisplay.textContent = data.Money;
             }
-            if (moneyDisplay && data.money !== undefined) {
-                moneyDisplay.textContent = data.money;
+            if (moneyDisplay && data.Money !== undefined) {
+                moneyDisplay.textContent = data.Money;
             }
-            if (gainDisplay && data.gain !== undefined) {
-                gainDisplay.textContent = data.gain;
+            if (gainDisplay && data.Gain !== undefined) {
+                gainDisplay.textContent = data.Gain;
             }
-            if (data.gain > 0) {
-                showPatterns(data.grid, data.patterns);
+            if (data.Gain > 0) {
+                showPatterns(data.Grid, data.Patterns);
                 jackpotAudio.play();
                 const machineImg = document.getElementById("machine-gif");
                 machineImg.src = "/assets/SlotMachine/background/slot_win.gif";

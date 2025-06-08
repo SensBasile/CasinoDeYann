@@ -40,9 +40,9 @@ public class BackofficeModel : PageModel
         public async Task OnGetAsync()
         {
             CurrentSort = SortOrder.IsNullOrEmpty() ? "date_desc" : SortOrder;
-            BetSort = SortOrder == "bet_asc" ? "bet_desc" : "bet_asc";
-            GainSort = SortOrder == "gain_asc" ? "gain_desc" : "gain_asc";
-            DateSort = SortOrder == "date_asc" ? "date_desc" : "date_asc";
+            BetSort = SortOrder == "bet_desc" ? "bet_asc" : "bet_desc";
+            GainSort = SortOrder == "gain_desc" ? "gain_asc" : "gain_desc";
+            DateSort = SortOrder == "date_desc" ? "date_asc" : "date_desc";
             CurrentFilter = SearchString;
 
             var result = await _statsService.GetBackOffice(CurrentSort, SearchString, PageIndex);

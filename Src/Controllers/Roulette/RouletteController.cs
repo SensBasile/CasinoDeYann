@@ -7,7 +7,7 @@ namespace CasinoDeYann.Controllers.Roulette;
 
 [ApiController]
 [Route("api/[controller]")]
-public class RouletteController(RouletteService rouletteService) : ControllerBase
+public class RouletteController(IRouletteService rouletteService) : ControllerBase
 {
 
     // GET /api/roulette/play/

@@ -11,5 +11,6 @@ namespace CasinoDeYann.Services.User
 
         public Task<Models.User> Pay(string username, long amount);
         Task<IEnumerable<Models.User>> GetLeaderboard();
+        Task<IEnumerable<string>> Search(string query);
     }
 }

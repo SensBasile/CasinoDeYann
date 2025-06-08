@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using CasinoDeYann.DataAccess.Dbo;
 using CasinoDeYann.DataAccess.Interfaces;
-using CasinoDeYann.DataAccess.Dbo;
 using CasinoDeYann.Services.Stats;
 using CasinoDeYann.Services.Stats.Models;
 using CasinoDeYann.Services.User;
-using CasinoDeYann.Services.User.Models;
 using FluentAssertions;
 using Moq;
-using Xunit;
 
-namespace CasinoDeYann.Services.Stats.Tests
+namespace UnitTests.Stats
 {
     public class StatsServiceTests
     {
         private readonly Mock<IStatsRepository> _statsRepoMock;
-        private readonly Mock<UserService> _userServiceMock;
+        private readonly Mock<IUserService> _userServiceMock;
         private readonly StatsService _statsService;
 
         public StatsServiceTests()
         {
             _statsRepoMock   = new Mock<IStatsRepository>();
-            _userServiceMock = new Mock<UserService>();
+            _userServiceMock = new Mock<IUserService>();
             _statsService    = new StatsService(_statsRepoMock.Object, _userServiceMock.Object);
         }
 
@@ -40,12 +35,12 @@ namespace CasinoDeYann.Services.Stats.Tests
                 IsCanceled: false
             );
 
-            var user = new User.Models.User(10, "johndoe", 2000, 500 , "User");
+            var user = new CasinoDeYann.Services.User.Models.User(10, "johndoe", 2000, 500 , "User");
             _userServiceMock
                 .Setup(s => s.GetUser("johndoe"))
                 .ReturnsAsync(user);
 
-            var inserted = new DataAccess.Dbo.Stats
+            var inserted = new CasinoDeYann.DataAccess.Dbo.Stats
             {
                 Id        = 42,
                 UserId    = 10,
@@ -56,7 +51,7 @@ namespace CasinoDeYann.Services.Stats.Tests
                 IsCanceled = false
             };
             _statsRepoMock
-                .Setup(r => r.Insert(It.IsAny<DataAccess.Dbo.Stats>()))
+                .Setup(r => r.Insert(It.IsAny<CasinoDeYann.DataAccess.Dbo.Stats>()))
                 .ReturnsAsync(inserted);
 
             // Act
@@ -73,7 +68,7 @@ namespace CasinoDeYann.Services.Stats.Tests
                 IsCanceled: false
             ));
             _userServiceMock.Verify(s => s.GetUser("johndoe"), Times.Once);
-            _statsRepoMock.Verify(r => r.Insert(It.Is<DataAccess.Dbo.Stats>(st =>
+            _statsRepoMock.Verify(r => r.Insert(It.Is<CasinoDeYann.DataAccess.Dbo.Stats>(st =>
                 st.UserId == 10 &&
                 st.Bet    == 50m &&
                 st.Gain   == 100m &&
@@ -85,7 +80,7 @@ namespace CasinoDeYann.Services.Stats.Tests
         public async Task GetPlayerStats_ShouldMapDataAndPagingCorrectly()
         {
             // Arrange
-            var user = new User.Models.User( 5, "alice", 1500, 300, "User");
+            var user = new CasinoDeYann.Services.User.Models.User( 5, "alice", 1500, 300, "User");
 
             var summary = new UserStatsSummary
             {
@@ -102,8 +97,8 @@ namespace CasinoDeYann.Services.Stats.Tests
 
             var statsList = new[]
             {
-                new DataAccess.Dbo.Stats { Id = 1, Date = new DateTime(2025,5,30), Game = "Roulette", Bet = 100, Gain = 150, IsCanceled = false },
-                new DataAccess.Dbo.Stats { Id = 2, Date = new DateTime(2025,5,31), Game = "Poker",   Bet = 200, Gain =  50, IsCanceled = true  }
+                new CasinoDeYann.DataAccess.Dbo.Stats { Id = 1, Date = new DateTime(2025,5,30), Game = "Roulette", Bet = 100, Gain = 150, IsCanceled = false },
+                new CasinoDeYann.DataAccess.Dbo.Stats { Id = 2, Date = new DateTime(2025,5,31), Game = "Poker",   Bet = 200, Gain =  50, IsCanceled = true  }
             };
             var paged = new PaginatedStats(statsList, totalPages: 2);
             _statsRepoMock
@@ -122,7 +117,7 @@ namespace CasinoDeYann.Services.Stats.Tests
             result.GamesPlayedPerDay[new DateTime(2025,5,30)].Should().Be(3);
 
             result.HasPrevious.Should().BeTrue();  // pageIndex > 1
-            result.HasNext.Should().BeTrue();      // TotalPages == pageIndex
+            result.HasNext.Should().BeFalse();      // TotalPages != pageIndex
 
             result.History.Should().HaveCount(2);
             result.History.ElementAt(1).IsCanceled.Should().BeTrue();
@@ -132,7 +127,7 @@ namespace CasinoDeYann.Services.Stats.Tests
         public async Task GetUserProfileAsync_ShouldReturnProfileWithStats()
         {
             // Arrange
-            var user = new User.Models.User(7, "bob", 2500, 1000, "User");
+            var user = new CasinoDeYann.Services.User.Models.User(7, "bob", 1000, 2500, "User");
             _userServiceMock
                 .Setup(s => s.GetUser("bob"))
                 .ReturnsAsync(user);
@@ -149,8 +144,6 @@ namespace CasinoDeYann.Services.Stats.Tests
                 GamesPlayedPerDay:   new Dictionary<DateTime,int>()
             );
 
-            // On GetPlayerStats, on cette instance appelera la méthode réelle,
-            // donc on mocke elle-même pour rediriger vers notre statsModel.
             var serviceMock = new Mock<StatsService>(_statsRepoMock.Object, _userServiceMock.Object) { CallBase = true };
             serviceMock
                 .Setup(s => s.GetPlayerStats("game_asc", user, 1))
@@ -160,7 +153,7 @@ namespace CasinoDeYann.Services.Stats.Tests
             var profile = await serviceMock.Object.GetUserProfileAsync("game_asc", "bob", 1);
 
             // Assert
-            profile.Level.Should().Be(2);   // 2500 / 1000 == 2
+            profile.Level.Should().Be(2);
             profile.Balance.Should().Be(1000);
             profile.Stats.Should().Be(statsModel);
         }
@@ -171,8 +164,8 @@ namespace CasinoDeYann.Services.Stats.Tests
             // Arrange
             var statsList = new[]
             {
-                new DataAccess.Dbo.Stats { Id = 11, User = new DataAccess.Dbo.User { Username = "charlie" }, Date = DateTime.Today, Game = "Slots", Bet = 10, Gain = 0, IsCanceled = false },
-                new DataAccess.Dbo.Stats { Id = 12, User = new DataAccess.Dbo.User { Username = "dave"    }, Date = DateTime.Today, Game = "Poker", Bet = 20, Gain = 5, IsCanceled = false }
+                new CasinoDeYann.DataAccess.Dbo.Stats { Id = 11, User = new CasinoDeYann.DataAccess.Dbo.User { Username = "charlie" }, Date = DateTime.Today, Game = "Slots", Bet = 10, Gain = 0, IsCanceled = false },
+                new CasinoDeYann.DataAccess.Dbo.Stats { Id = 12, User = new CasinoDeYann.DataAccess.Dbo.User { Username = "dave"    }, Date = DateTime.Today, Game = "Poker", Bet = 20, Gain = 5, IsCanceled = false }
             };
             var paged = new PaginatedStats(statsList, totalPages: 3);
             _statsRepoMock
@@ -195,12 +188,12 @@ namespace CasinoDeYann.Services.Stats.Tests
         public async Task Cancel_ShouldMarkStatCanceledAndCallAddMoney()
         {
             // Arrange
-            var stat = new DataAccess.Dbo.Stats { Id = 5, UserId = 9, Bet = 100, Gain = 30, IsCanceled = false };
+            var stat = new CasinoDeYann.DataAccess.Dbo.Stats { Id = 5, UserId = 9, Bet = 100, Gain = 30, IsCanceled = false };
             _statsRepoMock
                 .Setup(r => r.GetOneById(5, ""))
                 .ReturnsAsync(stat);
 
-            var user = new User.Models.User(9, "eve", 0, 0, "User");
+            var user = new CasinoDeYann.Services.User.Models.User(9, "eve", 0, 0, "User");
             _userServiceMock
                 .Setup(s => s.GetUser(9))
                 .ReturnsAsync(user);
@@ -209,9 +202,9 @@ namespace CasinoDeYann.Services.Stats.Tests
                 .Setup(s => s.AddMoney("eve", 70))
                 .Returns(Task.FromResult(70L));
 
-            var updated = new DataAccess.Dbo.Stats { Id = 5, UserId = 9, Bet = 100, Gain = 30, IsCanceled = true };
+            var updated = new CasinoDeYann.DataAccess.Dbo.Stats { Id = 5, UserId = 9, Bet = 100, Gain = 30, IsCanceled = true };
             _statsRepoMock
-                .Setup(r => r.Update(It.Is<DataAccess.Dbo.Stats>(st => st.IsCanceled)))
+                .Setup(r => r.Update(It.Is<CasinoDeYann.DataAccess.Dbo.Stats>(st => st.IsCanceled)))
                 .ReturnsAsync(updated);
 
             // Act
@@ -220,7 +213,7 @@ namespace CasinoDeYann.Services.Stats.Tests
             // Assert
             result.IsCanceled.Should().BeTrue();
             _userServiceMock.Verify(s => s.AddMoney("eve", 70), Times.Once);
-            _statsRepoMock.Verify(r => r.Update(It.Is<DataAccess.Dbo.Stats>(st => st.IsCanceled)), Times.Once);
+            _statsRepoMock.Verify(r => r.Update(It.Is<CasinoDeYann.DataAccess.Dbo.Stats>(st => st.IsCanceled)), Times.Once);
         }
 
         [Fact]

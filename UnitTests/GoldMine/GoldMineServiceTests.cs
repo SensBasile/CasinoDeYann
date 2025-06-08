@@ -9,14 +9,14 @@ namespace UnitTests.GoldMine
 {
     public class GoldMineServiceTests
     {
-        private readonly Mock<UserService> _userServiceMock;
-        private readonly Mock<StatsService> _statsServiceMock;
+        private readonly Mock<IUserService> _userServiceMock;
+        private readonly Mock<IStatsService> _statsServiceMock;
         private readonly GoldMineService _goldMineService;
 
         public GoldMineServiceTests()
         {
-            _userServiceMock = new Mock<UserService>(null, null); // On injecte null car on ne teste pas UserService ici
-            _statsServiceMock = new Mock<StatsService>();
+            _userServiceMock = new Mock<IUserService>();
+            _statsServiceMock = new Mock<IStatsService>();
             _goldMineService = new GoldMineService(_userServiceMock.Object, _statsServiceMock.Object);
         }
 
@@ -47,19 +47,19 @@ namespace UnitTests.GoldMine
             _userServiceMock.Setup(s => s.GetUser(username)).ReturnsAsync(user);
             _userServiceMock.Setup(s => s.AddMoney(username, 1)).ReturnsAsync(updatedUser.Money);
             _userServiceMock.Setup(s => s.AddExp(username, 1)).ReturnsAsync(updatedUser);
-            _statsServiceMock.Setup(s => s.Create(It.IsAny<GameHistoryEntryModel>())).Returns((Task<GameHistoryEntryModel>)Task.CompletedTask);
+            _statsServiceMock.Setup(s => s.Create(It.IsAny<GameHistoryEntryModel>())).Returns(Task.FromResult<GameHistoryEntryModel>(null));
 
             var result = await _goldMineService.Mine(username);
 
             Assert.True(result.ToResponse().Credited);
 
-            _userServiceMock.Verify(s => s.AddMoney(username, 1), Times.Once);
-            _userServiceMock.Verify(s => s.AddExp(username, 1), Times.Once);
+            _userServiceMock.Verify(s => s.AddMoney(username, 5), Times.Once);
+            _userServiceMock.Verify(s => s.AddExp(username, 5), Times.Once);
             _statsServiceMock.Verify(s => s.Create(It.Is<GameHistoryEntryModel>(entry =>
                 entry.Username == username &&
                 entry.Game == "Gold Mine" &&
                 entry.Bet == 0 &&
-                entry.Gain == 1
+                entry.Gain == 5
             )), Times.Once);
         }
     }

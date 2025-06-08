@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using CasinoDeYann;
 using CasinoDeYann.DataAccess;
 using CasinoDeYann.DataAccess.EFModels;
@@ -9,14 +11,11 @@ using CasinoDeYann.Services.Roulette;
 using CasinoDeYann.Services.SlotMachine;
 using CasinoDeYann.Services.Stats;
 using CasinoDeYann.Services.User;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
 builder.Services.AddControllers();
+builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<CasinoDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -28,31 +27,29 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LogoutPath = "/Logout";
     });
 
-builder.Services.AddAutoMapper(typeof(AutomapperProfiles));
-
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<UserContextService>();
+builder.Services.AddHttpClient();
+builder.Services.AddMemoryCache();
+
+builder.Services.AddAutoMapper(typeof(AutomapperProfiles));
+
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IStatsRepository, StatsRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IStatsService, StatsService>();
-builder.Services.AddScoped<SlotMachineService>();
-builder.Services.AddScoped<RouletteService>();
+builder.Services.AddScoped<IRouletteService, RouletteService>();
+builder.Services.AddScoped<ISlotMachineService, SlotMachineService>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<UserContextService>();
 builder.Services.AddScoped<GoldMineService>();
 builder.Services.AddScoped<HorseRaceService>();
-builder.Services.AddHttpClient();
-builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 
-
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -65,7 +62,5 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages().WithStaticAssets();
 app.MapControllers();
-
-
 
 app.Run();

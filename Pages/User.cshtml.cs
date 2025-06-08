@@ -21,6 +21,8 @@ namespace CasinoDeYann.Pages
         [BindProperty(SupportsGet = true)] public string Username { get; set; }
 
         [BindProperty(SupportsGet = true)] public int PageIndex { get; set; } = 1;
+        
+        [BindProperty(SupportsGet = true)] public string SortOrder { get; set; }
 
         public long Level { get; private set; }
         public decimal Balance { get; private set; }
@@ -31,6 +33,11 @@ namespace CasinoDeYann.Pages
         public decimal TotalLost { get; private set; }
         public Dictionary<string, int> GamesPlayedPerGame { get; private set; } = new();
         public Dictionary<DateTime, int> GamesPlayedPerDay { get; private set; } = new();
+        
+        public string CurrentSort { get; set; }
+        public string BetSort { get; set; }
+        public string GainSort { get; set; }
+        public string DateSort { get; set; }
 
         // paging flags
         public bool HasPreviousPage { get; private set; }
@@ -40,16 +47,19 @@ namespace CasinoDeYann.Pages
         {
             if (string.IsNullOrWhiteSpace(username))
                 return NotFound();
-
-            // admins are redirected to BackOffice
+            
             if (User.IsInRole("Admin"))
                 return Redirect("/BackOffice/" + username);
+            
+            CurrentSort = string.IsNullOrEmpty(SortOrder)? "date_desc" : SortOrder;
+            BetSort = SortOrder == "bet_desc" ? "bet_asc" : "bet_desc";
+            GainSort = SortOrder == "gain_desc" ? "gain_asc" : "gain_desc";
+            DateSort = SortOrder == "date_desc" ? "date_asc" : "date_desc";
 
             Username = username;
-
-            // pass the current PageIndex through to the service
+            
             var dto = await _statsService.GetUserProfileAsync(
-                sortOrder: "",
+                sortOrder: CurrentSort,
                 userName: username,
                 pageIndex: PageIndex
             );

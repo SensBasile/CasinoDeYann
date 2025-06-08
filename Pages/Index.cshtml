@@ -10,10 +10,10 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>Rank</th>
-        <th>Name</th>
-        <th>Money</th>
-        <th>Level</th>
+        <th>Rang</th>
+        <th>Pseudonyme</th>
+        <th>Solde</th>
+        <th>Niveau</th>
     </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
                         @user.Username
                     </a></td>
                 <td class="money-cell">
-                    @user.Money.ToString("N0") @* or "N2" for two decimals *@
+                    @user.Money.ToString("N0")
                     <img src="~/assets/GoldMine/Yanns/yanns.webp" alt="coin" class="money-icon"/>
                 </td>
                 <td class="level-cell">

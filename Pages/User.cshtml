@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Profil utilisateur</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/css/Profile.css"/>
@@ -16,234 +16,255 @@
     <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Profil de @Model.Username</h1>
+<h1>Profil de @Model.Username</h1>
 
-    <div class="section">
-        <p>
-            @{
-                var rankIndex = Math.Min(((Model.Level - 1) / 3), 15);
-                var rankImgPath = $"/assets/Ranks/ranks{rankIndex:D2}.png";
-            }
-            <img src="@rankImgPath" alt="Rank @rankIndex" class="rank-icon"/>
-            @if (rankIndex < 3)
-            {
-                <span class="badge-bronze">Niveau @Model.Level</span>
-            }
-            else if (rankIndex >= 3 && rankIndex < 6)
-            {
-                <span class="badge-silver">Niveau @Model.Level</span>
-            }
-            else if (rankIndex >= 6 && rankIndex < 9)
-            {
-                <span class="badge-gold">Niveau @Model.Level</span>
-            }
-            else if (rankIndex >= 9 && rankIndex < 12)
-            {
-                <span class="badge-platinum">Niveau @Model.Level</span>
-            }
-            else if (rankIndex >= 12 && rankIndex < 15)
-            {
-                <span class="badge-diamond">Niveau @Model.Level</span>
-            }
-            else
-            {
-                <span class="badge-kitsune">Niveau @Model.Level</span>
-            }
-            &nbsp;&nbsp;
-            Solde : <strong>@Model.Balance.ToString("N2") €</strong>
-        </p>
-    </div>
-    
-    <div class="section">
-        <h2>Historique des parties</h2>
-        @if (Model.History.Any())
+<div class="section">
+    <p>
+        @{
+            var rankIndex = Math.Min(((Model.Level - 1) / 3), 15);
+            var rankImgPath = $"/assets/Ranks/ranks{rankIndex:D2}.png";
+        }
+        <img src="@rankImgPath" alt="Rank @rankIndex" class="rank-icon"/>
+        @if (rankIndex < 3)
         {
-            <nav>
-                <ul class="pagination">
-                    <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
-                        @if (Model.HasPreviousPage)
-                        {
-                            <a class="page-link"
-                               asp-route-username="@Model.Username"
-                               asp-route-PageIndex="@(Model.PageIndex - 1)">
-                                &laquo; Précédent
-                            </a>
-                        }
-                        else
-                        {
-                            <span class="page-link disabled">&laquo; Précédent</span>
-                        }
-                    </li>
-                    <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
-                        @if (Model.HasPreviousPage)
-                        {
-                            <a class="page-link"
-                               asp-route-username="@Model.Username"
-                               asp-route-PageIndex="1">
-                                Première page
-                            </a>
-                        }
-                        else
-                        {
-                            <span class="page-link disabled">Première page</span>
-                        }
-                    </li>
-                    <li class="page-item disabled">
-                        <span class="page-link">Page @Model.PageIndex</span>
-                    </li>
-                    <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
-                        @if (Model.HasNextPage)
-                        {
-                            <a class="page-link"
-                               asp-route-username="@Model.Username"
-                               asp-route-PageIndex="@(Model.PageIndex + 1)">
-                                Suivant &raquo;
-                            </a>
-                        }
-                        else
-                        {
-                            <span class="page-link disabled">Suivant &raquo;</span>
-                        }
-                    </li>
-                </ul>
-            </nav>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Jeu</th>
-                        <th>Mise</th>
-                        <th>Gain</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var entry in Model.History)
-                    {
-                        <tr>
-                            <td>@entry.Date.ToString("dd/MM/yyyy HH:mm")</td>
-                            <td>@entry.Game</td>
-                            <td>@entry.Bet.ToString("N2")</td>
-                            <td>@entry.Gain.ToString("N2")</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <span class="badge-bronze">Niveau @Model.Level</span>
+        }
+        else if (rankIndex >= 3 && rankIndex < 6)
+        {
+            <span class="badge-silver">Niveau @Model.Level</span>
+        }
+        else if (rankIndex >= 6 && rankIndex < 9)
+        {
+            <span class="badge-gold">Niveau @Model.Level</span>
+        }
+        else if (rankIndex >= 9 && rankIndex < 12)
+        {
+            <span class="badge-platinum">Niveau @Model.Level</span>
+        }
+        else if (rankIndex >= 12 && rankIndex < 15)
+        {
+            <span class="badge-diamond">Niveau @Model.Level</span>
         }
         else
         {
-            <p>Aucune partie jouée pour l'instant.</p>
+            <span class="badge-kitsune">Niveau @Model.Level</span>
         }
-    </div>
-    
-    <div class="section">
-        <h2>Statistiques</h2>
-        <div class="stats-wrapper">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Parties Jouées</h3>
-                    <p><strong>@Model.TotalPlayed.ToString("0000")</strong></p>
-                </div>
-                <div class="stat-card">
-                    <h3>Gain maximal</h3>
-                    <p><strong>@Model.MaxWin.ToString("N2") €</strong></p>
-                </div>
-                <div class="stat-card">
-                    <h3>Montant total gagné</h3>
-                    <p><strong>@Model.TotalWon.ToString("N2") €</strong></p>
-                </div>
-                <div class="stat-card">
-                    <h3>Montant total parié</h3>
-                    <p><strong>@Model.TotalLost.ToString("N2") €</strong></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="section">
-        <div class="charts-row">
-            <div class="chart-container">
-                <h3 class="chart-title">Répartition des parties par jeu</h3>
-                <canvas id="pieChart" width="400" height="400"></canvas>
-            </div>
-            <div class="chart-container">
-                <h3 class="chart-title">Parties jouées par jour</h3>
-                <canvas id="barChart" width="600" height="300"></canvas>
-            </div>
-        </div>
-    </div>
-    
-    @if (User.Identity?.Name == Model.Username)
+        &nbsp;&nbsp;
+        Solde : <strong>@Model.Balance.ToString("N2") €</strong>
+    </p>
+</div>
+
+<div class="section">
+    <h2>Historique des parties</h2>
+    @if (Model.History.Any())
     {
-        <div class="section" id="editSection">
-            <a asp-page="/ChangePassword" class="btn btn-primary">Modifier le mot de passe</a>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <a class="page-link"
+                           asp-route-username="@Model.Username"
+                           asp-route-SortOrder="@Model.CurrentSort"
+                           asp-route-PageIndex="@(Model.PageIndex - 1)">
+                            &laquo; Précédent
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="page-link disabled">&laquo; Précédent</span>
+                    }
+                </li>
+                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <a class="page-link"
+                           asp-route-username="@Model.Username"
+                           asp-route-SortOrder="@Model.CurrentSort"
+                           asp-route-PageIndex="1">
+                            Première page
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="page-link disabled">Première page</span>
+                    }
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">Page @Model.PageIndex</span>
+                </li>
+                <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                    @if (Model.HasNextPage)
+                    {
+                        <a class="page-link"
+                           asp-route-username="@Model.Username"
+                           asp-route-SortOrder="@Model.CurrentSort"
+                           asp-route-PageIndex="@(Model.PageIndex + 1)">
+                            Suivant &raquo;
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="page-link disabled">Suivant &raquo;</span>
+                    }
+                </li>
+            </ul>
+        </nav>
 
-            <form method="post" asp-page-handler="DeleteAccount">
-                <button type="submit" class="btn btn-danger"
-                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte ?');">
-                    Supprimer le compte
-                </button>
-            </form>
-        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>
+                    <a asp-page="./User"
+                       asp-route-username="@Model.Username"
+                       asp-route-SortOrder="@Model.DateSort">
+                        Date @(Model.CurrentSort == "date_asc" ? "↑" : Model.CurrentSort == "date_desc" ? "↓" : "-")
+                    </a>
+                </th>
+                <th>Jeu</th>
+                <th>
+                    <a asp-page="./User"
+                       asp-route-username="@Model.Username"
+                       asp-route-SortOrder="@Model.BetSort">
+                        Pari @(Model.CurrentSort == "bet_asc" ? "↑" : Model.CurrentSort == "bet_desc" ? "↓" : "-")
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./User"
+                       asp-route-username="@Model.Username"
+                       asp-route-SortOrder="@Model.GainSort">
+                        Gain @(Model.CurrentSort == "gain_asc" ? "↑" : Model.CurrentSort == "gain_desc" ? "↓" : "-")
+                    </a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var entry in Model.History)
+            {
+                <tr>
+                    <td>@entry.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@entry.Game</td>
+                    <td>@entry.Bet.ToString("N2")</td>
+                    <td>@entry.Gain.ToString("N2")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
     }
+    else
+    {
+        <p>Aucune partie jouée pour l'instant.</p>
+    }
+</div>
+
+<div class="section">
+    <h2>Statistiques</h2>
+    <div class="stats-wrapper">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Parties Jouées</h3>
+                <p><strong>@Model.TotalPlayed.ToString("0000")</strong></p>
+            </div>
+            <div class="stat-card">
+                <h3>Gain maximal</h3>
+                <p><strong>@Model.MaxWin.ToString("N2") €</strong></p>
+            </div>
+            <div class="stat-card">
+                <h3>Montant total gagné</h3>
+                <p><strong>@Model.TotalWon.ToString("N2") €</strong></p>
+            </div>
+            <div class="stat-card">
+                <h3>Montant total parié</h3>
+                <p><strong>@Model.TotalLost.ToString("N2") €</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="charts-row">
+        <div class="chart-container">
+            <h3 class="chart-title">Répartition des parties par jeu</h3>
+            <canvas id="pieChart" width="400" height="400"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3 class="chart-title">Parties jouées par jour</h3>
+            <canvas id="barChart" width="600" height="300"></canvas>
+        </div>
+    </div>
+</div>
+
+@if (User.Identity?.Name == Model.Username)
+{
+    <div class="section" id="editSection">
+        <a asp-page="/ChangePassword" class="btn btn-primary">Modifier le mot de passe</a>
+
+        <form method="post" asp-page-handler="DeleteAccount">
+            <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte ?');">
+                Supprimer le compte
+            </button>
+        </form>
+    </div>
+}
 
 
-    <!-- ------------------ SCRIPTS POUR LES GRAPHIQUES ------------------ -->
-    <script>
-        const pieLabels = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerGame.Keys));
-        const pieValues = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerGame.Values));
+<!-- ------------------ SCRIPTS POUR LES GRAPHIQUES ------------------ -->
+<script>
+    const pieLabels = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerGame.Keys));
+    const pieValues = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerGame.Values));
 
-        const ctxPie = document.getElementById('pieChart').getContext('2d');
-        new Chart(ctxPie, {
-            type: 'pie',
-            data: {
-                labels: pieLabels,
-                datasets: [{
-                    data: pieValues,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 206, 86, 0.6)',
-                        'rgba(75, 192, 192, 0.6)',
-                        'rgba(153, 102, 255, 0.6)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'pie',
+        data: {
+            labels: pieLabels,
+            datasets: [{
+                data: pieValues,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)'
+                ]
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    const barLabels = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerDay.Keys));
+    const barValues = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerDay.Values));
+
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: barLabels,
+            datasets: [{
+                label: 'Parties jouées',
+                data: barValues,
+            }]
+        },
+        options: {
+            responsive: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
                     }
                 }
             }
-        });
-        
-        const barLabels = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerDay.Keys));
-        const barValues = @Html.Raw(JsonSerializer.Serialize(Model.GamesPlayedPerDay.Values));
-
-        const ctxBar = document.getElementById('barChart').getContext('2d');
-        new Chart(ctxBar, {
-            type: 'bar',
-            data: {
-                labels: barLabels,
-                datasets: [{
-                    label: 'Parties jouées',
-                    data: barValues,
-                }]
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 1
-                        }
-                    }
-                }
-            }
-        });
-    </script>
+        }
+    });
+</script>
 </body>
 </html>

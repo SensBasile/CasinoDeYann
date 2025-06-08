@@ -6,7 +6,7 @@ namespace CasinoDeYann.Controllers.SlotMachine;
 
 [Route("api/[controller]")] // SlotMachine
 [ApiController]
-public class SlotMachineController(SlotMachineService slotMachineService) : Controller
+public class SlotMachineController(ISlotMachineService slotMachineService) : Controller
 {
     [HttpPost("play/{bet}")]
     public async Task<IActionResult> Play(int bet)

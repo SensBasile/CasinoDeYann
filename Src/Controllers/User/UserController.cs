@@ -6,7 +6,7 @@ namespace CasinoDeYann.Controllers.User;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController(UserService userService) : Controller
+public class UserController(IUserService userService) : Controller
 {
     [HttpGet]
     public async Task<IActionResult> Get(string query)

@@ -8,12 +8,12 @@ namespace UnitTests.User
 {
     public class UserControllerTests
     {
-        private readonly Mock<UserService> _userServiceMock;
+        private readonly Mock<IUserService> _userServiceMock;
         private readonly UserController _controller;
 
         public UserControllerTests()
         {
-            _userServiceMock = new Mock<UserService>(null, null);
+            _userServiceMock = new Mock<IUserService>();
             _controller = new UserController(_userServiceMock.Object);
         }
 

@@ -7,7 +7,7 @@ using CasinoDeYann.Services.User;
 
 namespace CasinoDeYann.Services.Roulette;
 
-public class RouletteService(IUserService userService, IStatsService statsService)
+public class RouletteService(IUserService userService, IStatsService statsService) : IRouletteService
 {
     private readonly Random _random = new();
     
@@ -16,7 +16,8 @@ public class RouletteService(IUserService userService, IStatsService statsServic
         1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36
     };
 
-    public async Task<RouletteModel> play(string userName, RouletteRequest bets)
+    // Marked virtual for unit tests
+    public virtual async Task<RouletteModel> play(string userName, RouletteRequest bets)
     {
         long totalBet = getTotalBetValue(bets);
         var user = await userService.Pay(userName, totalBet);

@@ -6,7 +6,7 @@ using CasinoDeYann.Services.User;
 
 namespace CasinoDeYann.Services.SlotMachine;
 
-public class SlotMachineService(IUserService userService, IStatsService statsService)
+public class SlotMachineService(IUserService userService, IStatsService statsService) : ISlotMachineService
 {
     private const int W = 5;
     private const int H = 5;

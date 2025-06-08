@@ -238,9 +238,3 @@ h2 {
     background-color: var(--pagination-bg);
 }
 
-.pagination .page-item.active .page-link {
-    background-color: var(--pagination-active-bg);
-    color: var(--pagination-active-color);
-    border-color: var(--pagination-active-bg);
-    cursor: default;
-}

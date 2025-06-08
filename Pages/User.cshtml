@@ -58,6 +58,56 @@
         <h2>Historique des parties</h2>
         @if (Model.History.Any())
         {
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                        @if (Model.HasPreviousPage)
+                        {
+                            <a class="page-link"
+                               asp-route-username="@Model.Username"
+                               asp-route-PageIndex="@(Model.PageIndex - 1)">
+                                &laquo; Précédent
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="page-link disabled">&laquo; Précédent</span>
+                        }
+                    </li>
+                    <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                        @if (Model.HasPreviousPage)
+                        {
+                            <a class="page-link"
+                               asp-route-username="@Model.Username"
+                               asp-route-PageIndex="1">
+                                Première page
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="page-link disabled">Première page</span>
+                        }
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link">Page @Model.PageIndex</span>
+                    </li>
+                    <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                        @if (Model.HasNextPage)
+                        {
+                            <a class="page-link"
+                               asp-route-username="@Model.Username"
+                               asp-route-PageIndex="@(Model.PageIndex + 1)">
+                                Suivant &raquo;
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="page-link disabled">Suivant &raquo;</span>
+                        }
+                    </li>
+                </ul>
+            </nav>
+
             <table>
                 <thead>
                     <tr>

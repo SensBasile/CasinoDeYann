@@ -17,7 +17,7 @@ public class GoldMineService(IUserService userService, IStatsService statsServic
         await userService.AddMoney(callingUser.Username, MineValue);
         _ = await userService.AddExp(callingUser.Username, MineValue);
         
-        await statsService.Create(new GameHistoryEntryModel(-1, callingUser.Username, DateTime.Now, "Gold Mine", 0, MineValue, false));
+        await statsService.Create(new GameHistoryEntryModel(-1, callingUser.Username, DateTime.Now, "Mine d'Or", 0, MineValue, false));
 
         return new GoldMineModel(true);
     }

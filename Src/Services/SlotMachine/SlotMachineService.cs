@@ -59,7 +59,7 @@ public class SlotMachineService(IUserService userService, IStatsService statsSer
         var userMoney = await userService.AddMoney(callingUser.Username, gain);
         _ = await userService.AddExp(callingUser.Username, gain / 1000 + 50);
         
-        await statsService.Create(new GameHistoryEntryModel(-1, callingUser.Username, DateTime.Now, "Slot Machine", bet, gain, false));
+        await statsService.Create(new GameHistoryEntryModel(-1, callingUser.Username, DateTime.Now, "YannMania", bet, gain, false));
         
         return new SlotMachineModel(
             grid.ToArray(),

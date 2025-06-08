@@ -216,7 +216,7 @@ ViewData["Title"] = "Machine à sous";
                     else if (col === 4) res3Audio.play();
                     else res2Audio.play();
                 }
-            },i * 500);
+            },i * 400);
         }
     }
 
@@ -261,45 +261,45 @@ ViewData["Title"] = "Machine à sous";
 
         setTimeout(() => {
             clearInterval(roll0);
-            setCol(0, data.Grid);
+            setCol(0, data.grid);
         }, 1000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll1);
-            setCol(1, data.Grid);
+            setCol(1, data.grid);
         }, 2000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll2);
-            setCol(2, data.Grid);
+            setCol(2, data.grid);
         }, 3000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll3);
-            setCol(3, data.Grid);
+            setCol(3, data.grid);
         }, 4000 + getRandomInt(500, -500));
 
         setTimeout(() => {
             clearInterval(roll4);
-            setCol(4, data.Grid);
+            setCol(4, data.grid);
         }, 5000);
 
         setTimeout(() => {
             const userMoneyDisplay = document.getElementById("user-money");
             console.log(userMoneyDisplay);
-            console.log(data.Money);
-            if (userMoneyDisplay && data.Money !== undefined) {
-                playerMoney = data.Money;
-                userMoneyDisplay.textContent = data.Money;
+            console.log(data.money);
+            if (userMoneyDisplay && data.money !== undefined) {
+                playerMoney = data.money;
+                userMoneyDisplay.textContent = data.money;
             }
-            if (moneyDisplay && data.Money !== undefined) {
-                moneyDisplay.textContent = data.Money;
+            if (moneyDisplay && data.money !== undefined) {
+                moneyDisplay.textContent = data.money;
             }
-            if (gainDisplay && data.Gain !== undefined) {
-                gainDisplay.textContent = data.Gain;
+            if (gainDisplay && data.gain !== undefined) {
+                gainDisplay.textContent = data.gain;
             }
-            if (data.Gain > 0) {
-                showPatterns(data.Grid, data.Patterns);
+            if (data.gain > 0) {
+                showPatterns(data.grid, data.patterns);
                 jackpotAudio.play();
                 const machineImg = document.getElementById("machine-gif");
                 machineImg.src = "/assets/SlotMachine/background/slot_win.gif";

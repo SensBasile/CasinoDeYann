@@ -28,7 +28,7 @@ public class UserServiceTests
         
         _mapperMock = new Mock<IMapper>();
         _statsRepositoryMock = new Mock<IStatsRepository>();
-        _userService = new UserService(_usersRepositoryMock.Object, _mapperMock.Object);
+        _userService = new UserService(_usersRepositoryMock.Object);
     }
 
     [Fact]

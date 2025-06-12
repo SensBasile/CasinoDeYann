@@ -65,7 +65,7 @@ public class SlotMachineService(IUserService userService, IStatsService statsSer
             grid.ToArray(),
             patterns,
             gain,
-            callingUser.Money,
+            userMoney,
             gain > 0 ? "Bravo vous avez gagné !!!" : "Retentez votre chance"
             );
     }

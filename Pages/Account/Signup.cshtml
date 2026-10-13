@@ -30,12 +30,15 @@
                 <input asp-for="ConfirmPassword"class="form-control confirm-control"type="password" />
             </div>
 
-            <div class="form-group form-check">
-                <input asp-for="IsAdmin"class="form-check-input debug-check"type="checkbox" />
-                <label asp-for="IsAdmin"class="form-check-label debug-label">
-                    Créer un compte administrateur (debug)
-                </label>
-            </div>
+            @if (Model.CanCreateAdmin)
+            {
+                <div class="form-group form-check">
+                    <input asp-for="IsAdmin"class="form-check-input debug-check"type="checkbox" />
+                    <label asp-for="IsAdmin"class="form-check-label debug-label">
+                        Créer un compte administrateur (debug)
+                    </label>
+                </div>
+            }
 
             <button type="submit" class="btn btn-primary">Créer le compte</button>
         </form>

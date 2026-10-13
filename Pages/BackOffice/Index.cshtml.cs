@@ -6,7 +6,6 @@ using CasinoDeYann.Services.Stats.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.IdentityModel.Tokens;
 
 namespace CasinoDeYann.Pages.BackOffice;
 
@@ -39,7 +38,7 @@ public class BackofficeModel : PageModel
 
         public async Task OnGetAsync()
         {
-            CurrentSort = SortOrder.IsNullOrEmpty() ? "date_desc" : SortOrder;
+            CurrentSort = string.IsNullOrEmpty(SortOrder) ? "date_desc" : SortOrder;
             BetSort = SortOrder == "bet_desc" ? "bet_asc" : "bet_desc";
             GainSort = SortOrder == "gain_desc" ? "gain_asc" : "gain_desc";
             DateSort = SortOrder == "date_desc" ? "date_asc" : "date_desc";

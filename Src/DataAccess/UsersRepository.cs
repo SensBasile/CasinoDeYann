@@ -15,7 +15,7 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
     {
         try
         { 
-            var query = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Username == name);
+            var query = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Username.ToLower() == name.ToLower());
             if (query == null)
                 return null;
             return _mapper.Map<User>(query);
@@ -36,7 +36,7 @@ public class UsersRepository : Repository<TUser, User>, IUsersRepository
     public async Task<IEnumerable<string>> FindUsernamesStartingWith(string query)
     {
         return await _context.Users
-            .Where(u => u.Username.StartsWith(query))
+            .Where(u => u.Username.ToLower().StartsWith(query.ToLower()))
             .OrderBy(u => u.Username)
             .Select(u => u.Username)
             .Take(5)

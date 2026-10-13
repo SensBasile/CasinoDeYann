@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using CasinoDeYann;
 using CasinoDeYann.DataAccess;
@@ -18,7 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<CasinoDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -26,6 +27,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Login";
         options.LogoutPath = "/Logout";
     });
+
+// Clés qui chiffrent le cookie de connexion et les jetons anti-CSRF. Par défaut
+// elles vivent dans le conteneur et disparaissent à chaque redéploiement (tout
+// le monde est déconnecté) : en Docker, on les range dans un volume.
+var keysPath = builder.Configuration["DataProtection:KeysPath"];
+if (!string.IsNullOrEmpty(keysPath))
+{
+    builder.Services.AddDataProtection()
+        .PersistKeysToFileSystem(new DirectoryInfo(keysPath))
+        .SetApplicationName("CasinoDeYann");
+}
 
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
@@ -47,13 +59,23 @@ builder.Services.AddScoped<HorseRaceService>();
 
 var app = builder.Build();
 
+// Applique les migrations en attente au démarrage (sans effet si la base est à jour).
+using (var scope = app.Services.CreateScope())
+{
+    scope.ServiceProvider.GetRequiredService<CasinoDbContext>().Database.Migrate();
+}
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// En prod, le HTTPS est géré par le nginx frontal : la redirection ne sert qu'en local.
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();

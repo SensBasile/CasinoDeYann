@@ -1,0 +1,13 @@
+# Overrides dev : ports exposés sur la machine, pas de reverse proxy.
+# Usage : docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+#   -> appli sur http://localhost:8080
+#   -> Postgres sur localhost:5432 (pour lancer l'appli depuis Rider / dotnet run)
+
+services:
+  postgres:
+    ports:
+      - "5432:5432"
+
+  app:
+    ports:
+      - "8080:8080"

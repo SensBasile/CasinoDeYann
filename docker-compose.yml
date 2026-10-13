@@ -1,0 +1,49 @@
+name: casinodeyann
+
+# Configuration commune dev/prod. Les différences (ports exposés, réseau edge)
+# vivent dans docker-compose.dev.yml / docker-compose.prod.yml.
+# Variables lues dans .env (modèle : .env.example).
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - casino-network
+
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      DataProtection__KeysPath: /keys
+      # Fait confiance aux en-têtes X-Forwarded-For / X-Forwarded-Proto du nginx
+      # frontal (vraie IP client, schéma https).
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+    volumes:
+      - dataprotection-keys:/keys
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - casino-network
+
+networks:
+  casino-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  dataprotection-keys:

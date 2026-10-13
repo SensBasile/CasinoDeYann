@@ -50,11 +50,11 @@ public class StatsRepository: Repository<TStats, Stats>, IStatsRepository
         {
             if (strictSearch)
             {
-                stats = stats.Where(s => s.User.Username.Equals(searchString));
+                stats = stats.Where(s => s.User.Username.ToLower() == searchString.ToLower());
             }
             else
             {
-                stats = stats.Where(s => s.User.Username.Contains(searchString));
+                stats = stats.Where(s => s.User.Username.ToLower().Contains(searchString.ToLower()));
             }
         }
         

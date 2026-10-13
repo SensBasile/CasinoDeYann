@@ -1,0 +1,16 @@
+# Overrides prod : l'appli rejoint le réseau "edge" de yannlab-infra, où le
+# nginx frontal la joint via l'alias "casinodeyann" (port 8080). Aucun port
+# publié sur l'hôte ; Postgres reste sur le réseau interne uniquement.
+# Usage : docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
+
+services:
+  app:
+    networks:
+      casino-network:
+      edge:
+        aliases:
+          - casinodeyann
+
+networks:
+  edge:
+    external: true

@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+.git/
+.idea/
+.vs/
+UnitTests/
+.env
+*.user
+*.DotSettings.user
+Dockerfile
+docker-compose*.yml
